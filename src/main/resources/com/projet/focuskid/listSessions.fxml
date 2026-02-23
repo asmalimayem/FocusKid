@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.Region?>
+<StackPane styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.focuskid.controllers.listSessionsC">
+
+    <BorderPane>
+        <!-- TOP: Profil utilisateur -->
+        <top>
+            <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 15;">
+                <VBox alignment="CENTER_RIGHT" spacing="2">
+                    <Label styleClass="user-name" text="Lucas" />
+                    <HBox alignment="CENTER" spacing="5">
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image><Image url="@star.png" /></image>
+                        </ImageView>
+                        <Label styleClass="user-points" text="1250 points" />
+                    </HBox>
+                </VBox>
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="30" />
+                    <ImageView fitHeight="50" fitWidth="50" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <!-- LEFT: Sidebar identique -->
+        <left>
+            <VBox alignment="CENTER" spacing="25" styleClass="sidebar">
+                <Button styleClass="side-button" fx:id="btnAdd">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnList">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@list.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnRefresh">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnDelete">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <VBox styleClass="sidebar-separator" />
+
+                <VBox alignment="CENTER" spacing="5">
+                    <Label styleClass="level-text" text="Niveau 5" />
+                    <VBox styleClass="level-progress-container">
+                        <VBox styleClass="level-progress-fill" prefHeight="8" prefWidth="40" />
+                    </VBox>
+                </VBox>
+            </VBox>
+        </left>
+
+        <!-- CENTER: Liste des sessions en cartes colorées -->
+        <center>
+            <StackPane styleClass="main-content-container">
+                <VBox styleClass="white-board" spacing="20">
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25" />
+                    </padding>
+
+                    <!-- En-tête avec recherche et stats rapides -->
+                    <VBox spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="15">
+                            <ImageView fitHeight="40" fitWidth="40">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                            <Label styleClass="form-title" text="Mes Sessions de Calme" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="searchField" promptText="🔍 Rechercher une activité..." styleClass="search-field" />
+                            <Button text="↻" onAction="#handleRefresh" styleClass="refresh-btn" />
+                        </HBox>
+
+                        <!-- Mini statistiques ludiques -->
+                        <HBox spacing="15" alignment="CENTER">
+                            <HBox styleClass="stat-pill">
+                                <Label text="📊 Total:" styleClass="stat-pill-label" />
+                                <Label fx:id="totalSessions" text="0" styleClass="stat-pill-value" />
+                            </HBox>
+                            <HBox styleClass="stat-pill">
+                                <Label text="⏱️ Moyenne:" styleClass="stat-pill-label" />
+                                <Label fx:id="avgDuration" text="0 min" styleClass="stat-pill-value" />
+                            </HBox>
+                            <HBox styleClass="stat-pill">
+                                <Label text="⭐ Feedback:" styleClass="stat-pill-label" />
+                                <Label fx:id="avgFeedback" text="0/5" styleClass="stat-pill-value" />
+                            </HBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- ScrollPane avec les cartes -->
+                    <ScrollPane fitToWidth="true" styleClass="cards-scroll-pane">
+                        <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" prefWrapLength="800" styleClass="cards-container" />
+                    </ScrollPane>
+
+                    <!-- Message si aucune session -->
+                    <VBox fx:id="emptyMessage" alignment="CENTER" spacing="15" visible="false" managed="false">
+                        <ImageView fitHeight="100" fitWidth="100">
+                            <image><Image url="@meditation.png" /></image>
+                        </ImageView>
+                        <Label text="Aucune session pour le moment" styleClass="empty-message" />
+                        <Label text="Clique sur le bouton + pour en créer une !" styleClass="empty-submessage" />
+                    </VBox>
+                </VBox>
+            </StackPane>
+        </center>
+
+        <!-- BOTTOM: Navigation -->
+        <bottom>
+            <VBox>
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav">
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCours">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Mes cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navExercices">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navParents">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navGamification">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Boutique" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCalme">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg, calm-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navEmotions">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </bottom>
+    </BorderPane>
+</StackPane>

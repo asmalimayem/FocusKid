@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<StackPane styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.focuskid.controllers.updateSessionC">
+
+    <BorderPane>
+        <!-- TOP: Profil utilisateur (identique) -->
+        <top>
+            <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 15;">
+                <VBox alignment="CENTER_RIGHT" spacing="2">
+                    <Label styleClass="user-name" text="Lucas" />
+                    <HBox alignment="CENTER" spacing="5">
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image><Image url="@star.png" /></image>
+                        </ImageView>
+                        <Label styleClass="user-points" text="1250 points" />
+                    </HBox>
+                </VBox>
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="30" />
+                    <ImageView fitHeight="50" fitWidth="50" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <!-- LEFT: Sidebar identique -->
+        <left>
+            <VBox alignment="CENTER" spacing="25" styleClass="sidebar">
+                <Button styleClass="side-button" fx:id="btnAdd">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnList">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@list.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnRefresh">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnDelete">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <VBox styleClass="sidebar-separator" />
+
+                <VBox alignment="CENTER" spacing="5">
+                    <Label styleClass="level-text" text="Niveau 5" />
+                    <VBox styleClass="level-progress-container">
+                        <VBox styleClass="level-progress-fill" prefHeight="8" prefWidth="40" />
+                    </VBox>
+                </VBox>
+            </VBox>
+        </left>
+
+        <!-- CENTER: Formulaire de modification -->
+        <center>
+            <StackPane styleClass="main-content-container">
+                <VBox styleClass="white-board" spacing="25">
+                    <padding>
+                        <Insets top="30" right="40" bottom="30" left="40" />
+                    </padding>
+
+                    <!-- En-tête avec sélection de session -->
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <ImageView fitHeight="50" fitWidth="50">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Modifier une Session" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="sessionSelector" promptText="Sélectionner une session" prefWidth="200" styleClass="form-field" />
+                    </HBox>
+
+                    <!-- Formulaire de modification -->
+                    <GridPane hgap="20" vgap="15" styleClass="form-grid">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="30" />
+                            <ColumnConstraints percentWidth="70" />
+                        </columnConstraints>
+
+                        <!-- ID caché -->
+                        <Label fx:id="sessionId" visible="false" managed="false" />
+
+                        <!-- Type d'activité -->
+                        <Label text="Type d'activité :" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                        <ComboBox fx:id="typeActiviteCombo" promptText="Choisir une activité" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                        <!-- Durée réelle -->
+                        <Label text="Durée réelle (min) :" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                            <Slider fx:id="dureeSlider" min="1" max="30" value="5" showTickLabels="true" showTickMarks="true" majorTickUnit="5" blockIncrement="1" styleClass="form-slider" />
+                            <Label fx:id="dureeValue" text="5 min" styleClass="slider-value" />
+                        </HBox>
+
+                        <!-- Feedback enfant - CORRECTION AVEC RADIOBUTTONS -->
+                        <Label text="Feedback enfant :" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                            <RadioButton fx:id="feedback1" text="1" styleClass="feedback-radio">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="feedbackGroup" />
+                                </toggleGroup>
+                            </RadioButton>
+                            <RadioButton fx:id="feedback2" text="2" styleClass="feedback-radio">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="feedbackGroup" />
+                                </toggleGroup>
+                            </RadioButton>
+                            <RadioButton fx:id="feedback3" text="3" styleClass="feedback-radio" selected="true">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="feedbackGroup" />
+                                </toggleGroup>
+                            </RadioButton>
+                            <RadioButton fx:id="feedback4" text="4" styleClass="feedback-radio">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="feedbackGroup" />
+                                </toggleGroup>
+                            </RadioButton>
+                            <RadioButton fx:id="feedback5" text="5" styleClass="feedback-radio">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="feedbackGroup" />
+                                </toggleGroup>
+                            </RadioButton>
+                        </HBox>
+
+                        <!-- Note parent -->
+                        <Label text="Note parent :" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                        <TextField fx:id="noteParentField" promptText="Note du parent" styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                        <!-- Boutons d'action -->
+                        <HBox spacing="15" alignment="CENTER_RIGHT" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-actions">
+                            <Button fx:id="btnCancel" text="Annuler" onAction="#handleCancel" styleClass="action-btn, reset-btn" />
+                            <Button fx:id="btnUpdate" text="Mettre à jour" onAction="#handleUpdate" styleClass="action-btn, save-btn" />
+                        </HBox>
+                    </GridPane>
+
+                    <!-- Message de confirmation -->
+                    <Label fx:id="messageLabel" styleClass="message-label" visible="false" managed="false" />
+                </VBox>
+            </StackPane>
+        </center>
+
+        <!-- BOTTOM: Navigation (identique) -->
+        <bottom>
+            <VBox>
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav">
+                    <!-- Même navigation que précédemment -->
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCours">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Mes cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navExercices">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navParents">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navGamification">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Boutique" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCalme">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg, calm-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navEmotions">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </bottom>
+    </BorderPane>
+</StackPane>
