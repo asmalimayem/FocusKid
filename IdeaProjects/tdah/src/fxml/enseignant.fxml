@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<TabPane xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="controller.EnseignantController"
+         prefHeight="900.0" prefWidth="1400.0"
+         tabClosingPolicy="UNAVAILABLE"
+         stylesheets="@../css/tdah-style.css">
+
+    <tabs>
+        <!-- ========== ONGLET EXERCICES ========== -->
+        <Tab text="📝 Gestion des Exercices" closable="false">
+            <content>
+                <BorderPane style="-fx-background-color: #f0f2f5;">
+
+                    <!-- Barre d'outils supérieure -->
+                    <top>
+                        <ToolBar styleClass="tool-bar">
+                            <Label text="Gestion Complète des Exercices">
+                                <font><Font size="18.0" /></font>
+                            </Label>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnNouvelExercice"
+                                    onAction="#nouvelExercice"
+                                    styleClass="button-success"
+                                    text="➕ Nouvel Exercice" />
+                            <Button onAction="#consulterExercices"
+                                    styleClass="button-info"
+                                    text="🔄 Rafraîchir" />
+                        </ToolBar>
+                    </top>
+
+                    <!-- Contenu central -->
+                    <center>
+                        <SplitPane dividerPositions="0.3" style="-fx-background-color: transparent;">
+                            <items>
+                                <!-- ========== PANNEAU GAUCHE : LISTE DES EXERCICES ========== -->
+                                <VBox styleClass="left-panel" spacing="12">
+                                    <Label text="📋 Liste des exercices" />
+
+                                    <TextField fx:id="searchExerciceField"
+                                               promptText="🔍 Rechercher un exercice..."
+                                               HBox.hgrow="ALWAYS" />
+
+                                    <ListView fx:id="listExercices"
+                                              VBox.vgrow="ALWAYS"
+                                              style="-fx-background-color: transparent;" />
+
+                                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                                        <Label text="Total :" style="-fx-font-size: 14px;" />
+                                        <Label fx:id="totalExercicesLabel"
+                                               styleClass="total-label"
+                                               text="0" />
+                                    </HBox>
+                                </VBox>
+
+                                <!-- ========== PANNEAU DROIT : DÉTAILS DE L'EXERCICE ========== -->
+                                <VBox styleClass="right-panel" spacing="20">
+
+                                    <!-- En-tête avec mode et ID -->
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label fx:id="lblModeExercice"
+                                               styleClass="header-label"
+                                               text="➡️ Nouvel Exercice" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblExerciceId"
+                                               styleClass="id-label"
+                                               text="ID: -" />
+                                    </HBox>
+
+                                    <Separator />
+
+                                    <!-- ========== FORMULAIRE EXERCICE ========== -->
+                                    <TitledPane text="📌 Informations de l'exercice" expanded="true">
+                                        <GridPane hgap="15" vgap="12" styleClass="grid-pane">
+                                            <columnConstraints>
+                                                <ColumnConstraints minWidth="100" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                                <ColumnConstraints minWidth="80" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                            </columnConstraints>
+
+                                            <!-- Titre -->
+                                            <Label text="Titre :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="tfTitreExercice"
+                                                       promptText="Titre de l'exercice"
+                                                       GridPane.columnIndex="1"
+                                                       GridPane.rowIndex="0"
+                                                       GridPane.columnSpan="3" />
+
+                                            <!-- Description -->
+                                            <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextArea fx:id="taDescriptionExercice"
+                                                      promptText="Description de l'exercice"
+                                                      prefRowCount="2"
+                                                      wrapText="true"
+                                                      GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="1"
+                                                      GridPane.columnSpan="3" />
+
+                                            <!-- Difficulté -->
+                                            <Label text="Difficulté :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <ComboBox fx:id="cbDifficulteExercice"
+                                                      prefWidth="150"
+                                                      promptText="Sélectionner"
+                                                      GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="2" />
+
+                                            <!-- Points -->
+                                            <Label text="Points :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                            <TextField fx:id="tfPointsExercice"
+                                                       promptText="Points"
+                                                       prefWidth="100"
+                                                       GridPane.columnIndex="3"
+                                                       GridPane.rowIndex="2" />
+
+                                            <!-- Durée -->
+                                            <Label text="Durée (s) :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <TextField fx:id="tfDureeExercice"
+                                                       promptText="Durée en secondes"
+                                                       GridPane.columnIndex="1"
+                                                       GridPane.rowIndex="3"
+                                                       GridPane.columnSpan="3" />
+
+                                            <!-- Boutons de sauvegarde -->
+                                            <HBox spacing="10"
+                                                  GridPane.columnIndex="1"
+                                                  GridPane.rowIndex="4"
+                                                  GridPane.columnSpan="3"
+                                                  alignment="CENTER_RIGHT">
+                                                <Button fx:id="btnSaveExercice"
+                                                        onAction="#sauvegarderExercice"
+                                                        styleClass="button-success"
+                                                        text="💾 Sauvegarder l'exercice" />
+                                                <Button fx:id="btnAnnulerExercice"
+                                                        onAction="#annulerExercice"
+                                                        styleClass="button-cancel"
+                                                        text="❌ Annuler" />
+                                            </HBox>
+                                        </GridPane>
+                                    </TitledPane>
+
+                                    <!-- ========== GESTION DES QUESTIONS ET CORRECTIONS ========== -->
+                                    <TitledPane text="❓ Questions et corrections" expanded="true">
+                                        <VBox spacing="20" style="-fx-padding: 15;">
+
+                                            <!-- Barre d'outils des questions -->
+                                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                                <Label text="Questions de l'exercice :"
+                                                       style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <Button onAction="#chargerQuestionsDepuisBase"
+                                                        styleClass="button-info"
+                                                        text="🔄 Charger de la base" />
+                                                <Button onAction="#sauvegarderQuestionsSeulement"
+                                                        styleClass="button-success"
+                                                        text="💾 Sauvegarder en base" />
+                                            </HBox>
+
+                                            <!-- Tableau des questions -->
+                                            <TableView fx:id="tableQuestionsExercice"
+                                                       prefHeight="250"
+                                                       editable="true">
+                                                <columns>
+                                                    <TableColumn fx:id="colNumQuestion"
+                                                                 prefWidth="50"
+                                                                 text="#" />
+                                                    <TableColumn fx:id="colEnonceQuestion"
+                                                                 prefWidth="350"
+                                                                 text="Énoncé" />
+                                                    <TableColumn fx:id="colCorrectionQuestion"
+                                                                 prefWidth="250"
+                                                                 text="Correction" />
+                                                    <TableColumn fx:id="colActionsQuestion"
+                                                                 prefWidth="120"
+                                                                 text="Actions" />
+                                                </columns>
+                                                <columnResizePolicy>
+                                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                </columnResizePolicy>
+                                            </TableView>
+
+                                            <!-- Formulaire d'ajout de question -->
+                                            <Label text="➕ Ajouter une nouvelle question :"
+                                                   style="-fx-font-weight: bold; -fx-text-fill: #27ae60; -fx-font-size: 14px;" />
+
+                                            <GridPane hgap="15" vgap="12">
+                                                <columnConstraints>
+                                                    <ColumnConstraints minWidth="80" />
+                                                    <ColumnConstraints hgrow="ALWAYS" />
+                                                </columnConstraints>
+
+                                                <!-- Question -->
+                                                <Label text="Question :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                <TextArea fx:id="taNouvelleQuestion"
+                                                          promptText="Saisissez l'énoncé de la question"
+                                                          prefRowCount="2"
+                                                          wrapText="true"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="0" />
+
+                                                <!-- Correction -->
+                                                <Label text="Correction :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                <TextArea fx:id="taNouvelleCorrection"
+                                                          promptText="Saisissez la correction / réponse attendue"
+                                                          prefRowCount="2"
+                                                          wrapText="true"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="1" />
+
+                                                <!-- Bouton d'ajout -->
+                                                <HBox spacing="10"
+                                                      GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="2"
+                                                      alignment="CENTER_RIGHT">
+                                                    <Button onAction="#ajouterQuestionAvecCorrection"
+                                                            styleClass="button-info"
+                                                            text="✅ Ajouter cette question" />
+                                                </HBox>
+                                            </GridPane>
+
+                                            <!-- Boutons d'action globaux -->
+                                            <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15 0 5 0;">
+                                                <Button onAction="#modifierExercice"
+                                                        styleClass="button-warning"
+                                                        prefWidth="180"
+                                                        text="✏️ Modifier cet exercice" />
+                                                <Button onAction="#supprimerExercice"
+                                                        styleClass="button-danger"
+                                                        prefWidth="180"
+                                                        text="🗑️ Supprimer cet exercice" />
+                                            </HBox>
+                                        </VBox>
+                                    </TitledPane>
+                                </VBox>
+                            </items>
+                        </SplitPane>
+                    </center>
+                </BorderPane>
+            </content>
+        </Tab>
+
+        <!-- ========== ONGLET QUIZ ========== -->
+        <Tab text="📝 Gestion des Quiz" closable="false">
+            <content>
+                <BorderPane style="-fx-background-color: #f0f2f5;">
+
+                    <!-- Barre d'outils supérieure -->
+                    <top>
+                        <ToolBar styleClass="tool-bar">
+                            <Label text="Gestion Complète des Quiz">
+                                <font><Font size="18.0" /></font>
+                            </Label>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnNouveauQuiz"
+                                    onAction="#nouveauQuiz"
+                                    styleClass="button-success"
+                                    text="➕ Nouveau Quiz" />
+                            <Button onAction="#consulterQuiz"
+                                    styleClass="button-info"
+                                    text="🔄 Rafraîchir" />
+                        </ToolBar>
+                    </top>
+
+                    <center>
+                        <SplitPane dividerPositions="0.3" style="-fx-background-color: transparent;">
+                            <items>
+                                <!-- ========== PANNEAU GAUCHE : LISTE DES QUIZ ========== -->
+                                <VBox styleClass="left-panel" spacing="12">
+                                    <Label text="📋 Liste des quiz" />
+
+                                    <TextField fx:id="searchQuizField"
+                                               promptText="🔍 Rechercher un quiz..."
+                                               HBox.hgrow="ALWAYS" />
+
+                                    <ListView fx:id="listQuiz"
+                                              VBox.vgrow="ALWAYS"
+                                              style="-fx-background-color: transparent;" />
+
+                                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                                        <Label text="Total :" style="-fx-font-size: 14px;" />
+                                        <Label fx:id="totalQuizLabel"
+                                               styleClass="total-label"
+                                               text="0" />
+                                    </HBox>
+                                </VBox>
+
+                                <!-- ========== PANNEAU DROIT : DÉTAILS DU QUIZ ========== -->
+                                <VBox styleClass="right-panel" spacing="20">
+
+                                    <!-- En-tête avec mode et ID -->
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label fx:id="lblModeQuiz"
+                                               styleClass="header-label"
+                                               text="➡️ Nouveau Quiz" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblQuizId"
+                                               styleClass="id-label"
+                                               text="ID: -" />
+                                    </HBox>
+
+                                    <Separator />
+
+                                    <!-- ========== FORMULAIRE QUIZ ========== -->
+                                    <TitledPane text="📌 Informations du quiz" expanded="true">
+                                        <GridPane hgap="15" vgap="12" styleClass="grid-pane">
+                                            <columnConstraints>
+                                                <ColumnConstraints minWidth="100" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                                <ColumnConstraints minWidth="80" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                            </columnConstraints>
+
+                                            <!-- Titre -->
+                                            <Label text="Titre :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="tfTitreQuiz"
+                                                       promptText="Titre du quiz"
+                                                       GridPane.columnIndex="1"
+                                                       GridPane.rowIndex="0"
+                                                       GridPane.columnSpan="3" />
+
+                                            <!-- Description -->
+                                            <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextArea fx:id="taDescriptionQuiz"
+                                                      promptText="Description du quiz"
+                                                      prefRowCount="2"
+                                                      wrapText="true"
+                                                      GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="1"
+                                                      GridPane.columnSpan="3" />
+
+                                            <!-- Difficulté -->
+                                            <Label text="Difficulté :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <ComboBox fx:id="cbDifficulteQuiz"
+                                                      prefWidth="150"
+                                                      promptText="Sélectionner"
+                                                      GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="2" />
+
+                                            <!-- Points -->
+                                            <Label text="Points totaux :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                            <TextField fx:id="tfPointsQuiz"
+                                                       promptText="Points"
+                                                       prefWidth="100"
+                                                       GridPane.columnIndex="3"
+                                                       GridPane.rowIndex="2" />
+
+                                            <!-- Durée -->
+                                            <Label text="Durée totale (s) :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <TextField fx:id="tfDureeQuiz"
+                                                       promptText="Durée en secondes"
+                                                       GridPane.columnIndex="1"
+                                                       GridPane.rowIndex="3"
+                                                       GridPane.columnSpan="3" />
+
+                                            <!-- Boutons de sauvegarde -->
+                                            <HBox spacing="10"
+                                                  GridPane.columnIndex="1"
+                                                  GridPane.rowIndex="4"
+                                                  GridPane.columnSpan="3"
+                                                  alignment="CENTER_RIGHT">
+                                                <Button fx:id="btnSaveQuiz"
+                                                        onAction="#sauvegarderQuiz"
+                                                        styleClass="button-success"
+                                                        text="💾 Sauvegarder le quiz" />
+                                                <Button fx:id="btnAnnulerQuiz"
+                                                        onAction="#annulerQuiz"
+                                                        styleClass="button-cancel"
+                                                        text="❌ Annuler" />
+                                            </HBox>
+                                        </GridPane>
+                                    </TitledPane>
+
+                                    <!-- ========== GESTION DES QUESTIONS DE QUIZ ========== -->
+                                    <TitledPane text="❓ Questions du quiz" expanded="true">
+                                        <VBox spacing="20" style="-fx-padding: 15;">
+
+                                            <!-- Barre d'outils des questions -->
+                                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                                <Label text="Questions du quiz :"
+                                                       style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <Button onAction="#chargerQuestionsQuizDepuisBase"
+                                                        styleClass="button-info"
+                                                        text="🔄 Charger de la base" />
+                                                <Button onAction="#sauvegarderQuestionsQuizSeulement"
+                                                        styleClass="button-success"
+                                                        text="💾 Sauvegarder en base" />
+                                            </HBox>
+
+                                            <!-- Tableau des questions -->
+                                            <TableView fx:id="tableQuestionsQuiz"
+                                                       prefHeight="200"
+                                                       editable="true">
+                                                <columns>
+                                                    <TableColumn fx:id="colNumQuestionQuiz"
+                                                                 prefWidth="50"
+                                                                 text="#" />
+                                                    <TableColumn fx:id="colTypeQuestionQuiz"
+                                                                 prefWidth="80"
+                                                                 text="Type" />
+                                                    <TableColumn fx:id="colEnonceQuestionQuiz"
+                                                                 prefWidth="320"
+                                                                 text="Énoncé" />
+                                                    <TableColumn fx:id="colCorrectionQuiz"
+                                                                 prefWidth="200"
+                                                                 text="Correction" />
+                                                    <TableColumn prefWidth="100"
+                                                                 text="Actions" />
+                                                </columns>
+                                                <columnResizePolicy>
+                                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                </columnResizePolicy>
+                                            </TableView>
+
+                                            <!-- Formulaire d'ajout de question -->
+                                            <Label text="➕ Ajouter une nouvelle question :"
+                                                   style="-fx-font-weight: bold; -fx-text-fill: #27ae60; -fx-font-size: 14px;" />
+
+                                            <GridPane hgap="15" vgap="12">
+                                                <columnConstraints>
+                                                    <ColumnConstraints minWidth="80" />
+                                                    <ColumnConstraints hgrow="ALWAYS" />
+                                                    <ColumnConstraints minWidth="80" />
+                                                    <ColumnConstraints hgrow="ALWAYS" />
+                                                </columnConstraints>
+
+                                                <!-- Type de question -->
+                                                <Label text="Type :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                <ComboBox fx:id="cbTypeQuestion"
+                                                          prefWidth="120"
+                                                          promptText="Type"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="0" />
+
+                                                <!-- Points et Temps -->
+                                                <Label text="Points :" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                                <TextField fx:id="tfPointsQuestion"
+                                                           promptText="Points"
+                                                           prefWidth="80"
+                                                           GridPane.columnIndex="3"
+                                                           GridPane.rowIndex="0" />
+
+                                                <!-- Question -->
+                                                <Label text="Question :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                <!-- CORRECTION ICI: fx:id="taEnonceQuestionQuiz" au lieu de "taNouvelleQuestionQuiz" -->
+                                                <TextArea fx:id="taEnonceQuestionQuiz"
+                                                          promptText="Énoncé de la question"
+                                                          prefRowCount="2"
+                                                          wrapText="true"
+                                                          GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="1"
+                                                          GridPane.columnSpan="3" />
+
+                                                <!-- Temps limite -->
+                                                <Label text="Temps (s) :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                                <TextField fx:id="tfTempsLimite"
+                                                           promptText="Temps limite"
+                                                           prefWidth="80"
+                                                           GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="2" />
+
+                                                <!-- Correction -->
+                                                <Label text="Correction :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                                <TextField fx:id="tfCorrectionQuiz"
+                                                           promptText="Réponse correcte"
+                                                           GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="3"
+                                                           GridPane.columnSpan="3" />
+
+                                                <!-- Bouton d'ajout -->
+                                                <HBox spacing="10"
+                                                      GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="4"
+                                                      GridPane.columnSpan="3"
+                                                      alignment="CENTER_RIGHT">
+                                                    <Button onAction="#ajouterQuestionQuizAvecCorrection"
+                                                            styleClass="button-info"
+                                                            text="✅ Ajouter cette question" />
+                                                </HBox>
+                                            </GridPane>
+
+                                            <!-- Boutons d'action globaux -->
+                                            <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15 0 5 0;">
+                                                <Button onAction="#modifierQuiz"
+                                                        styleClass="button-warning"
+                                                        prefWidth="180"
+                                                        text="✏️ Modifier ce quiz" />
+                                                <Button onAction="#supprimerQuiz"
+                                                        styleClass="button-danger"
+                                                        prefWidth="180"
+                                                        text="🗑️ Supprimer ce quiz" />
+                                            </HBox>
+                                        </VBox>
+                                    </TitledPane>
+                                </VBox>
+                            </items>
+                        </SplitPane>
+                    </center>
+                </BorderPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

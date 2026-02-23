@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApprenantController">
+    <tabs>
+        <!-- Onglet Exercices -->
+        <Tab text="Exercices">
+            <content>
+                <SplitPane dividerPositions="0.3">
+                    <items>
+                        <!-- Panneau gauche : Liste des exercices -->
+                        <VBox spacing="10">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10" />
+                            </padding>
+                            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Exercices disponibles" />
+                            <ListView fx:id="listeExercices" onMouseClicked="#selectionnerExercice" VBox.vgrow="ALWAYS" />
+                        </VBox>
+
+                        <!-- Panneau droit : Contenu de l'exercice -->
+                        <VBox spacing="15">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+
+                            <Label fx:id="labelTitre" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+                            <HBox spacing="20">
+                                <Label fx:id="labelDifficulte" style="-fx-font-size: 14px;" />
+                                <Label fx:id="labelPoints" style="-fx-font-size: 14px;" />
+                                <Label fx:id="labelDuree" style="-fx-font-size: 14px;" />
+                            </HBox>
+
+                            <TextArea fx:id="affichageEnonce" editable="false" prefRowCount="5" style="-fx-font-size: 16px;" wrapText="true" />
+
+                            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Votre réponse :" />
+                            <TextField fx:id="tfReponse" promptText="Saisissez votre réponse" style="-fx-font-size: 14px;" />
+
+                            <Button fx:id="btnValider" onAction="#validerReponseExercice" style="-fx-background-color: #4CAF50; -fx-font-size: 16px; -fx-text-fill: white;" text="Valider" />
+
+                            <Button fx:id="btnVoirCorrection" onAction="#voirCorrectionExercice" style="-fx-background-color: #2196F3; -fx-font-size: 16px; -fx-text-fill: white;" text="Voir la correction" visible="false" />
+
+                            <TextArea fx:id="affichageCorrection" editable="false" prefRowCount="5" style="-fx-font-size: 14px;" visible="false" wrapText="true" />
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </content>
+        </Tab>
+
+        <!-- Onglet Quiz -->
+        <Tab text="Quiz">
+            <content>
+                <SplitPane dividerPositions="0.3">
+                    <items>
+                        <!-- Panneau gauche : Liste des quiz -->
+                        <VBox spacing="10">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10" />
+                            </padding>
+                            <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Quiz disponibles" />
+                            <ListView fx:id="listeQuiz" onMouseClicked="#selectionnerQuiz" VBox.vgrow="ALWAYS" />
+                        </VBox>
+
+                        <!-- Panneau droit : Contenu du quiz -->
+                        <VBox spacing="15">
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+
+                            <Label fx:id="labelTitre" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+                            <HBox spacing="20">
+                                <Label fx:id="labelDifficulte" style="-fx-font-size: 14px;" />
+                                <Label fx:id="labelPoints" style="-fx-font-size: 14px;" />
+                                <Label fx:id="labelDuree" style="-fx-font-size: 14px;" />
+                            </HBox>
+
+                            <TextArea fx:id="affichageEnonce" editable="false" prefRowCount="5" style="-fx-font-size: 16px;" wrapText="true" />
+
+                            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Votre réponse :" />
+                            <TextField fx:id="tfReponse" promptText="Saisissez votre réponse" style="-fx-font-size: 14px;" />
+
+                            <Button fx:id="btnValider" onAction="#validerReponseQuiz" style="-fx-background-color: #4CAF50; -fx-font-size: 16px; -fx-text-fill: white;" text="Valider" />
+
+                            <Button fx:id="btnVoirCorrection" onAction="#voirCorrectionQuiz" style="-fx-background-color: #2196F3; -fx-font-size: 16px; -fx-text-fill: white;" text="Voir la correction" visible="false" />
+
+                            <TextArea fx:id="affichageCorrection" editable="false" prefRowCount="5" style="-fx-font-size: 14px;" visible="false" wrapText="true" />
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
