@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+
+<StackPane styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.focuskid.controllers.addSessionC">
+
+    <BorderPane>
+        <!-- TOP: Profil utilisateur (identique à home.fxml) -->
+        <top>
+            <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 15;">
+                <VBox alignment="CENTER_RIGHT" spacing="2">
+                    <Label styleClass="user-name" text="Lucas" />
+                    <HBox alignment="CENTER" spacing="5">
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image><Image url="@star.png" /></image>
+                        </ImageView>
+                        <Label styleClass="user-points" text="1250 points" />
+                    </HBox>
+                </VBox>
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="30" />
+                    <ImageView fitHeight="50" fitWidth="50" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <!-- LEFT: Sidebar identique avec les mêmes boutons -->
+        <left>
+            <VBox alignment="CENTER" spacing="25" styleClass="sidebar">
+                <Button styleClass="side-button" fx:id="btnAdd">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnList">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@list.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnRefresh">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnDelete">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <VBox styleClass="sidebar-separator" />
+
+                <VBox alignment="CENTER" spacing="5">
+                    <Label styleClass="level-text" text="Niveau 5" />
+                    <VBox styleClass="level-progress-fill" prefHeight="8" prefWidth="40" />
+                </VBox>
+            </VBox>
+        </left>
+
+        <!-- CENTER: Formulaire d'ajout de session -->
+        <center>
+            <StackPane styleClass="main-content-container">
+                <VBox styleClass="white-board" spacing="25">
+                    <padding>
+                        <Insets top="30" right="40" bottom="30" left="40" />
+                    </padding>
+
+                    <!-- En-tête du formulaire -->
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <ImageView fitHeight="50" fitWidth="50">
+                            <image><Image url="@meditation.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Nouvelle Session de Calme" />
+                    </HBox>
+
+                    <!-- Formulaire en grille -->
+                    <GridPane hgap="20" vgap="15" styleClass="form-grid">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="30" />
+                            <ColumnConstraints percentWidth="70" />
+                        </columnConstraints>
+
+                        <!-- Enfant ID -->
+                        <Label text="Enfant :" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                        <ComboBox fx:id="enfantCombo" promptText="Sélectionner un enfant" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                        <!-- Type d'activité -->
+                        <Label text="Type d'activité :" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                        <ComboBox fx:id="typeActiviteCombo" promptText="Choisir une activité" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                        <!-- Déclencheur -->
+                        <Label text="Déclenché par :" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                        <HBox spacing="15" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                            <Button styleClass="trigger-btn, trigger-active" text="Enfant" fx:id="triggerEnfant" />
+                            <Button styleClass="trigger-btn" text="IA">
+                            </Button>
+                            <Button styleClass="trigger-btn" text="Parent" >
+                                triggerParent
+                            </Button>
+                        </HBox>
+
+                        <!-- Durée prévue -->
+                        <Label text="Durée prévue (min) :" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                            <Slider fx:id="dureeSlider" min="1" max="30" value="5" showTickLabels="true" showTickMarks="true" majorTickUnit="5" blockIncrement="1" styleClass="form-slider" />
+                            <Label fx:id="dureeValue" text="5 min" styleClass="slider-value" />
+                        </HBox>
+
+                        <!-- Note parent -->
+                        <Label text="Note parent :" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                        <TextField fx:id="noteParentField" promptText="Optionnel" styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                        <!-- Boutons d'action -->
+                        <HBox spacing="15" alignment="CENTER_RIGHT" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="2" styleClass="form-actions">
+                            <Button fx:id="btnReset" text="Réinitialiser" onAction="#handleReset" styleClass="action-btn, reset-btn" />
+                            <Button fx:id="btnSave" text="Enregistrer la session"  onAction="#handleSave" styleClass="action-btn, save-btn" />
+                        </HBox>
+                    </GridPane>
+
+                    <!-- Message de confirmation -->
+                    <Label fx:id="messageLabel" styleClass="message-label" visible="false" managed="false" />
+                </VBox>
+            </StackPane>
+        </center>
+
+        <!-- BOTTOM: Navigation (identique) -->
+        <bottom>
+            <VBox>
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav">
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCours">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Mes cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navExercices">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navParents">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navGamification">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Boutique" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCalme">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg, calm-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navEmotions">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </bottom>
+    </BorderPane>
+</StackPane>

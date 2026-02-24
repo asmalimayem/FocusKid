@@ -1,7 +1,7 @@
-package services;
+package com.projet.focuskid.services;
 
-import entities.Scenario;
-import utils.MyDataBase;
+import com.projet.focuskid.entities.Scenario;
+import com.projet.focuskid.utils.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;

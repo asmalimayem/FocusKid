@@ -1,4 +1,4 @@
-package services;
+package com.projet.focuskid.services;
 import java.sql.SQLException;
 import java.util.List;
 

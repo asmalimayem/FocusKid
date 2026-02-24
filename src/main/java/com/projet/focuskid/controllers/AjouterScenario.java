@@ -1,12 +1,12 @@
-package controllers;
+package com.projet.focuskid.controllers;
 
-import entities.Scenario;
+import com.projet.focuskid.entities.Scenario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
-import services.ServiceScenario;
+import com.projet.focuskid.services.ServiceScenario;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -40,7 +40,7 @@ public class AjouterScenario {
             ss.ajouter(scenario);
 
             FXMLLoader loader = new FXMLLoader(getClass()
-                    .getResource("/AfficherScenario.fxml"));
+                    .getResource("/com/projet/focuskid/AfficherScenario.fxml"));
             Parent root = loader.load();
 
             AfficherScenario as = loader.getController();

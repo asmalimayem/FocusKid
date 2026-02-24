@@ -1,9 +1,9 @@
-package controllers;
+package com.projet.focuskid.controllers;
 
-import entities.Scenario;
+import com.projet.focuskid.entities.Scenario;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import services.ServiceScenario;
+import com.projet.focuskid.services.ServiceScenario;
 
 import java.sql.SQLException;
 import java.util.List;

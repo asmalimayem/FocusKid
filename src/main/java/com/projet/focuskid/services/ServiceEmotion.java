@@ -1,7 +1,7 @@
-package services;
+package com.projet.focuskid.services;
 
-import entities.Emotion;
-import utils.MyDataBase;
+import com.projet.focuskid.entities.Emotion;
+import com.projet.focuskid.utils.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;

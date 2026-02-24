@@ -1,9 +1,9 @@
-package mains;
+package com.projet.focuskid.mains;
 
-import entities.Emotion;
-import entities.Scenario;
-import services.ServiceEmotion;
-import services.ServiceScenario;
+import com.projet.focuskid.entities.Emotion;
+import com.projet.focuskid.entities.Scenario;
+import com.projet.focuskid.services.ServiceEmotion;
+import com.projet.focuskid.services.ServiceScenario;
 
 import java.sql.SQLException;
 

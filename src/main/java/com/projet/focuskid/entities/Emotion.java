@@ -1,4 +1,4 @@
-package entities;
+package com.projet.focuskid.entities;
 
 public class Emotion {
     private int id;

@@ -1,4 +1,4 @@
-package mains;
+package com.projet.focuskid.mains;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class MainFX extends Application {
         try {
 
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/AjouterEmotion.fxml")
+                    getClass().getResource("/com/projet/focuskid/AjouterEmotion.fxml")
             );
 
             Parent root = loader.load();

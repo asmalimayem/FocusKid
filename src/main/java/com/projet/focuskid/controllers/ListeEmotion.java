@@ -1,9 +1,9 @@
-package controllers;
+package com.projet.focuskid.controllers;
 
-import entities.Emotion;
+import com.projet.focuskid.entities.Emotion;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import services.ServiceEmotion;
+import com.projet.focuskid.services.ServiceEmotion;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,12 +1,12 @@
-package controllers;
+package com.projet.focuskid.controllers;
 
-import entities.Emotion;
+import com.projet.focuskid.entities.Emotion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
-import services.ServiceEmotion;
+import com.projet.focuskid.services.ServiceEmotion;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,7 +32,7 @@ public class AjouterEmotion {
             se.ajouter(emotion);
 
             FXMLLoader loader = new FXMLLoader(getClass()
-                    .getResource("/AfficherEmotion.fxml"));
+                    .getResource("/com/projet/focuskid/AfficherEmotion.fxml"));
             Parent root = loader.load();
 
             AfficherEmotion ae = loader.getController();

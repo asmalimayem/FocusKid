@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.Region?>
+<StackPane styleClass="main-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet.focuskid.controllers.listSessionsC">
+
+    <BorderPane>
+        <!-- TOP: Profil utilisateur (identique) -->
+        <top>
+            <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 15;">
+                <VBox alignment="CENTER_RIGHT" spacing="2">
+                    <Label styleClass="user-name" text="Lucas" />
+                    <HBox alignment="CENTER" spacing="5">
+                        <ImageView fitHeight="20" fitWidth="20">
+                            <image><Image url="@star.png" /></image>
+                        </ImageView>
+                        <Label styleClass="user-points" text="1250 points" />
+                    </HBox>
+                </VBox>
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="30" />
+                    <ImageView fitHeight="50" fitWidth="50" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <!-- LEFT: Sidebar identique -->
+        <left>
+            <VBox alignment="CENTER" spacing="25" styleClass="sidebar">
+                <Button styleClass="side-button" fx:id="btnAdd">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnList">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@list.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnRefresh">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnDelete">
+                    <graphic>
+                        <ImageView fitWidth="35" preserveRatio="true" styleClass="side-icon">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <VBox styleClass="sidebar-separator" />
+
+                <VBox alignment="CENTER" spacing="5">
+                    <Label styleClass="level-text" text="Niveau 5" />
+                    <VBox styleClass="level-progress-container">
+                        <VBox styleClass="level-progress-fill" prefHeight="8">
+                            <prefWidth>65%</prefWidth>
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </left>
+
+        <!-- CENTER: Liste des sessions -->
+        <center>
+            <StackPane styleClass="main-content-container">
+                <VBox styleClass="white-board" spacing="20">
+                    <padding>
+                        <Insets top="25" right="25" bottom="25" left="25" />
+                    </padding>
+
+                    <!-- En-tête avec recherche -->
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <ImageView fitHeight="40" fitWidth="40">
+                            <image><Image url="@list.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Mes Sessions de Calme" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="searchField" promptText="Rechercher..." styleClass="search-field" />
+                    </HBox>
+
+                    <!-- Tableau des sessions -->
+                    <TableView fx:id="sessionsTable" styleClass="sessions-table">
+                        <columns>
+                            <TableColumn text="ID" prefWidth="50">
+                                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Type d'activité" prefWidth="150">
+                                <cellValueFactory><PropertyValueFactory property="typeActivite" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Déclencheur" prefWidth="100">
+                                <cellValueFactory><PropertyValueFactory property="declencheur1" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Durée" prefWidth="80">
+                                <cellValueFactory><PropertyValueFactory property="dureeReelle" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Feedback" prefWidth="80">
+                                <cellValueFactory><PropertyValueFactory property="feedbackEnfant" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Note parent" prefWidth="100">
+                                <cellValueFactory><PropertyValueFactory property="noteParent" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="Date" prefWidth="150">
+                                <cellValueFactory><PropertyValueFactory property="horodatage" /></cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+
+                    <!-- Statistiques -->
+                    <HBox spacing="20" alignment="CENTER" styleClass="stats-container">
+                        <VBox alignment="CENTER" styleClass="stat-box">
+                            <Label fx:id="totalSessions" text="0" styleClass="stat-number" />
+                            <Label text="Total sessions" styleClass="stat-label" />
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="stat-box">
+                            <Label fx:id="avgDuration" text="0 min" styleClass="stat-number" />
+                            <Label text="Durée moyenne" styleClass="stat-label" />
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="stat-box">
+                            <Label fx:id="avgFeedback" text="0/5" styleClass="stat-number" />
+                            <Label text="Feedback moyen" styleClass="stat-label" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </StackPane>
+        </center>
+
+        <!-- BOTTOM: Navigation (identique) -->
+        <bottom>
+            <VBox>
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav">
+                    <!-- Même navigation que dans addSession.fxml -->
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCours">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Mes cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navExercices">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navParents">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navGamification">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Boutique" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCalme">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg, calm-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navEmotions">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="35" />
+                            <ImageView fitHeight="50" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </bottom>
+    </BorderPane>
+</StackPane>
