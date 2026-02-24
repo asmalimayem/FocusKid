@@ -33,16 +33,42 @@ public class ServiceSessionDeCalme implements IService<SessionDeCalme> {
     @Override
     public void modifier(SessionDeCalme t) {
         try {
-            String req = "UPDATE `sessions_de_calme` SET "
-                    + "`type_activite`='" + t.getTypeActivite() + "', "
-                    + "`duree_reelle`=" + t.getDureeReelle() + ", "
-                    + "`feedback_enfant`=" + t.getFeedbackEnfant() + ", "
-                    + "`note_parent`='" + t.getNoteParent() + "' "
-                    + "WHERE `id`=" + t.getId();
+            StringBuilder req = new StringBuilder("UPDATE `sessions_de_calme` SET ");
+
+            // Construction dynamique de la requête
+            if (t.getTypeActivite() != null) {
+                req.append("`type_activite`='").append(t.getTypeActivite()).append("', ");
+            }
+            if (t.getDeclencheur1() != null) {
+                req.append("`declencheur`='").append(t.getDeclencheur1()).append("', ");
+            }
+            if (t.getDureePrevue() != 0) {
+                req.append("`duree_prevue`=").append(t.getDureePrevue()).append(", ");
+            }
+            if (t.getDureeReelle() != 0) {
+                req.append("`duree_reelle`=").append(t.getDureeReelle()).append(", ");
+            }
+            if (t.getFeedbackEnfant() != 0) {
+                req.append("`feedback_enfant`=").append(t.getFeedbackEnfant()).append(", ");
+            }
+            if (t.getNoteParent() != null) {
+                req.append("`note_parent`='").append(t.getNoteParent()).append("', ");
+            }
+
+            // Supprimer la dernière virgule et espace
+            String reqFinal = req.substring(0, req.length() - 2);
+
+            // Ajouter la condition WHERE
+            reqFinal += " WHERE `id`=" + t.getId();
 
             Statement stm = cnx.createStatement();
-            stm.executeUpdate(req);
-            System.out.println("Session modifiée avec succès");
+            int rowsAffected = stm.executeUpdate(reqFinal);
+
+            if (rowsAffected > 0) {
+                System.out.println("Session modifiée avec succès");
+            } else {
+                System.out.println("Aucune session trouvée avec l'ID: " + t.getId());
+            }
         } catch (SQLException ex) {
             System.out.println("Erreur modification: " + ex.getMessage());
         }
