@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            fitToHeight="false"
+            stylesheets="@focuskid.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.CarnetController">
+
+    <content>
+        <VBox spacing="20"
+              alignment="TOP_CENTER"
+              styleClass="root-page"
+              fillWidth="true">
+
+            <padding>
+                <Insets top="25" bottom="25" left="20" right="20"/>
+            </padding>
+
+            <!-- ===== TITRE ===== -->
+            <Label text="📚 Gestion des Carnets Éducatifs"
+                   styleClass="section-title"/>
+
+            <!-- ===== BOUTON CONSULTER centré ===== -->
+            <Button text="🔍 Consulter les carnets"
+                    onAction="#consulterCarnets"
+                    styleClass="btn-consulter"/>
+
+            <!-- ===== LAYOUT PRINCIPAL : GAUCHE + DROITE ===== -->
+            <HBox spacing="20" fillHeight="true" alignment="TOP_LEFT">
+
+                <!-- ============================================
+                     COLONNE GAUCHE : FORMULAIRE
+                     ============================================ -->
+                <VBox spacing="12"
+                      styleClass="form-card"
+                      fillWidth="true"
+                      HBox.hgrow="NEVER"
+                      prefWidth="380"
+                      minWidth="350">
+
+                    <Label text="✏ Saisie / Modification"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4a2c2c;"/>
+
+                    <!-- DATE -->
+                    <DatePicker fx:id="dateEtudeDP"
+                                promptText="Date d'étude"
+                                styleClass="date-picker"
+                                maxWidth="Infinity"/>
+
+                    <!-- HEURES -->
+                    <GridPane hgap="8" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+                        <TextField fx:id="heureDebutTF"
+                                   promptText="Heure Début (HH:mm)"
+                                   styleClass="text-field"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="heureFinTF"
+                                   promptText="Heure Fin (HH:mm)"
+                                   styleClass="text-field"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    </GridPane>
+
+                    <!-- DUREE -->
+                    <TextField fx:id="dureeTotaleTF"
+                               promptText="Durée Totale (minutes)"
+                               styleClass="text-field"/>
+
+                    <!-- MATIÈRE + LIEU -->
+                    <GridPane hgap="8" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+                        <TextField fx:id="matiereTF"
+                                   promptText="Matière"
+                                   styleClass="text-field"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="lieuTF"
+                                   promptText="Lieu"
+                                   styleClass="text-field"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    </GridPane>
+
+                    <!-- TYPE + DIFFICULTE -->
+                    <ComboBox fx:id="typeActiviteCB"
+                              promptText="Type Activité"
+                              maxWidth="Infinity"
+                              styleClass="combo-box"/>
+
+                    <ComboBox fx:id="niveauDifficulteCB"
+                              promptText="Niveau Difficulté"
+                              maxWidth="Infinity"
+                              styleClass="combo-box"/>
+
+                    <!-- CONCENTRATION + AGITATION -->
+                    <GridPane hgap="8" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+                        <ComboBox fx:id="niveauConcentrationCB"
+                                  promptText="Concentration (1-5)"
+                                  maxWidth="Infinity"
+                                  styleClass="combo-box"
+                                  GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <ComboBox fx:id="niveauAgitationCB"
+                                  promptText="Agitation (1-5)"
+                                  maxWidth="Infinity"
+                                  styleClass="combo-box"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    </GridPane>
+
+                    <!-- AUTONOMIE -->
+                    <ComboBox fx:id="niveauAutonomieCB"
+                              promptText="Niveau Autonomie (1-5)"
+                              maxWidth="Infinity"
+                              styleClass="combo-box"/>
+
+                    <!-- INTERRUPTIONS + TEMPS PERTE -->
+                    <GridPane hgap="8" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+                        <TextField fx:id="nombreInterruptionsTF"
+                                   promptText="Nb Interruptions"
+                                   styleClass="text-field"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="tempsAvantPerteTF"
+                                   promptText="Temps perte conc. (min)"
+                                   styleClass="text-field"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    </GridPane>
+
+                    <!-- CHECKBOX -->
+                    <VBox spacing="8">
+                        <CheckBox fx:id="travailleSeulCB"
+                                  text="Travaille seul"
+                                  styleClass="modern-checkbox"/>
+                        <CheckBox fx:id="demandeAideCB"
+                                  text="Demande aide"
+                                  styleClass="modern-checkbox"/>
+                        <CheckBox fx:id="travailTermineCB"
+                                  text="Travail terminé"
+                                  styleClass="modern-checkbox"/>
+                    </VBox>
+
+                    <!-- TEXTAREA -->
+                    <TextArea fx:id="difficultesTA"
+                              promptText="Difficultés rencontrées..."
+                              prefRowCount="3"
+                              wrapText="true"
+                              styleClass="text-area"/>
+
+                    <TextArea fx:id="pointsPositifsTA"
+                              promptText="Points positifs..."
+                              prefRowCount="3"
+                              wrapText="true"
+                              styleClass="text-area"/>
+
+                    <!-- BOUTONS -->
+                    <VBox spacing="10" alignment="CENTER">
+                        <Button text="➕ Ajouter"
+                                onAction="#ajouterCarnet"
+                                maxWidth="Infinity"
+                                styleClass="btn-action, btn-add"/>
+                        <Button text="✏ Modifier"
+                                onAction="#modifierCarnet"
+                                maxWidth="Infinity"
+                                styleClass="btn-action, btn-edit"/>
+                        <Button text="🗑 Supprimer"
+                                onAction="#supprimerCarnet"
+                                maxWidth="Infinity"
+                                styleClass="btn-action, btn-delete"/>
+                    </VBox>
+
+                </VBox>
+                <!-- FIN COLONNE GAUCHE -->
+
+                <!-- ============================================
+                     COLONNE DROITE : TABLEAU
+                     ============================================ -->
+                <VBox spacing="10"
+                      HBox.hgrow="ALWAYS"
+                      fillWidth="true">
+
+                    <Label text="📋 Liste des Carnets"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4a2c2c;"/>
+
+                    <!-- ScrollPane horizontal pour le tableau -->
+                    <ScrollPane hbarPolicy="ALWAYS"
+                                vbarPolicy="AS_NEEDED"
+                                fitToHeight="false"
+                                prefHeight="700"
+                                minHeight="700"
+                                VBox.vgrow="ALWAYS"
+                                style="-fx-background-color: white;
+                                       -fx-background-radius: 20;
+                                       -fx-border-color: #ffb6b6;
+                                       -fx-border-width: 2;
+                                       -fx-border-radius: 20;">
+                        <content>
+                            <TableView fx:id="tableCarnet"
+                                       prefHeight="680"
+                                       minHeight="680"
+                                       prefWidth="2130"
+                                       minWidth="2130"
+                                       styleClass="modern-table">
+                                <columns>
+                                    <TableColumn fx:id="colId"             text="ID"               prefWidth="55"/>
+                                    <TableColumn fx:id="colDate"           text="Date"             prefWidth="105"/>
+                                    <TableColumn fx:id="colHeureDebut"     text="Heure Début"      prefWidth="105"/>
+                                    <TableColumn fx:id="colHeureFin"       text="Heure Fin"        prefWidth="105"/>
+                                    <TableColumn fx:id="colDuree"          text="Durée"            prefWidth="80"/>
+                                    <TableColumn fx:id="colLieu"           text="Lieu"             prefWidth="110"/>
+                                    <TableColumn fx:id="colMatiere"        text="Matière"          prefWidth="110"/>
+                                    <TableColumn fx:id="colTypeActivite"   text="Type Activité"    prefWidth="120"/>
+                                    <TableColumn fx:id="colDifficulte"     text="Difficulté"       prefWidth="100"/>
+                                    <TableColumn fx:id="colConcentration"  text="Concentration"    prefWidth="115"/>
+                                    <TableColumn fx:id="colAgitation"      text="Agitation"        prefWidth="95"/>
+                                    <TableColumn fx:id="colInterruptions"  text="Interruptions"    prefWidth="105"/>
+                                    <TableColumn fx:id="colTempsPerte"     text="Temps Perte"      prefWidth="110"/>
+                                    <TableColumn fx:id="colTravailleSeul"  text="Travaille Seul"   prefWidth="115"/>
+                                    <TableColumn fx:id="colDemandeAide"    text="Demande Aide"     prefWidth="115"/>
+                                    <TableColumn fx:id="colAutonomie"      text="Autonomie"        prefWidth="95"/>
+                                    <TableColumn fx:id="colTravailTermine" text="Travail Terminé"  prefWidth="120"/>
+                                    <TableColumn fx:id="colDifficultes"    text="Difficultés"      prefWidth="155"/>
+                                    <TableColumn fx:id="colPointsPositifs" text="Points Positifs"  prefWidth="155"/>
+                                </columns>
+                            </TableView>
+                        </content>
+                    </ScrollPane>
+
+                </VBox>
+                <!-- FIN COLONNE DROITE -->
+
+            </HBox>
+            <!-- FIN LAYOUT PRINCIPAL -->
+
+        </VBox>
+    </content>
+</ScrollPane>
