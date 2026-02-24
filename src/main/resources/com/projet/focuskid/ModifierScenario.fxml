@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="550" prefWidth="650"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projet.focuskid.controllers.ModifierScenario">
+
+    <children>
+        <Label layoutX="50" layoutY="40" text="ID :" />
+        <Label layoutX="50" layoutY="80" text="Titre :" />
+        <Label layoutX="50" layoutY="120" text="Description :" />
+        <Label layoutX="50" layoutY="160" text="Animation URL :" />
+        <Label layoutX="50" layoutY="200" text="Emotion ID :" />
+
+        <TextField fx:id="txtid" layoutX="170" layoutY="35"/>
+        <TextField fx:id="txttitre" layoutX="170" layoutY="75"/>
+        <TextField fx:id="txtdescription" layoutX="170" layoutY="115"/>
+        <TextField fx:id="txtanimationUrl" layoutX="170" layoutY="155"/>
+        <TextField fx:id="txtemotionId" layoutX="170" layoutY="195"/>
+
+        <Button layoutX="250" layoutY="250"
+                text="Modifier"
+                onAction="#modifierScenario"/>
+    </children>
+</AnchorPane>

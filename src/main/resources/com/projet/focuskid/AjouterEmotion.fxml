@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400" prefWidth="600"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projet.focuskid.controllers.AjouterEmotion">
+
+    <children>
+        <Label layoutX="50" layoutY="60" text="Nom :" />
+        <Label layoutX="50" layoutY="110" text="Icone :" />
+
+        <TextField fx:id="txtnom" layoutX="150" layoutY="55"/>
+        <TextField fx:id="txticone" layoutX="150" layoutY="105"/>
+
+        <Button layoutX="200" layoutY="170"
+                text="Ajouter"
+                onAction="#addEmotion"/>
+    </children>
+</AnchorPane>

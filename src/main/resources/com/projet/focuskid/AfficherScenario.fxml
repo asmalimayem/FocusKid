@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="450.0" prefWidth="650.0"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projet.focuskid.controllers.AfficherScenario">
+
+    <children>
+
+        <Label layoutX="50.0" layoutY="40.0" text="Titre :" />
+        <Label layoutX="50.0" layoutY="80.0" text="Description :" />
+        <Label layoutX="50.0" layoutY="120.0" text="Animation URL :" />
+        <Label layoutX="50.0" layoutY="160.0" text="Emotion ID :" />
+        <Label layoutX="50.0" layoutY="220.0" text="Liste :" />
+
+        <TextField fx:id="rtitre" layoutX="160.0" layoutY="35.0" />
+        <TextField fx:id="rdescription" layoutX="160.0" layoutY="75.0" />
+        <TextField fx:id="ranimationUrl" layoutX="160.0" layoutY="115.0" />
+        <TextField fx:id="remotionId" layoutX="160.0" layoutY="155.0" />
+
+        <TextField fx:id="rList"
+                   layoutX="160.0"
+                   layoutY="215.0"
+                   prefHeight="120.0"
+                   prefWidth="420.0" />
+
+    </children>
+</AnchorPane>

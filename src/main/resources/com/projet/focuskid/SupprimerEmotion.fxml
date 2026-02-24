@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="300" prefWidth="500"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projet.focuskid.controllers.SupprimerEmotion">
+
+    <children>
+        <Label layoutX="50" layoutY="80" text="ID Emotion :" />
+        <TextField fx:id="txtid" layoutX="160" layoutY="75"/>
+
+        <Button layoutX="200" layoutY="130"
+                text="Supprimer"
+                onAction="#supprimerEmotion"/>
+    </children>
+</AnchorPane>
