@@ -1,0 +1,131 @@
+/* =====================================================
+   STYLE SPÉCIFIQUE À L'INTERFACE PARENT
+   ===================================================== */
+
+/* ----- Fond d'écran ----- */
+.parent-background {
+    -fx-background-image: url("../images/backgd.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+}
+
+/* ----- Header vert ----- */
+.parent-header {
+    -fx-background-color: #5ac15a;
+    -fx-background-radius: 0 0 35 35;
+    -fx-padding: 15 25;
+    -fx-spacing: 20;
+    -fx-alignment: center-left;
+}
+
+.parent-title {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ----- Bouton paramètres ----- */
+.settings-btn {
+    -fx-background-color: white;
+    -fx-text-fill: #5ac15a;
+    -fx-background-radius: 20;
+    -fx-padding: 6 15;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.2, 0, 2);
+}
+
+.settings-btn:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.3, 0, 3);
+}
+
+/* ----- Conteneur principal centré ----- */
+.main-content-container {
+    -fx-padding: 40;
+}
+
+/* ----- Cadre blanc (cercle) ----- */
+.white-board {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-border-color: #ffb32b;
+    -fx-border-width: 8;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+    -fx-padding: 40;
+    -fx-spacing: 30;
+    -fx-alignment: center;
+    -fx-max-width: 700;
+    -fx-max-height: 400;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0.2, 5, 5);
+}
+
+/* ----- Cartes ----- */
+.card {
+    -fx-background-radius: 25;
+    -fx-padding: 25;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-min-width: 180;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.2, 0, 4);
+    -fx-transition: all 0.2s ease;
+}
+
+.card:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0.3, 0, 6);
+}
+
+.carnet-card {
+    -fx-background-color: linear-gradient(to bottom, #ffb32b, #ffa500);
+}
+
+.comment-card {
+    -fx-background-color: linear-gradient(to bottom, #ff6fa5, #ff4d8c);
+}
+
+.card-title {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.card-count {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 20;
+    -fx-padding: 5 15;
+}
+
+/* ----- Bouton d'action (Ouvrir) ----- */
+.action-btn {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-background-radius: 18;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.action-btn:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+/* ----- Message du jour ----- */
+.tip-message {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 16px;
+    -fx-text-fill: #1a1a8b;
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-background-radius: 30;
+    -fx-padding: 10 20;
+}

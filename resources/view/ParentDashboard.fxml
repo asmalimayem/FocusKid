@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.ParentDashboardController"
+            stylesheets="@parent-style.css"
+            styleClass="parent-background">
+
+    <!-- ======= HEADER VERT ======= -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="20"
+              styleClass="parent-header">
+
+            <padding>
+                <Insets top="15" bottom="15" left="25" right="25"/>
+            </padding>
+
+            <!-- LOGO -->
+            <ImageView fitWidth="60" preserveRatio="true">
+                <image>
+                    <Image url="@images/logo.jpeg"/>
+                </image>
+            </ImageView>
+
+            <Label text="Bienvenue Parent"
+                   styleClass="parent-title"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="⚙ Paramètres"
+                    styleClass="settings-btn"/>
+        </HBox>
+    </top>
+
+    <!-- ======= CENTRE ======= -->
+    <center>
+        <StackPane alignment="CENTER" styleClass="main-content-container">
+
+            <VBox alignment="CENTER"
+                  spacing="30"
+                  styleClass="white-board">
+
+                <HBox alignment="CENTER" spacing="40">
+
+                    <!-- Carnet uniquement -->
+                    <VBox alignment="CENTER" spacing="10"
+                          style="-fx-background-color:#ffb32b;
+                                 -fx-background-radius:25;
+                                 -fx-padding:30;
+                                 -fx-min-width:200;
+                                 -fx-cursor:hand;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.2, 0, 4);">
+
+                        <Label text="📒"
+                               style="-fx-font-size:40px;"/>
+
+                        <Label text="Carnet"
+                               style="-fx-text-fill:white;
+                                      -fx-font-family:'Comic Sans MS';
+                                      -fx-font-size:20px;
+                                      -fx-font-weight:bold;"/>
+
+                        <Button text="Ouvrir"
+                                styleClass="action-btn"
+                                onAction="#ouvrirCarnet"/>
+                    </VBox>
+
+                </HBox>
+
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>

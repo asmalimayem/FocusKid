@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true"
+            stylesheets="@focuskid.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.CommentaireController">
+
+    <content>
+        <VBox spacing="25" styleClass="root-page" prefWidth="1000" prefHeight="700">
+            <padding>
+                <Insets top="25" bottom="25" left="25" right="25"/>
+            </padding>
+
+            <Label text="💬 Gestion des Commentaires" styleClass="section-title"/>
+
+            <HBox spacing="0" VBox.vgrow="ALWAYS">
+                <!-- SIDEBAR GAUCHE (icônes) -->
+                <VBox styleClass="sidebar" spacing="15" alignment="TOP_CENTER">
+                    <Button styleClass="side-button" onAction="#ouvrirListe">
+                        <graphic><Label text="🔍" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#ajouterCommentaire">
+                        <graphic><Label text="➕" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#modifierCommentaire">
+                        <graphic><Label text="✏️" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#supprimerCommentaire">
+                        <graphic><Label text="🗑️" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Separator styleClass="sidebar-separator"/>
+                </VBox>
+
+                <!-- CONTENU PRINCIPAL -->
+                <VBox spacing="20" HBox.hgrow="ALWAYS" styleClass="main-content-container">
+                    <VBox styleClass="white-board" VBox.vgrow="ALWAYS">
+                        <!-- Formulaire -->
+                        <GridPane styleClass="form-grid" hgap="20" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="20"/>
+                                <ColumnConstraints percentWidth="80"/>
+                            </columnConstraints>
+
+                            <Label text="ID Carnet :" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="carnetIdTF" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Date :" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <DatePicker fx:id="dateCommentaireDP" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Type :" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="typeCommentaireCB" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                            <Label text="Texte :" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <TextArea fx:id="texteCommentaireTA" styleClass="text-area" prefRowCount="4" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        </GridPane>
+
+                        <!-- Tableau -->
+                        <TableView fx:id="tableCommentaire" styleClass="comment-table" VBox.vgrow="ALWAYS" prefHeight="300">
+                            <placeholder>
+                                <Label text="Aucun contenu dans la table" style="-fx-font-size: 16px; -fx-text-fill: #999;"/>
+                            </placeholder>
+                            <columns>
+                                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                                <TableColumn fx:id="colDate" text="Date" prefWidth="120"/>
+                                <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
+                                <TableColumn fx:id="colTexte" text="Texte" prefWidth="300"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true"
+            stylesheets="@focuskid.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.CarnetController">
+
+    <content>
+        <VBox spacing="25" styleClass="root-page" prefWidth="1200" prefHeight="800">
+            <padding>
+                <Insets top="25" bottom="25" left="25" right="25"/>
+            </padding>
+
+            <Label text="📚 Gestion des Carnets Éducatifs" styleClass="section-title"/>
+
+            <HBox spacing="0" VBox.vgrow="ALWAYS">
+                <!-- SIDEBAR GAUCHE (icônes) -->
+                <VBox styleClass="sidebar" spacing="15" alignment="TOP_CENTER">
+                    <Button styleClass="side-button" onAction="#consulterCarnets">
+                        <graphic><Label text="🔍" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#ajouterCarnet">
+                        <graphic><Label text="➕" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#modifierCarnet">
+                        <graphic><Label text="✏️" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#supprimerCarnet">
+                        <graphic><Label text="🗑️" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Button styleClass="side-button" onAction="#ouvrirAjouterCommentaire">
+                        <graphic><Label text="💬" styleClass="side-icon"/></graphic>
+                    </Button>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Separator styleClass="sidebar-separator"/>
+                </VBox>
+
+                <!-- CONTENU PRINCIPAL -->
+                <VBox spacing="20" HBox.hgrow="ALWAYS" styleClass="main-content-container">
+                    <VBox styleClass="white-board" VBox.vgrow="ALWAYS">
+                        <!-- Formulaire -->
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" prefHeight="300">
+                            <content>
+                                <GridPane styleClass="form-grid" hgap="20" vgap="15">
+                                    <columnConstraints>
+                                        <ColumnConstraints percentWidth="35"/>
+                                        <ColumnConstraints percentWidth="65"/>
+                                    </columnConstraints>
+
+                                    <Label text="Date d'étude :" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                    <DatePicker fx:id="dateEtudeDP" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                    <Label text="Heure début :" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                    <TextField fx:id="heureDebutTF" promptText="HH:mm (ex: 14:30)" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                    <Label text="Heure fin :" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                    <TextField fx:id="heureFinTF" promptText="HH:mm (ex: 10:00)" styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                                    <Label text="Durée totale :" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                    <TextField fx:id="dureeTotaleTF" editable="false" styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                                    <Label text="Matière :" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                    <TextField fx:id="matiereTF" styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                                    <Label text="Lieu :" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                    <TextField fx:id="lieuTF" styleClass="form-field" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                                    <Label text="Type activité :" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                                    <ComboBox fx:id="typeActiviteCB" styleClass="form-field" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                                    <Label text="Niveau difficulté :" styleClass="form-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                                    <ComboBox fx:id="niveauDifficulteCB" styleClass="form-field" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                                    <Label text="Concentration :" styleClass="form-label" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                                    <ComboBox fx:id="niveauConcentrationCB" styleClass="form-field" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                                    <Label text="Agitation :" styleClass="form-label" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                                    <ComboBox fx:id="niveauAgitationCB" styleClass="form-field" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+
+                                    <Label text="Autonomie :" styleClass="form-label" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+                                    <ComboBox fx:id="niveauAutonomieCB" styleClass="form-field" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+
+                                    <Label text="Nb interruptions :" styleClass="form-label" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+                                    <TextField fx:id="nombreInterruptionsTF" styleClass="form-field" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+
+                                    <Label text="Temps perte concentration :" styleClass="form-label" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
+                                   <TextField fx:id="tempsAvantPerteTF"
+           promptText="Minutes (ex: 15)"
+           styleClass="form-field"
+           GridPane.rowIndex="12"
+           GridPane.columnIndex="1"/>
+
+                                    <!-- Checkboxes -->
+                                    <CheckBox fx:id="travailleSeulCB" text="Travaille seul" styleClass="check-box" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
+                                    <CheckBox fx:id="demandeAideCB" text="Demande aide" styleClass="check-box" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
+                                    <CheckBox fx:id="travailTermineCB" text="Travail terminé" styleClass="check-box" GridPane.rowIndex="15" GridPane.columnIndex="1"/>
+
+                                    <!-- TextAreas -->
+                                    <Label text="Difficultés :" styleClass="form-label" GridPane.rowIndex="16" GridPane.columnIndex="0"/>
+                                    <TextArea fx:id="difficultesTA" styleClass="text-area" prefRowCount="3" wrapText="true" GridPane.rowIndex="16" GridPane.columnIndex="1"/>
+
+                                    <Label text="Points positifs :" styleClass="form-label" GridPane.rowIndex="17" GridPane.columnIndex="0"/>
+                                    <TextArea fx:id="pointsPositifsTA" styleClass="text-area" prefRowCount="3" wrapText="true" GridPane.rowIndex="17" GridPane.columnIndex="1"/>
+                                </GridPane>
+                            </content>
+                        </ScrollPane>
+
+                        <!-- Table -->
+                        <TableView fx:id="tableCarnet" styleClass="modern-table" VBox.vgrow="ALWAYS" prefHeight="300">
+                            <columns>
+                                <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+                                <TableColumn fx:id="colDate" text="Date" prefWidth="80"/>
+                                <TableColumn fx:id="colHeureDebut" text="Début" prefWidth="60"/>
+                                <TableColumn fx:id="colHeureFin" text="Fin" prefWidth="60"/>
+                                <TableColumn fx:id="colDuree" text="Durée" prefWidth="60"/>
+                                <TableColumn fx:id="colLieu" text="Lieu" prefWidth="80"/>
+                                <TableColumn fx:id="colMatiere" text="Matière" prefWidth="80"/>
+                                <TableColumn fx:id="colTypeActivite" text="Type" prefWidth="80"/>
+                                <TableColumn fx:id="colDifficulte" text="Difficulté" prefWidth="70"/>
+                                <TableColumn fx:id="colConcentration" text="Concentration" prefWidth="90"/>
+                                <TableColumn fx:id="colAgitation" text="Agitation" prefWidth="70"/>
+                                <TableColumn fx:id="colInterruptions" text="Interruptions" prefWidth="80"/>
+                                <TableColumn fx:id="colTempsPerte" text="Temps perte" prefWidth="80"/>
+                                <TableColumn fx:id="colTravailleSeul" text="Seul" prefWidth="50"/>
+                                <TableColumn fx:id="colDemandeAide" text="Aide" prefWidth="50"/>
+                                <TableColumn fx:id="colAutonomie" text="Autonomie" prefWidth="70"/>
+                                <TableColumn fx:id="colTravailTermine" text="Terminé" prefWidth="60"/>
+                                <TableColumn fx:id="colDifficultes" text="Difficultés" prefWidth="150"/>
+                                <TableColumn fx:id="colPointsPositifs" text="Points positifs" prefWidth="150"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>
