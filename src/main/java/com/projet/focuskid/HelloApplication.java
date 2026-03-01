@@ -11,7 +11,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader fxmlLoader =
-                new FXMLLoader(HelloApplication.class.getResource("adminDashboard.fxml"));
+                new FXMLLoader(HelloApplication.class.getResource("sessiondecalme.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
 

@@ -2,7 +2,7 @@ module com.projet.focuskid {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-
+    requires javafx.media;
     requires com.fasterxml.jackson.databind;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;

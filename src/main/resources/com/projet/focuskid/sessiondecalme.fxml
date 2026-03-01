@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<!-- FIX 1: Le mode plein écran est géré dans le contrôleur via Platform.runLater -->
+<StackPane styleClass="main-background" stylesheets="@style.css"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.projet.focuskid.controllers.SessionDeCalmeC">
+
+    <!-- FIX 2: prefWidth/Height en 1920x1080 pour correspondre au fullscreen -->
+    <BorderPane fx:id="mainBorderPane" >
+        <!-- TOP: Profil utilisateur -->
+        <top>
+            <HBox alignment="CENTER" spacing="25" styleClass="top-bar">
+                <!-- LOGO ET NOM DE L'APPLICATION (à gauche) -->
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="app-brand">
+                    <ImageView fitHeight="80" fitWidth="80" styleClass="app-logo">
+                        <image><Image url="@logo.png" /></image> <!-- Remplacez par le chemin de votre logo -->
+                    </ImageView>
+                    <Label styleClass="app-name" text="FocusKid" />
+                </HBox>
+
+                <!-- ESPACE QUI POUSSE LE PROFIL VERS LA DROITE -->
+                <Region HBox.hgrow="ALWAYS" />
+
+                <!-- PROFIL UTILISATEUR (à droite) -->
+                <VBox alignment="CENTER_RIGHT" spacing="8">
+                    <Label styleClass="user-name" text="USERNAME 👋" />
+                    <HBox alignment="CENTER" spacing="12">
+                        <!-- Vous pouvez ajouter des éléments ici si nécessaire -->
+                    </HBox>
+                </VBox>
+
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="45" />
+                    <ImageView fitHeight="80" fitWidth="80" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+
+        <!-- LEFT: Sidebar -->
+        <left>
+            <VBox alignment="CENTER" spacing="30" styleClass="sidebar" prefWidth="90">
+                <Button styleClass="side-button" fx:id="btnRespiration" onAction="#handleRespiration">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@respiration.png" /></image>
+                            </ImageView>
+                            <Label text="Respiration" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnColoriage" onAction="#handleColoriage">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@coloriage.png" /></image>
+                            </ImageView>
+                            <Label text="Coloriage" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnMusique" onAction="#handleMusique">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@musique.png" /></image>
+                            </ImageView>
+                            <Label text="Musique" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnHistoire" onAction="#handleHistoire">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@histoire.png" /></image>
+                            </ImageView>
+                            <Label text="Histoire de calme" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+            </VBox>
+        </left>
+
+        <!-- CENTER: StackPane avec toutes les vues -->
+        <center>
+            <StackPane fx:id="contentArea" styleClass="main-content-container">
+
+                <!-- ========== VUE RESPIRATION ========== -->
+                <VBox fx:id="respirationView" styleClass="white-board" spacing="25"
+                      alignment="TOP_CENTER" visible="true" managed="true">
+                    <padding>
+                        <Insets top="30" right="40" bottom="30" left="40" />
+                    </padding>
+
+                    <Label text="Exercice de Respiration" styleClass="section-title" />
+
+                    <HBox alignment="CENTER" spacing="40">
+                        <VBox alignment="CENTER" spacing="20">
+                            <Circle fx:id="breathingCircle" radius="120"
+                                    styleClass="breathing-circle" />
+                            <Label fx:id="breathingInstruction"
+                                   styleClass="instruction-label"
+                                   text="Prêt à commencer ?" />
+                        </VBox>
+
+                        <VBox spacing="20" alignment="CENTER">
+                            <Label text="Vitesse de respiration" styleClass="control-label" />
+                            <Slider fx:id="breathingSpeedSlider"
+                                    min="2" max="8" value="4"
+                                    showTickLabels="true" showTickMarks="true"
+                                    majorTickUnit="2" blockIncrement="1"
+                                    prefWidth="300" />
+                            <Label text="secondes par phase" styleClass="hint-label" />
+
+                            <HBox spacing="15" alignment="CENTER">
+                                <Button fx:id="btnStartBreathing"
+                                        text="Démarrer" styleClass="action-button" />
+                                <Button fx:id="btnPauseBreathing"
+                                        text="Pause" styleClass="action-button" />
+                            </HBox>
+
+                            <Label fx:id="timerLabel" styleClass="timer-label" />
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="CENTER" spacing="20">
+                        <Label text="Conseil : Inspire par le nez, expire par la bouche"
+                               styleClass="tip-label" />
+                    </HBox>
+                </VBox>
+
+                <!-- ========== VUE MUSIQUE ========== -->
+                <VBox fx:id="musiqueView" styleClass="white-board" spacing="25"
+                      alignment="TOP_CENTER" visible="false" managed="false">
+                    <padding>
+                        <Insets top="30" right="40" bottom="30" left="40" />
+                    </padding>
+
+                    <Label text="Musique Relaxante" styleClass="section-title" />
+
+                    <HBox spacing="30" HBox.hgrow="ALWAYS">
+                        <VBox spacing="20" prefWidth="300">
+                            <Label text="Genre musical" styleClass="subtitle-label" />
+                            <ComboBox fx:id="musicGenreCombo" prefWidth="280"
+                                      promptText="Choisis un genre" />
+
+                            <Label text="Playlist" styleClass="subtitle-label" />
+                            <ListView fx:id="musicPlaylist" prefHeight="200"
+                                      styleClass="music-list" />
+                        </VBox>
+
+                        <VBox spacing="20" alignment="CENTER">
+                            <MediaView fx:id="mediaView" fitWidth="400" fitHeight="100" />
+
+                            <HBox spacing="15" alignment="CENTER">
+                                <Button fx:id="btnPlayMusic" text="▶️ Play"
+                                        styleClass="music-button" />
+                                <Button fx:id="btnPauseMusic" text="⏸️ Pause"
+                                        styleClass="music-button" />
+                                <Button fx:id="btnStopMusic" text="⏹️ Stop"
+                                        styleClass="music-button" />
+                            </HBox>
+
+                            <VBox spacing="10" alignment="CENTER">
+                                <Label text="Volume" styleClass="control-label" />
+                                <Slider fx:id="musicVolumeSlider"
+                                        min="0" max="100" value="50"
+                                        prefWidth="300" />
+                            </VBox>
+
+                            <Label fx:id="currentMusicLabel"
+                                   styleClass="current-music-label"
+                                   text="Aucune musique sélectionnée" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- ========== VUE HISTOIRE DE CALME ========== -->
+                <VBox fx:id="histoireView" styleClass="white-board" spacing="25"
+                      alignment="TOP_CENTER" visible="false" managed="false">
+                    <padding>
+                        <Insets top="30" right="40" bottom="30" left="40" />
+                    </padding>
+
+                    <Label text="Histoire de Calme" styleClass="section-title" />
+
+                    <HBox spacing="30">
+                        <VBox spacing="20" prefWidth="300">
+                            <Label text="Catégorie" styleClass="subtitle-label" />
+                            <ComboBox fx:id="storyCategoryCombo" prefWidth="280" />
+
+                            <Label text="Progression" styleClass="subtitle-label" />
+                            <Slider fx:id="storyProgressSlider"
+                                    orientation="VERTICAL"
+                                    prefHeight="200" />
+                        </VBox>
+
+                        <VBox spacing="20" HBox.hgrow="ALWAYS">
+                            <Label fx:id="storyTitle" styleClass="story-title"
+                                   text="Le Petit Nuage Calme" />
+
+                            <HBox spacing="20">
+                                <ImageView fx:id="storyImage" fitHeight="200"
+                                           fitWidth="200" preserveRatio="true" />
+                                <TextArea fx:id="storyContent"
+                                          editable="false" wrapText="true"
+                                          prefHeight="200" prefWidth="400"
+                                          styleClass="story-text" />
+                            </HBox>
+
+                            <HBox spacing="15" alignment="CENTER">
+                                <Button fx:id="btnPrevStory" text="◀️ Précédent"
+                                        styleClass="nav-button" />
+                                <Button fx:id="btnReadStory" text="📖 Lire l'histoire"
+                                        styleClass="action-button" />
+                                <Button fx:id="btnNextStory" text="Suivant ▶️"
+                                        styleClass="nav-button" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- ========== VUE COLORIAGE ========== -->
+                <VBox fx:id="coloriageView" styleClass="white-board" spacing="22"
+                      alignment="TOP_CENTER" visible="false" managed="false">
+                    <padding>
+                        <Insets top="30" right="40" bottom="30" left="40" />
+                    </padding>
+
+                    <Label text="Coloriage Magique" styleClass="section-title" />
+
+                    <HBox spacing="20">
+                        <VBox spacing="20" prefWidth="250">
+                            <Label text="Outils" styleClass="subtitle-label" />
+
+                            <VBox spacing="10">
+                                <Label text="Couleur" styleClass="tool-label" />
+                                <ColorPicker fx:id="colorPicker"
+                                             styleClass="color-picker" />
+                            </VBox>
+
+                            <VBox spacing="10">
+                                <Label text="Taille du pinceau" styleClass="tool-label" />
+                                <Slider fx:id="brushSizeSlider"
+                                        min="1" max="20" value="3"
+                                        showTickLabels="true" />
+                            </VBox>
+
+                            <VBox spacing="10">
+                                <Label text="Template" styleClass="tool-label" />
+                                <ComboBox fx:id="coloringTemplateCombo"
+                                          prefWidth="230" />
+                            </VBox>
+
+                            <Button fx:id="btnClearCanvas" text="Effacer 🧹"
+                                    styleClass="tool-button" prefWidth="230" />
+                            <Button fx:id="btnSaveDrawing" text="Sauvegarder 💾"
+                                    styleClass="tool-button" prefWidth="230" />
+                        </VBox>
+
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <ScrollPane fitToWidth="true" fitToHeight="true"
+                                        styleClass="canvas-scroll">
+                                <Canvas fx:id="coloringCanvas"
+                                        width="800" height="500" />
+                            </ScrollPane>
+
+                            <Label fx:id="drawingTooltip"
+                                   text="Choisis une couleur et dessine !"
+                                   styleClass="tooltip-label" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+            </StackPane>
+        </center>
+        <!-- BOTTOM: Navigation -->
+        <!-- BOTTOM: Navigation alignée avec le white-board -->
+        <bottom>
+            <HBox alignment="CENTER" styleClass="bottom-wrapper" prefHeight="130">
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav"
+                      prefHeight="120" maxWidth="1300" minWidth="1300" prefWidth="1300">
+
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCours" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navExercices" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navParents" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navGamification" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Boutique" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item-active" fx:id="navCalme" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg, calm-bg" radius="42" />
+                            <ImageView fitHeight="58" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Session De Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navEmotions" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+            </HBox>
+        </bottom>
+
+    </BorderPane>
+</StackPane>

@@ -645,7 +645,156 @@
     -fx-translate-y: -6;
     -fx-effect: dropshadow(gaussian, #1a1a8b, 14, 0.3, 0, 3);
 }
+/* Styles pour les sections */
+.section-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 20 0;
+}
 
+.subtitle-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+/* Respiration */
+.breathing-circle {
+    -fx-fill: #3498db;
+    -fx-stroke: #2980b9;
+    -fx-stroke-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+.instruction-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.timer-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #e67e22;
+    -fx-font-weight: bold;
+}
+
+.tip-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #7f8c8d;
+    -fx-font-style: italic;
+}
+
+/* Musique */
+.music-list {
+    -fx-background-color: transparent;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5;
+}
+
+.music-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+}
+
+.music-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.current-music-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+}
+
+/* Histoire */
+.story-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8e44ad;
+}
+
+.story-text {
+    -fx-font-size: 16px;
+    -fx-line-spacing: 5;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #ecf0f1;
+    -fx-border-radius: 5;
+}
+
+.nav-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 15;
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+}
+
+.nav-button:hover {
+    -fx-background-color: #7f8c8d;
+}
+
+/* Coloriage */
+.tool-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.tool-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-background-color: #e67e22;
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+}
+
+.tool-button:hover {
+    -fx-background-color: #d35400;
+}
+
+.color-picker {
+    -fx-pref-width: 230px;
+}
+
+.canvas-scroll {
+    -fx-background: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5;
+}
+
+.tooltip-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 5;
+}
+
+/* Boutons d'action */
+.action-button {
+    -fx-font-size: 16px;
+    -fx-padding: 12 25;
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #229954;
+}
+
+.control-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+.hint-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #95a5a6;
+}
 /* Item actif - plus compact */
 .nav-item-active {
     -fx-cursor: hand;
