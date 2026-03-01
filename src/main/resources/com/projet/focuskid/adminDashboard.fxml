@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<!-- FIX 1: Le mode plein écran est géré dans le contrôleur via Platform.runLater -->
+<StackPane styleClass="main-background" stylesheets="@style.css"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.projet.focuskid.controllers.AdminDashboardController">
+
+    <!-- FIX 2: prefWidth/Height en 1920x1080 pour correspondre au fullscreen -->
+    <BorderPane fx:id="mainBorderPane" prefHeight="1080.0" prefWidth="1920.0">
+
+        <!-- TOP: Profil utilisateur -->
+        <top>
+            <HBox alignment="CENTER" spacing="25" styleClass="top-bar">
+                <!-- LOGO ET NOM DE L'APPLICATION (à gauche) -->
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="app-brand">
+                    <ImageView fitHeight="80" fitWidth="80" styleClass="app-logo">
+                        <image><Image url="@logo.png" /></image> <!-- Remplacez par le chemin de votre logo -->
+                    </ImageView>
+                    <Label styleClass="app-name" text="FocusKid" />
+                </HBox>
+
+                <!-- ESPACE QUI POUSSE LE PROFIL VERS LA DROITE -->
+                <Region HBox.hgrow="ALWAYS" />
+
+                <!-- PROFIL UTILISATEUR (à droite) -->
+                <VBox alignment="CENTER_RIGHT" spacing="8">
+                    <Label styleClass="user-name" text="USERNAME 👋" />
+                    <HBox alignment="CENTER" spacing="12">
+                        <!-- Vous pouvez ajouter des éléments ici si nécessaire -->
+                    </HBox>
+                </VBox>
+
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="45" />
+                    <ImageView fitHeight="80" fitWidth="80" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <!-- LEFT: Sidebar -->
+        <left>
+            <VBox alignment="CENTER" spacing="30" styleClass="sidebar" prefWidth="90">
+                <Button styleClass="side-button" fx:id="btnAdd" onAction="#handleShowAdd">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@plus.png" /></image>
+                            </ImageView>
+                            <Label text="Ajouter" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnList" onAction="#handleShowList">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@list.png" /></image>
+                            </ImageView>
+                            <Label text="Liste" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnRefresh" onAction="#handleShowUpdate">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@refresh.png" /></image>
+                            </ImageView>
+                            <Label text="Modifier" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="side-button" fx:id="btnDelete" onAction="#handleShowDelete">
+                    <graphic>
+                        <VBox alignment="CENTER" spacing="3">
+                            <ImageView fitWidth="90" preserveRatio="true" styleClass="side-icon">
+                                <image><Image url="@trash.png" /></image>
+                            </ImageView>
+                            <Label text="Supprimer" styleClass="side-label" />
+                        </VBox>
+                    </graphic>
+                </Button>
+            </VBox>
+        </left>
+
+        <!-- CENTER: StackPane avec toutes les vues -->
+        <center>
+            <StackPane fx:id="contentArea" styleClass="main-content-container">
+
+                <!-- ========== VUE LISTE ========== -->
+                <VBox fx:id="listView" styleClass="white-board" spacing="20"
+                      visible="true" managed="true">
+                    <padding><Insets top="30" right="40" bottom="30" left="40" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@meditation.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Mes Sessions de Calme 🧘" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="searchField" promptText="🔍 Cherche une activité..."
+                                   styleClass="search-field" prefWidth="350" prefHeight="50" />
+                        <Button text="🔄" onAction="#handleRefreshList"
+                                styleClass="refresh-btn" prefWidth="60" prefHeight="60" />
+                    </HBox>
+
+                    <!-- FIX 3: Stat pills avec espacement amélioré -->
+                    <HBox spacing="20" alignment="CENTER">
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="📊 Total:" styleClass="stat-pill-label" />
+                            <Label fx:id="totalSessions" text="0" styleClass="stat-pill-value" />
+                        </HBox>
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="⏱️ Moyenne:" styleClass="stat-pill-label" />
+                            <Label fx:id="avgDuration" text="0 min" styleClass="stat-pill-value" />
+                        </HBox>
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="⭐ Feedback:" styleClass="stat-pill-label" />
+                            <Label fx:id="avgFeedback" text="0/5" styleClass="stat-pill-value" />
+                        </HBox>
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" styleClass="cards-scroll-pane" VBox.vgrow="ALWAYS">
+                        <FlowPane fx:id="cardsContainer" hgap="25" vgap="25"
+                                  styleClass="cards-container" prefWrapLength="1400" />
+                    </ScrollPane>
+
+                    <VBox fx:id="emptyMessage" alignment="CENTER" spacing="20"
+                          visible="false" managed="false">
+                        <ImageView fitHeight="150" fitWidth="150">
+                            <image><Image url="@meditation.png" /></image>
+                        </ImageView>
+                        <Label text="Aucune session pour le moment 🌱" styleClass="empty-message" />
+                        <Label text="Clique sur ➕ pour en créer une !" styleClass="empty-submessage" />
+                    </VBox>
+                </VBox>
+
+                <!-- ========== VUE AJOUT AVEC SCROLLPANE ========== -->
+                <VBox fx:id="addView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Nouvelle Session ✨" />
+                    </HBox>
+
+                    <!-- AJOUT DU SCROLLPANE POUR LE FORMULAIRE -->
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <!-- Ligne 0: Enfant -->
+                                <Label text="👶 Enfant :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="enfantCombo" promptText="Choisir un enfant"
+                                          styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                          prefHeight="52" maxWidth="1.7976931348623157E308" />
+
+                                <!-- Ligne 1: Type d'activité -->
+                                <Label text="🎯 Activité :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="typeActiviteCombo" promptText="Choisir une activité"
+                                          styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                          prefHeight="52" maxWidth="1.7976931348623157E308" />
+
+                                <!-- Ligne 2: Déclencheur -->
+                                <Label text="🔔 Déclenché par :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <HBox spacing="25" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                      alignment="CENTER_LEFT">
+                                    <RadioButton fx:id="triggerEnfant" text="👶 Enfant" styleClass="trigger-radio">
+                                        <toggleGroup><ToggleGroup fx:id="triggerGroup" /></toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="triggerIA" text="🤖 IA" styleClass="trigger-radio"
+                                                 toggleGroup="$triggerGroup" />
+                                    <RadioButton fx:id="triggerParent" text="👪 Parent" styleClass="trigger-radio"
+                                                 toggleGroup="$triggerGroup" />
+                                </HBox>
+
+                                <!-- Ligne 3: Durée prévue -->
+                                <Label text="⏱️ Durée prévue :" styleClass="form-label"
+                                       GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <HBox spacing="20" alignment="CENTER_LEFT"
+                                      GridPane.rowIndex="3" GridPane.columnIndex="1">
+                                    <Slider fx:id="dureeSlider" min="1" max="60" value="5"
+                                            showTickLabels="true" showTickMarks="true"
+                                            majorTickUnit="10" blockIncrement="1"
+                                            styleClass="form-slider" prefWidth="400" />
+                                    <Label fx:id="dureeValue" text="5 min"
+                                           styleClass="slider-value" prefWidth="80" />
+                                </HBox>
+
+                                <!-- Ligne 4: Durée réelle -->
+                                <Label text="⏱️ Durée réelle :" styleClass="form-label"
+                                       GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <HBox spacing="20" alignment="CENTER_LEFT"
+                                      GridPane.rowIndex="4" GridPane.columnIndex="1">
+                                    <Slider fx:id="dureeReelleSlider" min="1" max="60" value="5"
+                                            showTickLabels="true" showTickMarks="true"
+                                            majorTickUnit="10" blockIncrement="1"
+                                            styleClass="form-slider" prefWidth="400" />
+                                    <Label fx:id="dureeReelleValue" text="5 min"
+                                           styleClass="slider-value" prefWidth="80" />
+                                </HBox>
+
+                                <!-- Ligne 5: Feedback enfant -->
+                                <Label text="⭐ Feedback enfant :" styleClass="form-label"
+                                       GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <HBox spacing="15" alignment="CENTER_LEFT"
+                                      GridPane.rowIndex="5" GridPane.columnIndex="1">
+                                    <RadioButton fx:id="addFeedback1" text="1 😞" styleClass="feedback-radio">
+                                        <toggleGroup><ToggleGroup fx:id="addFeedbackGroup" /></toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="addFeedback2" text="2 😐" styleClass="feedback-radio"
+                                                 toggleGroup="$addFeedbackGroup" />
+                                    <RadioButton fx:id="addFeedback3" text="3 🙂" styleClass="feedback-radio"
+                                                 toggleGroup="$addFeedbackGroup" />
+                                    <RadioButton fx:id="addFeedback4" text="4 😄" styleClass="feedback-radio"
+                                                 toggleGroup="$addFeedbackGroup" />
+                                    <RadioButton fx:id="addFeedback5" text="5 🤩" styleClass="feedback-radio"
+                                                 toggleGroup="$addFeedbackGroup" />
+                                </HBox>
+
+                                <!-- Ligne 6: Note parent -->
+                                <Label text="📝 Note parent :" styleClass="form-label"
+                                       GridPane.rowIndex="6" GridPane.columnIndex="0" />
+                                <TextField fx:id="noteParentField" promptText="Optionnel"
+                                           styleClass="form-field" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Boutons en dehors du ScrollPane pour rester toujours visibles -->
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnReset" text="🔄 Réinitialiser" onAction="#handleReset"
+                                styleClass="action-btn, reset-btn" prefHeight="60" prefWidth="220" />
+                        <Button fx:id="btnSave" text="✅ Enregistrer" onAction="#handleSave"
+                                styleClass="action-btn, save-btn" prefHeight="60" prefWidth="220" />
+                    </HBox>
+
+                    <Label fx:id="addMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- ========== VUE MODIFICATION AVEC SCROLLPANE ========== -->
+                <VBox fx:id="updateView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Modifier une Session ✏️" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="sessionSelector"
+                                  promptText="📋 Choisir une session à modifier"
+                                  prefWidth="450" styleClass="form-field" prefHeight="52" />
+                    </HBox>
+
+                    <!-- AJOUT DU SCROLLPANE POUR LE FORMULAIRE -->
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <!-- ID caché -->
+                                <Label fx:id="sessionId" visible="false" managed="false" />
+
+                                <!-- Ligne 0: Type d'activité -->
+                                <Label text="🎯 Type d'activité :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="updateTypeCombo" promptText="Choisir une activité"
+                                          styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                          prefHeight="52" maxWidth="1.7976931348623157E308" />
+
+                                <!-- Ligne 1: Durée réelle -->
+                                <Label text="⏱️ Durée réelle :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <HBox spacing="20" alignment="CENTER_LEFT"
+                                      GridPane.rowIndex="1" GridPane.columnIndex="1">
+                                    <Slider fx:id="updateDureeSlider" min="1" max="60" value="5"
+                                            showTickLabels="true" showTickMarks="true"
+                                            majorTickUnit="10" blockIncrement="1"
+                                            styleClass="form-slider" prefWidth="400" />
+                                    <Label fx:id="updateDureeValue" text="5 min"
+                                           styleClass="slider-value" prefWidth="80" />
+                                </HBox>
+
+                                <!-- Ligne 2: Durée prévue -->
+                                <Label text="⏱️ Durée prévue :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <HBox spacing="20" alignment="CENTER_LEFT"
+                                      GridPane.rowIndex="2" GridPane.columnIndex="1">
+                                    <Slider fx:id="updateDureePrevueSlider" min="1" max="60" value="5"
+                                            showTickLabels="true" showTickMarks="true"
+                                            majorTickUnit="10" blockIncrement="1"
+                                            styleClass="form-slider" prefWidth="400" />
+                                    <Label fx:id="updateDureePrevueValue" text="5 min"
+                                           styleClass="slider-value" prefWidth="80" />
+                                </HBox>
+
+                                <!-- Ligne 3: Feedback enfant -->
+                                <Label text="⭐ Feedback enfant :" styleClass="form-label"
+                                       GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <HBox spacing="15" alignment="CENTER_LEFT"
+                                      GridPane.rowIndex="3" GridPane.columnIndex="1">
+                                    <RadioButton fx:id="feedback1" text="1 😞" styleClass="feedback-radio">
+                                        <toggleGroup><ToggleGroup fx:id="feedbackGroup" /></toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="feedback2" text="2 😐" styleClass="feedback-radio"
+                                                 toggleGroup="$feedbackGroup" />
+                                    <RadioButton fx:id="feedback3" text="3 🙂" styleClass="feedback-radio"
+                                                 toggleGroup="$feedbackGroup" />
+                                    <RadioButton fx:id="feedback4" text="4 😄" styleClass="feedback-radio"
+                                                 toggleGroup="$feedbackGroup" />
+                                    <RadioButton fx:id="feedback5" text="5 🤩" styleClass="feedback-radio"
+                                                 toggleGroup="$feedbackGroup" />
+                                </HBox>
+
+                                <!-- Ligne 4: Déclencheur -->
+                                <Label text="🔔 Déclencheur :" styleClass="form-label"
+                                       GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="updateDeclencheurCombo" promptText="Choisir le déclencheur"
+                                          styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                          prefHeight="52" maxWidth="1.7976931348623157E308">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="enfant" />
+                                            <String fx:value="ia_detection" />
+                                            <String fx:value="parent" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <!-- Ligne 5: Date -->
+                                <Label text="📅 Date :" styleClass="form-label"
+                                       GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <DatePicker fx:id="updateDatePicker" styleClass="form-field"
+                                            GridPane.rowIndex="5" GridPane.columnIndex="1" prefHeight="52" />
+
+                                <!-- Ligne 6: Note parent -->
+                                <Label text="📝 Note parent :" styleClass="form-label"
+                                       GridPane.rowIndex="6" GridPane.columnIndex="0" />
+                                <TextField fx:id="updateNoteField" promptText="Note du parent"
+                                           styleClass="form-field" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <!-- Boutons en dehors du ScrollPane pour rester toujours visibles -->
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnCancel" text="🔄 Annuler" onAction="#handleCancel"
+                                styleClass="action-btn, reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnUpdate" text="✅ Mettre à jour" onAction="#handleUpdate"
+                                styleClass="action-btn, save-btn" prefHeight="60" prefWidth="230" />
+                    </HBox>
+
+                    <Label fx:id="updateMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- ========== VUE SUPPRESSION ========== -->
+                <VBox fx:id="deleteView" styleClass="white-board" spacing="22"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Supprimer des Sessions 🗑️" />
+                    </HBox>
+
+                    <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
+                        <ImageView fitHeight="40" fitWidth="40">
+                            <image><Image url="@warning.png" /></image>
+                        </ImageView>
+                        <Label text="⚠️ Attention : Cette action est irréversible !"
+                               styleClass="warning-text" />
+                    </HBox>
+
+                    <Label text="📋 Sélectionne les sessions à supprimer :"
+                           styleClass="form-label" />
+                    <ListView fx:id="deleteSessionsList" styleClass="sessions-list"
+                              VBox.vgrow="ALWAYS" prefHeight="380">
+                        <placeholder>
+                            <Label text="Aucune session disponible 🌱" styleClass="empty-submessage" />
+                        </placeholder>
+                    </ListView>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT">
+                        <Button fx:id="btnRefreshList" text="🔄 Actualiser"
+                                onAction="#handleRefreshList"
+                                styleClass="action-btn, reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnDeleteSelected" text="🗑️ Supprimer la sélection"
+                                onAction="#handleDeleteSelected"
+                                styleClass="action-btn, delete-btn" prefHeight="60" prefWidth="280" />
+                    </HBox>
+
+                    <Label fx:id="deleteMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+            </StackPane>
+        </center>
+
+        <!-- BOTTOM: Navigation -->
+        <!-- BOTTOM: Navigation alignée avec le white-board -->
+        <bottom>
+            <HBox alignment="CENTER" styleClass="bottom-wrapper" prefHeight="130">
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav"
+                      prefHeight="120" maxWidth="1300" minWidth="1300" prefWidth="1300">
+
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navCours" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navExercices" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navParents" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navGamification" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Boutique" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item-active" fx:id="navCalme" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg, calm-bg" radius="42" />
+                            <ImageView fitHeight="58" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Session De Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" fx:id="navEmotions" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+            </HBox>
+        </bottom>
+
+    </BorderPane>
+</StackPane>

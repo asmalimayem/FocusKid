@@ -6,10 +6,8 @@ import java.util.Objects;
 public class SessionDeCalme {
     private int id;
     private int enfantId;
-    private String typeActivite; // respiration, musique, coloriage, etc.
+    private String typeActivite; // respiration, musique, coloriage, histoire de calme , meditation
     private String declencheur;   // enfant, ia_detection, parent
-    private int etatInitialId;
-    private int etatFinalId;
     private int dureePrevue;     // en secondes
     private int dureeReelle;     // en secondes
     private Timestamp horodatage;
@@ -30,13 +28,12 @@ public class SessionDeCalme {
     }
 
     // Constructeur complet (utile pour la lecture/READ)
-    public SessionDeCalme(int id, int enfantId, String typeActivite, String declencheur, int etatInitialId, int etatFinalId, int dureePrevue, int dureeReelle, Timestamp horodatage, int feedbackEnfant, String noteParent) {
+    public SessionDeCalme(int id, int enfantId, String typeActivite, String declencheur, int dureePrevue, int dureeReelle, Timestamp horodatage, int feedbackEnfant, String noteParent) {
         this.id = id;
         this.enfantId = enfantId;
         this.typeActivite = typeActivite;
         this.declencheur = declencheur;
-        this.etatInitialId = etatInitialId;
-        this.etatFinalId = etatFinalId;
+
         this.dureePrevue = dureePrevue;
         this.dureeReelle = dureeReelle;
         this.horodatage = horodatage;
@@ -57,11 +54,6 @@ public class SessionDeCalme {
     public String getDeclencheur1() { return declencheur; }
     public void setDeclencheur(String declencheur) { this.declencheur = declencheur; }
 
-    public int getEtatInitialId() { return etatInitialId; }
-    public void setEtatInitialId(int etatInitialId) { this.etatInitialId = etatInitialId; }
-
-    public int getEtatFinalId() { return etatFinalId; }
-    public void setEtatFinalId(int etatFinalId) { this.etatFinalId = etatFinalId; }
 
     public int getDureePrevue() { return dureePrevue; }
     public void setDureePrevue(int dureePrevue) { this.dureePrevue = dureePrevue; }

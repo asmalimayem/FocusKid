@@ -1,4 +1,10 @@
-/* ========== STYLES DE BASE ========== */
+/* ===================================================
+   FocusKid – style.css (version corrigée)
+   Thème : ludique, enfants TDAH, bords arrondis,
+   couleurs vives, feedback visuel immédiat.
+   =================================================== */
+
+/* ========== FOND GÉNÉRAL ========== */
 .main-background {
     -fx-background-image: url("backgd.jpg");
     -fx-background-repeat: no-repeat;
@@ -6,29 +12,9 @@
     -fx-background-position: center center;
 }
 
-/* ========== ANIMATIONS ========== */
-@keyframes float {
-    0% { -fx-translate-y: 0; }
-    50% { -fx-translate-y: -5; }
-    100% { -fx-translate-y: 0; }
-}
+/* ========== BARRE DU HAUT ========== */
+/* FIX: Zone top séparée visuellement de la navigation */
 
-@keyframes pulse {
-    0% { -fx-scale: 1; }
-    50% { -fx-scale: 1.05; }
-    100% { -fx-scale: 1; }
-}
-
-@keyframes rotate {
-    from { -fx-rotate: 0; }
-    to { -fx-rotate: 360; }
-}
-
-@keyframes shake {
-    0%, 100% { -fx-translate-x: 0; }
-    25% { -fx-translate-x: 3; }
-    75% { -fx-translate-x: -3; }
-}
 
 /* ========== PROFIL UTILISATEUR ========== */
 .user-name {
@@ -48,7 +34,74 @@
 
 .avatar-container {
     -fx-cursor: hand;
-    -fx-transition: all 0.3s ease;
+}
+
+.avatar-container:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, #1a1a8b, 15, 0.5, 0, 0);
+}
+
+.avatar-circle {
+    -fx-fill: linear-gradient(to bottom, rgba(164, 197, 211, 0.69), #ffffff);
+    -fx-stroke: white;
+    -fx-stroke-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.3, 0, 2);
+}
+
+.avatar-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0.2, 0, 1);
+}
+/* ========== TOP BAR AVEC LOGO ========== */
+.top-bar {
+    -fx-background-color: rgba(152, 220, 248, 0.69);
+    -fx-background-radius: 0 0 30 30;
+    -fx-padding: 12 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 8, 0.2, 0, 3);
+    -fx-border-color: rgba(7, 164, 209, 0.94);
+    -fx-border-width: 4 0 0 0;
+}
+
+/* Style pour la marque de l'application */
+.app-brand {
+    -fx-cursor: hand;
+}
+
+.app-brand:hover {
+    -fx-opacity: 0.9;
+    -fx-effect: dropshadow(gaussian, #1a1a8b, 10, 0.3, 0, 0);
+}
+
+.app-logo {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.3, 2, 2);
+}
+
+.app-name {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a8b;
+    -fx-effect: dropshadow(gaussian, white, 5, 0.5, 0, 2);
+}
+
+/* Profil utilisateur */
+.user-name {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a8b;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.8), 5, 0.3, 0, 2);
+}
+
+.user-points {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 14px;
+    -fx-text-fill: #ff8c00;
+    -fx-font-weight: bold;
+}
+
+.avatar-container {
+    -fx-cursor: hand;
 }
 
 .avatar-container:hover {
@@ -67,40 +120,57 @@
 .avatar-image {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0.2, 0, 1);
 }
-
 /* ========== SIDEBAR ========== */
+/* FIX: Zonage clair – fond jaune-vert distinctif */
 .sidebar {
-    -fx-background-color: linear-gradient(to bottom, #e4f35e, #d4e34e);
+    -fx-background-color: linear-gradient(to bottom, rgba(197, 239, 197, 0.92), rgba(197, 237, 188, 0.89));
     -fx-background-radius: 0 40 40 0;
-    -fx-min-width: 90;
-    -fx-padding: 25 10 25 10;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 2, 0);
+    -fx-pref-width: 90;
+    -fx-pref-height: 300;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0.2, 3, 0);
+
+    /* Bordure complète */
+    -fx-border-color: rgba(26,26,139,0.2);
+    -fx-border-width: 2;  /* Bordure de 2px partout */
+    -fx-border-radius: 0 40 40 0;  /* MÊME RAYON */
 }
 
 .side-button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-transition: all 0.2s ease;
 }
 
+/* FIX: Hover avec agrandissement + lueur dorée */
 .side-button:hover {
-    -fx-scale-x: 1.15;
-    -fx-scale-y: 1.15;
+    -fx-scale-x: 1.25;
+    -fx-scale-y: 1.25;
+    -fx-effect: dropshadow(gaussian, #FFD700, 18, 0.6, 0, 0);
 }
 
+/* FIX: Feedback visuel immédiat au clic */
 .side-button:pressed {
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.92;
+    -fx-scale-y: 0.92;
+    -fx-background-color: rgba(255,215,0,0.4);
+    -fx-background-radius: 15;
 }
 
 .side-icon {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0.2, 1, 1);
 }
 
+.side-label {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 12px;
+    -fx-text-fill: #1a1a8b;
+    -fx-font-weight: bold;
+}
+
 .sidebar-separator {
     -fx-background-color: rgba(26, 26, 139, 0.3);
     -fx-min-height: 2;
-    -fx-max-width: 50;
+    -fx-max-width: 60;
     -fx-background-radius: 2;
 }
 
@@ -111,461 +181,96 @@
     -fx-text-fill: #1a1a8b;
 }
 
-.level-progress {
-    -fx-accent: #1a1a8b;
+.level-percent {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 12px;
+    -fx-text-fill: #1a1a8b;
+    -fx-font-weight: bold;
+}
+
+.level-progress-container {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 10;
+    -fx-pref-width: 60;
+    -fx-pref-height: 8;
+}
+
+.level-progress-fill {
+    -fx-background-color: #1a1a8b;
     -fx-background-radius: 10;
 }
 
 /* ========== CONTENU PRINCIPAL ========== */
+/* FIX: padding homogène autour du contenu */
 .main-content-container {
-    -fx-padding: 20;
+    -fx-padding: 18;
 }
 
+/* FIX: Tableau blanc central avec bordure arrondie et ombre douce */
 .white-board {
-    -fx-background-color: rgba(255, 255, 255, 0.95);
-    -fx-border-color: #ffb32b;
-    -fx-border-width: 8;
-    -fx-border-radius: 35;
+    -fx-background-color: rgba(255, 255, 255, 0.96);
+    -fx-border-width: 7;
+    -fx-border-radius: 40;
     -fx-background-radius: 40;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0.2, 5, 5);
-    -fx-min-width: 700;
-    -fx-min-height: 400;
-}
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 22, 0.2, 6, 6);
 
-.welcome-text {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 24px;
-    -fx-fill: #1a1a8b;
-    -fx-font-weight: bold;
-}
+    /* --- TAILLE FIXE ICI --- */
+    -fx-pref-width: 1300;   /* Largeur souhaitée */
+    -fx-pref-height: 600;  /* Hauteur souhaitée */
 
-/* ========== WIDGETS ========== */
-.widget-card {
-    -fx-background-color: white;
-    -fx-background-radius: 25;
-    -fx-border-radius: 25;
-    -fx-border-width: 3;
-    -fx-padding: 15;
-    -fx-cursor: hand;
-    -fx-transition: all 0.3s ease;
+    /* Verrouiller pour empêcher toute déformation */
+    -fx-min-width: 1300;
+    -fx-max-width: 1300;
+    -fx-min-height: 600;
+    -fx-max-height: 600;
 }
+/* Les couleurs de bordure sont injectées par le contrôleur selon la vue */
 
-.widget-card:hover {
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0.3, 0, 5);
-}
-
-.widget-challenge {
-    -fx-border-color: #ff6b6b;
-    -fx-background-color: linear-gradient(to bottom right, #fff5f5, #ffe0e0);
-}
-
-.widget-reward {
-    -fx-border-color: #ffd93d;
-    -fx-background-color: linear-gradient(to bottom right, #fff9e6, #fff0c0);
-}
-
-.widget-mood {
-    -fx-border-color: #6c5ce7;
-    -fx-background-color: linear-gradient(to bottom right, #f0f0ff, #e0e0ff);
-}
-
-.widget-title {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1a1a8b;
-}
-
-.widget-count {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
-    -fx-text-fill: #ff8c00;
-    -fx-font-weight: bold;
-}
-
-.challenge-progress {
-    -fx-accent: #ff6b6b;
-    -fx-background-radius: 10;
-}
-
-/* ========== BOUTONS D'HUMEUR ========== */
-.mood-btn {
-    -fx-min-width: 40;
-    -fx-min-height: 40;
-    -fx-background-radius: 50%;
-    -fx-border-radius: 50%;
-    -fx-border-width: 2;
-    -fx-cursor: hand;
-    -fx-transition: all 0.2s ease;
-}
-
-.mood-btn:hover {
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.2;
-}
-
-.mood-btn:pressed {
-    -fx-scale-x: 0.9;
-    -fx-scale-y: 0.9;
-}
-
-.mood-happy {
-    -fx-background-color: #ffd93d;
-    -fx-border-color: #ffb800;
-}
-
-.mood-calm {
-    -fx-background-color: #6c5ce7;
-    -fx-border-color: #4a3fd4;
-}
-
-.mood-excited {
-    -fx-background-color: #ff6b6b;
-    -fx-border-color: #ff3b3b;
-}
-
-.mood-tired {
-    -fx-background-color: #95a5a6;
-    -fx-border-color: #7f8c8d;
-}
-
-/* ========== MESSAGE DU JOUR ========== */
-.daily-message {
-    -fx-background-color: rgba(26, 26, 139, 0.1);
-    -fx-background-radius: 30;
-    -fx-padding: 10 20;
-    -fx-border-radius: 30;
-    -fx-border-color: #1a1a8b;
-    -fx-border-width: 1;
-    -fx-transition: all 0.3s ease;
-}
-
-.daily-message:hover {
-    -fx-background-color: rgba(26, 26, 139, 0.2);
-    -fx-scale-x: 1.02;
-}
-
-.tip-text {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
-    -fx-text-fill: #1a1a8b;
-}
-
-/* ========== NAVIGATION ========== */
-.bottom-nav {
-    -fx-padding: 20 10;
-    -fx-spacing: 25;
-    -fx-background-color: rgba(255, 255, 255, 0.9);
-    -fx-background-radius: 50 50 0 0;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, -3);
-}
-
-.nav-item {
-    -fx-cursor: hand;
-    -fx-transition: all 0.3s ease;
-}
-
-.nav-item:hover {
-    -fx-translate-y: -5;
-}
-
-.nav-item:hover .nav-icon-container {
-    -fx-effect: dropshadow(gaussian, #1a1a8b, 15, 0.3, 0, 3);
-}
-
-.nav-icon-container {
-    -fx-transition: all 0.3s ease;
-}
-
-.nav-icon-bg {
-    -fx-fill: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
-    -fx-stroke: white;
-    -fx-stroke-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.2, 0, 2);
-}
-
-.calm-bg {
-    -fx-fill: linear-gradient(to bottom, #a8e6cf, #87d4b9);
-}
-
-.nav-icon {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0.1, 0, 1);
-}
-
-.nav-label {
-    -fx-font-family: 'Comic Sans MS';
-    -fx-font-size: 14px;
-    -fx-text-fill: #1a1a8b;
-    -fx-font-weight: bold;
-}
-
-.nav-label-active {
-    -fx-font-family: 'Comic Sans MS';
-    -fx-font-size: 16px;
-    -fx-text-fill: #ff8c00;
-    -fx-font-weight: bold;
-    -fx-underline: true;
-}
-
-.nav-indicator {
-    -fx-padding: 5;
-    -fx-opacity: 0;
-    -fx-transition: all 0.3s ease;
-}
-/* Style pour les RadioButtons de feedback */
-.feedback-radio {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1a1a8b;
-    -fx-padding: 5;
-}
-
-.feedback-radio .radio {
-    -fx-background-color: white;
-    -fx-border-color: #ffb32b;
-    -fx-border-radius: 50%;
-    -fx-border-width: 2;
-    -fx-padding: 5;
-}
-.trigger-radio {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
-    -fx-text-fill: #1a1a8b;
-}
-/* ========== CARTES SESSIONS ========== */
-.session-card {
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-width: 3;
-    -fx-border-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.2, 0, 2);
-    -fx-transition: all 0.3s ease;
-    -fx-cursor: hand;
-}
-
-.session-card:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0.3, 0, 4);
-}
-
-.card-type {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1a1a8b;
-}
-
-.card-id {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 12px;
-    -fx-text-fill: #888;
-    -fx-background-color: rgba(255,255,255,0.5);
-    -fx-padding: 2 8;
-    -fx-background-radius: 10;
-}
-
-.card-detail {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-    -fx-text-fill: #333;
-}
-
-.card-note {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 12px;
-    -fx-text-fill: #666;
-    -fx-font-style: italic;
-}
-
-.trigger-badge {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 12px;
-    -fx-background-color: rgba(255,255,255,0.7);
-    -fx-padding: 4 10;
-    -fx-background-radius: 15;
-    -fx-text-fill: #1a1a8b;
-}
-
-/* ========== STATISTIQUES LUDIQUES ========== */
-.stat-pill {
-    -fx-background-color: rgba(255,255,255,0.9);
-    -fx-background-radius: 30;
-    -fx-padding: 8 15;
-    -fx-border-color: #ffb32b;
-    -fx-border-width: 2;
-    -fx-border-radius: 30;
-}
-
-.stat-pill-label {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-    -fx-text-fill: #666;
-}
-
-.stat-pill-value {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1a1a8b;
-    -fx-padding: 0 0 0 5;
-}
-
-/* ========== SCROLLPANE ========== */
-.cards-scroll-pane {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-}
-
-.cards-scroll-pane .viewport {
-    -fx-background-color: transparent;
-}
-
-.cards-container {
-    -fx-padding: 10 0 10 0;
-}
-
-/* ========== MESSAGE VIDE ========== */
-.empty-message {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1a1a8b;
-}
-
-.empty-submessage {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
-    -fx-text-fill: #ff8c00;
-}
-
-/* ========== BOUTON RAFRAÎCHIR ========== */
-.refresh-btn {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 24px;
-    -fx-background-color: #ffb32b;
-    -fx-text-fill: white;
-    -fx-background-radius: 50%;
-    -fx-min-width: 50;
-    -fx-min-height: 50;
-    -fx-cursor: hand;
-}
-
-.refresh-btn:hover {
-    -fx-background-color: #ff9f00;
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
-}
-.trigger-radio .radio {
-    -fx-background-color: white;
-    -fx-border-color: #ffb32b;
-    -fx-border-radius: 50%;
-}
-
-.trigger-radio:selected .radio {
-    -fx-background-color: #4CAF50;
-    -fx-border-color: #388E3C;
-}
-.feedback-radio:selected .radio {
-    -fx-background-color: #4CAF50;
-    -fx-border-color: #388E3C;
-}
-
-.feedback-radio:selected .dot {
-    -fx-background-color: white;
-    -fx-background-insets: 0;
-}
-.nav-item:hover {
-    -fx-opacity: 1;
-}
-    .nav-indicator :hover {
-        -fx-opacity: 1;
-    }
-
-/* ========== TOOLTIPS ========== */
-.custom-tooltip {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-    -fx-background-color: #1a1a8b;
-    -fx-text-fill: white;
-    -fx-background-radius: 10;
-    -fx-padding: 5 10;
-}
-
-/* ========== ANIMATIONS SPÉCIFIQUES ========== */
-.nav-item:hover .nav-icon {
-    -fx-animation: float 2s infinite ease-in-out;
-}
-
-.side-button:hover .side-icon {
-    -fx-animation: pulse 1s infinite;
-}
-
-.mood-btn:pressed {
-    -fx-animation: shake 0.3s ease;
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 800px) {
-    .bottom-nav {
-        -fx-spacing: 10;
-    }
-
-    .nav-label {
-        -fx-font-size: 11px;
-    }
-
-    .widget-card {
-        -fx-pref-width: 150;
-        -fx-pref-height: 120;
-    }
-}
-/* ========== STYLES POUR LES FORMULAIRES ========== */
+/* ========== FORMULAIRES ========== */
 .form-title {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 28px;
+    -fx-font-size: 34px;
     -fx-font-weight: bold;
     -fx-text-fill: #1a1a8b;
-    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.8), 5, 0.3, 0, 2);
+    -fx-effect: dropshadow(gaussian, #ffb32b, 5, 0.5, 2, 2);
 }
 
 .form-grid {
-    -fx-padding: 20 0 0 0;
+    -fx-padding: 15 0 0 0;
 }
 
 .form-label {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #1a1a8b;
 }
 
 .form-field {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
+    -fx-font-size: 18px;
     -fx-background-color: white;
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
     -fx-border-color: #ffb32b;
-    -fx-border-width: 2;
-    -fx-padding: 8 15;
-    -fx-transition: all 0.3s ease;
+    -fx-border-width: 3;
+    -fx-padding: 10 18;
+}
+
+/* FIX: Feedback visuel focus pour les champs */
+.form-field:focused {
+    -fx-border-color: #1a1a8b;
+    -fx-effect: dropshadow(gaussian, rgba(26,26,139,0.35), 10, 0.4, 0, 0);
 }
 
 .form-field:hover {
     -fx-border-color: #1a1a8b;
-    -fx-effect: dropshadow(gaussian, rgba(26,26,139,0.2), 5, 0.3, 0, 0);
 }
 
-.form-field:focused {
-    -fx-border-color: #1a1a8b;
-    -fx-effect: dropshadow(gaussian, rgba(26,26,139,0.3), 8, 0.4, 0, 0);
-}
-
-.form-slider {
-    -fx-pref-width: 200;
+/* Correction taille texte dans les ComboBox */
+.combo-box .list-cell {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 18px;
 }
 
 .form-slider .track {
@@ -581,208 +286,292 @@
 
 .slider-value {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-text-fill: #1a1a8b;
-    -fx-min-width: 60;
+    -fx-min-width: 75;
 }
 
-/* ========== BOUTONS DE DÉCLENCHEUR ========== */
-.trigger-btn {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
-    -fx-background-color: #f0f0f0;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 2;
-    -fx-padding: 8 20;
-    -fx-cursor: hand;
-    -fx-transition: all 0.2s ease;
-}
-
-.trigger-btn:hover {
-    -fx-background-color: #e0e0e0;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-.trigger-active {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
-    -fx-border-color: #388E3C;
-}
-
-/* ========== BOUTONS DE FEEDBACK ========== */
-.feedback-btn {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-min-width: 50;
-    -fx-min-height: 50;
-    -fx-background-color: #f0f0f0;
-    -fx-background-radius: 50%;
-    -fx-border-radius: 50%;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 2;
-    -fx-cursor: hand;
-    -fx-transition: all 0.2s ease;
-}
-
-.feedback-btn:hover {
-    -fx-background-color: #ffb32b;
-    -fx-text-fill: white;
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
-}
-
-.feedback-btn:pressed {
-    -fx-scale-x: 0.95;
-    -fx-scale-y: 0.95;
+.form-actions {
+    -fx-padding: 10 0 0 0;
 }
 
 /* ========== BOUTONS D'ACTION ========== */
+/* FIX: Boutons grands, arrondis, colorés, avec feedback immédiat */
 .action-btn {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 18px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
-    -fx-padding: 12 25;
+    -fx-background-radius: 40;
+    -fx-border-radius: 40;
+    -fx-padding: 12 30;
     -fx-cursor: hand;
-    -fx-transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 14, 0.3, 3, 3);
+}
+
+/* FIX: Feedback visuel immédiat au clic */
+.action-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.2, 1, 1);
 }
 
 .save-btn {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #43A047;
     -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, #388E3C, 5, 0.3, 0, 2);
+    -fx-effect: dropshadow(gaussian, #2E7D32, 8, 0.5, 0, 3);
 }
-
-.save-btn:hover {
-    -fx-background-color: #388E3C;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
+.save-btn:hover { -fx-background-color: #2E7D32; }
 
 .reset-btn {
-    -fx-background-color: #f44336;
+    -fx-background-color: #EF5350;
     -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, #d32f2f, 5, 0.3, 0, 2);
+    -fx-effect: dropshadow(gaussian, #c62828, 8, 0.5, 0, 3);
 }
-
-.reset-btn:hover {
-    -fx-background-color: #d32f2f;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
+.reset-btn:hover { -fx-background-color: #c62828; }
 
 .delete-btn {
-    -fx-background-color: #ff9800;
+    -fx-background-color: #FF7043;
     -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, #f57c00, 5, 0.3, 0, 2);
+    -fx-effect: dropshadow(gaussian, #bf360c, 8, 0.5, 0, 3);
+}
+.delete-btn:hover { -fx-background-color: #bf360c; }
+
+/* ========== RADIO BUTTONS – FIX principal ========== */
+/*
+  FIX: Le bug de désélection venait du fait que chaque RadioButton
+  déclarait son propre fx:id="triggerGroup" (créant des groupes distincts).
+  Corrigé dans le FXML : un seul ToggleGroup partagé via $triggerGroup.
+  Côté CSS : styles clairs pour l'état sélectionné / non-sélectionné.
+*/
+
+.trigger-radio {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 18px;
+    -fx-text-fill: #1a1a8b;
+    -fx-cursor: hand;
 }
 
-.delete-btn:hover {
-    -fx-background-color: #f57c00;
+.trigger-radio .radio {
+    -fx-background-color: white;
+    -fx-border-color: #ffb32b;
+    -fx-border-radius: 50%;
+    -fx-border-width: 3;
+    -fx-padding: 6;
+}
+
+/* FIX: État sélectionné visuellement distinct */
+.trigger-radio:selected {
+    -fx-background-color: rgba(76, 175, 80, 0.18);
+    -fx-background-radius: 20;
+    -fx-padding: 4 12;
+}
+
+.trigger-radio:selected .radio {
+    -fx-background-color: #43A047;
+    -fx-border-color: #2E7D32;
+}
+
+.trigger-radio:selected .dot {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 4;
+}
+
+/* FIX: Feedback visuel immédiat au clic */
+.trigger-radio:pressed {
+    -fx-scale-x: 0.93;
+    -fx-scale-y: 0.93;
+}
+
+.feedback-radio {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a8b;
+    -fx-cursor: hand;
+}
+
+.feedback-radio .radio {
+    -fx-background-color: white;
+    -fx-border-color: #ffb32b;
+    -fx-border-radius: 50%;
+    -fx-border-width: 3;
+    -fx-padding: 8;
+}
+
+.feedback-radio:selected .radio {
+    -fx-background-color: #FFD600;
+    -fx-border-color: #F9A825;
+}
+
+.feedback-radio:selected .dot {
+    -fx-background-color: #1a1a8b;
+    -fx-background-insets: 0;
+    -fx-padding: 5;
+}
+
+/* FIX: Feedback visuel immédiat */
+.feedback-radio:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+}
+
+/* ========== CARDS SESSIONS ========== */
+.session-card {
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-border-width: 3;
+    -fx-pref-width: 300;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 8, 0.2, 0, 2);
+    -fx-cursor: hand;
+}
+
+.session-card:hover {
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, #FFD700, 18, 0.4, 0, 5);
 }
 
-/* ========== MESSAGE LABEL ========== */
-.message-label {
+.card-type {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 16px;
-    -fx-background-color: rgba(76, 175, 80, 0.2);
-    -fx-background-radius: 15;
-    -fx-text-fill: #388E3C;
-    -fx-padding: 10 20;
-    -fx-alignment: center;
-}
-
-/* ========== TABLE DES SESSIONS ========== */
-.sessions-table {
-    -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-color: #ffb32b;
-    -fx-border-width: 3;
-}
-
-.sessions-table .column-header {
-    -fx-background-color: #ffb32b;
-    -fx-background-radius: 15 15 0 0;
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
-
-.sessions-table .table-row-cell {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 13px;
-}
-
-.sessions-table .table-row-cell:selected {
-    -fx-background-color: #e3f2fd;
-}
-
-.search-field {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-    -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-color: #ffb32b;
-    -fx-border-width: 2;
-    -fx-padding: 8 15;
-    -fx-pref-width: 200;
-}
-
-/* ========== STATISTIQUES ========== */
-.stats-container {
-    -fx-padding: 20 0 0 0;
-}
-
-.stat-box {
-    -fx-background-color: rgba(255, 179, 43, 0.1);
-    -fx-background-radius: 20;
-    -fx-padding: 15 25;
-    -fx-border-radius: 20;
-    -fx-border-color: #ffb32b;
-    -fx-border-width: 2;
-    -fx-min-width: 120;
-}
-
-.stat-number {
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 24px;
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #1a1a8b;
 }
 
-.stat-label {
+.card-detail {
     -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-    -fx-text-fill: #666666;
+    -fx-font-size: 17px;
+    -fx-text-fill: #333;
 }
 
-/* ========== LISTE DE SUPPRESSION ========== */
+.card-note {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 15px;
+    -fx-text-fill: #666;
+    -fx-font-style: italic;
+    -fx-padding: 4 0 0 0;
+}
+
+/* ========== STATISTIQUES (pills) ========== */
+.stat-pill {
+    -fx-background-color: rgba(255, 255, 255, 0.96);
+    -fx-background-radius: 40;
+    -fx-padding: 10 22;
+    -fx-border-color: #ffb32b;
+    -fx-border-width: 3;
+    -fx-border-radius: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.2, 2, 2);
+}
+
+.stat-pill-label {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+}
+
+.stat-pill-value {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a8b;
+    -fx-padding: 0 0 0 8;
+}
+
+/* ========== BARRE DE RECHERCHE ========== */
+.search-field {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 17px;
+    -fx-background-color: white;
+    -fx-background-radius: 28;
+    -fx-border-radius: 28;
+    -fx-border-color: #ffb32b;
+    -fx-border-width: 3;
+    -fx-padding: 10 18;
+}
+
+.search-field:focused {
+    -fx-border-color: #1a1a8b;
+    -fx-effect: dropshadow(gaussian, rgba(26,26,139,0.3), 10, 0.4, 0, 0);
+}
+
+/* ========== BOUTON RAFRAÎCHIR ========== */
+.refresh-btn {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 24px;
+    -fx-background-color: #ffb32b;
+    -fx-text-fill: white;
+    -fx-background-radius: 50%;
+    -fx-min-width: 56;
+    -fx-min-height: 56;
+    -fx-cursor: hand;
+}
+.refresh-btn:hover {
+    -fx-background-color: #e6921a;
+    -fx-scale-x: 1.12;
+    -fx-scale-y: 1.12;
+}
+.refresh-btn:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+}
+
+/* ========== SCROLLPANE TRANSPARENT ========== */
+.cards-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.cards-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+.cards-container {
+    -fx-padding: 8 0 8 0;
+}
+
+/* ========== MESSAGES VIDES ========== */
+.empty-message {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a8b;
+}
+.empty-submessage {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 20px;
+    -fx-text-fill: #ff8c00;
+}
+
+/* ========== MESSAGES DE FEEDBACK (succès/erreur) ========== */
+.message-label {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 19px;
+    -fx-background-radius: 25;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0.2, 2, 2);
+}
+
+/* ========== VUE SUPPRESSION ========== */
 .warning-container {
     -fx-background-color: rgba(244, 67, 54, 0.1);
     -fx-background-radius: 15;
-    -fx-padding: 15;
+    -fx-padding: 14;
     -fx-border-radius: 15;
     -fx-border-color: #f44336;
     -fx-border-width: 2;
 }
-
 .warning-text {
     -fx-font-family: "Comic Sans MS";
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-text-fill: #f44336;
 }
-
 .sessions-list {
     -fx-background-color: white;
     -fx-background-radius: 15;
@@ -790,27 +579,215 @@
     -fx-border-color: #ffb32b;
     -fx-border-width: 2;
 }
-
 .sessions-list .list-cell {
     -fx-font-family: "Comic Sans MS";
     -fx-font-size: 16px;
     -fx-padding: 10;
 }
-
 .sessions-list .list-cell:selected {
     -fx-background-color: #ffb32b;
     -fx-text-fill: white;
 }
 
-/* ========== PROGRESS BAR AMÉLIORÉ ========== */
-.level-progress-container {
-    -fx-background-color: #e0e0e0;
-    -fx-background-radius: 10;
-    -fx-pref-width: 60;
-    -fx-pref-height: 8;
+/* ========== NAVIGATION BASSE - VERSION AMÉLIORÉE ========== */
+/* ========== BOTTOM ALIGNÉ AVEC LE WHITE-BOARD ========== */
+.bottom-wrapper {
+    -fx-alignment: center;
+    -fx-padding: 0;  /* Ajustez pour la marge en bas si nécessaire */
+    -fx-background-color: transparent;
 }
 
-.level-progress-fill {
+.bottom-nav {
+    -fx-padding: 8 30;
+    -fx-background-color: rgba(244, 242, 131, 0.79);
+    -fx-background-radius: 45 45 0 0;  /* Rayon du background */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, -3);
+
+    /* BORDURE COMPLÈTE (comme la sidebar) */
+    -fx-border-color: rgba(246, 173, 91, 0.87);  /* Même couleur que sidebar */
+    -fx-border-width: 2;  /* Bordure de 2px partout */
+    -fx-border-radius: 45 45 0 0;  /* MÊME RAYON QUE LE BACKGROUND */
+
+    /* Ou si vous voulez garder la bordure supérieure colorée */
+    /* -fx-border-color: #ffb32b rgba(26,26,139,0.2) rgba(26,26,139,0.2) rgba(26,26,139,0.2); */
+    /* -fx-border-width: 4 2 2 2; */
+
+    /* MÊME LARGEUR QUE LE WHITE-BOARD */
+    -fx-pref-width: 1300px;
+    -fx-max-width: 1300px;
+    -fx-min-width: 1300px;
+
+    /* Hauteur */
+    -fx-pref-height: 120px;
+
+    /* Centrage */
+    -fx-alignment: center;
+}
+
+.bottom-wrapper .bottom-nav {
+    -fx-padding: 8 30;
+    -fx-background-color: rgba(244, 242, 131, 0.79);
+    -fx-background-radius: 45 45 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, -3);
+
+    /* BORDURE COMPLÈTE */
+    -fx-border-color: rgba(246, 173, 91, 0.87);
+    -fx-border-width: 2;
+    -fx-border-radius: 45 45 0 0;
+}
+.nav-item {
+    -fx-cursor: hand;
+    -fx-padding: 4 6; /* Réduction du padding horizontal */
+    -fx-min-width: 90; /* Largeur minimale pour uniformité */
+}
+
+.nav-item:hover {
+    -fx-translate-y: -6;
+    -fx-effect: dropshadow(gaussian, #1a1a8b, 14, 0.3, 0, 3);
+}
+
+/* Item actif - plus compact */
+.nav-item-active {
+    -fx-cursor: hand;
+    -fx-padding: 4 10; /* Padding réduit */
+    -fx-background-color: rgba(255, 179, 43, 0.18);
+    -fx-background-radius: 20;
+    -fx-translate-y: -4;
+    -fx-min-width: 100;
+}
+
+/* Conteneur d'icône - centrage parfait */
+.nav-icon-container {
+    -fx-alignment: center;
+}
+
+/* Fond des icônes - plus grands */
+.nav-icon-bg {
+    -fx-fill: linear-gradient(to bottom, #e8e8e8, #cccccc);
+    -fx-stroke: white;
+    -fx-stroke-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0.2, 0, 2);
+}
+
+/* Fond de l'icône Calme (section active) - encore plus visible */
+.calm-bg {
+    -fx-fill: linear-gradient(to bottom, #a8e6cf, #56c09b);
+    -fx-stroke: white;
+    -fx-stroke-width: 3;
+}
+
+/* Icônes - plus grandes */
+.nav-icon {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0.1, 0, 1);
+}
+
+/* Labels - ajustés pour les icônes plus grandes */
+.nav-label {
+    -fx-font-family: 'Comic Sans MS';
+    -fx-font-size: 12px; /* Légèrement réduit pour économiser de l'espace */
+    -fx-text-fill: #1a1a8b;
+    -fx-font-weight: bold;
+    -fx-padding: 2 0 0 0;
+}
+
+.nav-label-active {
+    -fx-font-family: 'Comic Sans MS';
+    -fx-font-size: 13px;
+    -fx-text-fill: #ff8c00;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-padding: 2 0 0 0;
+}
+
+/* Optionnel : Ajouter un effet de brillance au survol */
+.nav-item:hover .nav-icon-bg {
+    -fx-fill: linear-gradient(to bottom, #f0f0f0, #dddddd);
+    -fx-effect: dropshadow(gaussian, #ffb32b, 10, 0.3, 0, 0);
+}
+
+.nav-item-active:hover .nav-icon-bg {
+    -fx-fill: linear-gradient(to bottom, #b8f0d9, #66caa5);
+}
+
+/* ========== DATE PICKER ========== */
+.date-picker {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 18px;
+}
+.date-picker .text-field {
+    -fx-background-radius: 20 0 0 20;
+    -fx-border-radius: 20 0 0 20;
+}
+.date-picker .arrow-button {
+    -fx-background-radius: 0 20 20 0;
+    -fx-background-color: #ffb32b;
+}
+
+/* ========== DIALOG DE CONFIRMATION ========== */
+.confirmation-dialog {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 16px;
+}
+.confirmation-dialog .header-panel {
+    -fx-background-color: #ffb32b;
+}
+.confirmation-dialog .content {
+    -fx-font-size: 18px;
+}
+
+/* ========== TOOLTIPS ========== */
+.custom-tooltip {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 14px;
     -fx-background-color: #1a1a8b;
+    -fx-text-fill: white;
     -fx-background-radius: 10;
+    -fx-padding: 5 10;
+}
+/* ========== SCROLLPANE POUR FORMULAIRES ========== */
+.form-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.form-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.form-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 16;
+}
+
+.form-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: rgba(255, 179, 43, 0.2);
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+}
+
+.form-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #ffb32b;
+    -fx-background-radius: 10;
+}
+
+.form-scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #1a1a8b;
+}
+
+.form-scroll-pane .scroll-bar:vertical .increment-button,
+.form-scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.form-scroll-pane .scroll-bar:vertical .increment-arrow,
+.form-scroll-pane .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #ffb32b;
+}
+
+/* Style pour le contenu du ScrollPane */
+.form-scroll-pane > .viewport {
+    -fx-padding: 10;
 }
