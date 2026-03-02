@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<StackPane styleClass="main-background" stylesheets="@style.css"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.projet.fouckid.controllers.adminDashboardGamificationController">
+
+    <BorderPane fx:id="mainBorderPane" prefHeight="1080.0" prefWidth="1920.0">
+
+        <!-- TOP: Profil utilisateur -->
+        <top>
+            <HBox alignment="CENTER" spacing="25" styleClass="top-bar">
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="app-brand">
+                    <ImageView fitHeight="80" fitWidth="80" styleClass="app-logo">
+                        <image><Image url="@logo.png" /></image>
+                    </ImageView>
+                    <Label styleClass="app-name" text="FocusKid" />
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <VBox alignment="CENTER_RIGHT" spacing="8">
+                    <Label styleClass="user-name" text="USERNAME 👋" />
+                </VBox>
+                <StackPane styleClass="avatar-container">
+                    <Circle styleClass="avatar-circle" radius="45" />
+                    <ImageView fitHeight="80" fitWidth="80" styleClass="avatar-image">
+                        <image><Image url="@avatar.png" /></image>
+                    </ImageView>
+                </StackPane>
+            </HBox>
+        </top>
+
+        <!-- LEFT: Sidebar avec entités et CRUD -->
+        <left>
+            <VBox spacing="10" styleClass="sidebar" prefWidth="130" alignment="TOP_CENTER">
+                <padding><Insets top="30" bottom="30" /></padding>
+
+                <!-- Section: Choix de l'entité -->
+                <VBox spacing="5" styleClass="entity-section" alignment="CENTER">
+                    <Label styleClass="sidebar-title" text="Gamification 🎮" />
+
+                    <Button styleClass="entity-button" fx:id="btnEntityJeu" onAction="#handleSelectJeu">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="30" preserveRatio="true" styleClass="entity-icon">
+                                    <image><Image url="@puzzle.png" /></image>
+                                </ImageView>
+                                <Label text="Jeux" styleClass="entity-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+
+                    <Button styleClass="entity-button" fx:id="btnEntityQuestion" onAction="#handleSelectQuestion">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="30" preserveRatio="true" styleClass="entity-icon">
+                                    <image><Image url="@quiz.png" /></image>
+                                </ImageView>
+                                <Label text="Questions" styleClass="entity-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+
+                    <Button styleClass="entity-button" fx:id="btnEntityScore" onAction="#handleSelectScore">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="30" preserveRatio="true" styleClass="entity-icon">
+                                    <image><Image url="@score.png" /></image>
+                                </ImageView>
+                                <Label text="Scores" styleClass="entity-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+                </VBox>
+
+                <!-- Séparateur -->
+                <Region styleClass="sidebar-separator" prefHeight="2" />
+
+                <!-- Section: CRUD Operations -->
+                <VBox spacing="15" styleClass="crud-section" alignment="CENTER">
+                    <Label fx:id="currentEntityLabel" styleClass="crud-title" text="Jeux 🎮" />
+
+                    <Button styleClass="side-button" fx:id="btnAdd" onAction="#handleShowAdd">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
+                                    <image><Image url="@plus.png" /></image>
+                                </ImageView>
+                                <Label text="Ajouter" styleClass="side-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+
+                    <Button styleClass="side-button" fx:id="btnList" onAction="#handleShowList">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
+                                    <image><Image url="@list.png" /></image>
+                                </ImageView>
+                                <Label text="Liste" styleClass="side-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+
+                    <Button styleClass="side-button" fx:id="btnUpdate" onAction="#handleShowUpdate">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
+                                    <image><Image url="@refresh.png" /></image>
+                                </ImageView>
+                                <Label text="Modifier" styleClass="side-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+
+                    <Button styleClass="side-button" fx:id="btnDelete" onAction="#handleShowDelete">
+                        <graphic>
+                            <VBox alignment="CENTER" spacing="3">
+                                <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
+                                    <image><Image url="@trash.png" /></image>
+                                </ImageView>
+                                <Label text="Supprimer" styleClass="side-label" />
+                            </VBox>
+                        </graphic>
+                    </Button>
+                </VBox>
+            </VBox>
+        </left>
+
+        <!-- CENTER: StackPane avec toutes les vues -->
+        <center>
+            <StackPane fx:id="contentArea" styleClass="main-content-container">
+
+                <!-- ========== VUES JEU ========== -->
+                <!-- Vue Liste Jeux -->
+                <VBox fx:id="jeuListView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="30" right="40" bottom="30" left="40" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@puzzle.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Gestion des Jeux 🎮" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="jeuSearchField" promptText="🔍 Chercher un jeu..."
+                                   styleClass="search-field" prefWidth="350" prefHeight="50" />
+                        <Button text="🔄" onAction="#handleRefreshJeu"
+                                styleClass="refresh-btn" prefWidth="60" prefHeight="60" />
+                    </HBox>
+
+                    <HBox spacing="20" alignment="CENTER">
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="📊 Total jeux:" styleClass="stat-pill-label" />
+                            <Label fx:id="totalJeux" text="0" styleClass="stat-pill-value" />
+                        </HBox>
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" styleClass="cards-scroll-pane" VBox.vgrow="ALWAYS">
+                        <FlowPane fx:id="jeuxCardsContainer" hgap="25" vgap="25"
+                                  styleClass="cards-container" prefWrapLength="1400" />
+                    </ScrollPane>
+
+                    <VBox fx:id="jeuEmptyMessage" alignment="CENTER" spacing="20"
+                          visible="false" managed="false">
+                        <ImageView fitHeight="150" fitWidth="150">
+                            <image><Image url="@puzzle.png" /></image>
+                        </ImageView>
+                        <Label text="Aucun jeu pour le moment 🎮" styleClass="empty-message" />
+                        <Label text="Clique sur Ajouter pour en créer un !" styleClass="empty-submessage" />
+                    </VBox>
+                </VBox>
+
+                <!-- Vue Ajout Jeu -->
+                <VBox fx:id="jeuAddView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Nouveau Jeu ✨" />
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <Label text="🎮 Titre :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="jeuTitreField" promptText="Titre du jeu"
+                                           styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="📋 Type :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="jeuTypeCombo" promptText="Choisir le type"
+                                          styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                          prefHeight="52">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="QUIZ" />
+                                            <String fx:value="EXERCICE" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <Label text="⭐ Niveau :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="jeuNiveauCombo" promptText="Choisir le niveau"
+                                          styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                          prefHeight="52">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="FACILE" />
+                                            <String fx:value="MOYEN" />
+                                            <String fx:value="DIFFICILE" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnJeuReset" text="🔄 Réinitialiser" onAction="#handleJeuReset"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="220" />
+                        <Button fx:id="btnJeuSave" text="✅ Enregistrer" onAction="#handleJeuSave"
+                                styleClass="action-btn save-btn" prefHeight="60" prefWidth="220" />
+                    </HBox>
+                    <Label fx:id="jeuAddMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- Vue Modification Jeu -->
+                <VBox fx:id="jeuUpdateView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Modifier un Jeu ✏️" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="jeuSelector" promptText="📋 Choisir un jeu à modifier"
+                                  prefWidth="450" styleClass="form-field" prefHeight="52" />
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <Label fx:id="jeuId" visible="false" managed="false" />
+
+                                <Label text="🎮 Titre :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="jeuUpdateTitreField"
+                                           styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="📋 Type :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="jeuUpdateTypeCombo"
+                                          styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                          prefHeight="52">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="QUIZ" />
+                                            <String fx:value="EXERCICE" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <Label text="⭐ Niveau :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="jeuUpdateNiveauCombo"
+                                          styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                          prefHeight="52">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="FACILE" />
+                                            <String fx:value="MOYEN" />
+                                            <String fx:value="DIFFICILE" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnJeuCancel" text="🔄 Annuler" onAction="#handleJeuCancel"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnJeuUpdate" text="✅ Mettre à jour" onAction="#handleJeuUpdate"
+                                styleClass="action-btn save-btn" prefHeight="60" prefWidth="230" />
+                    </HBox>
+                    <Label fx:id="jeuUpdateMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- Vue Suppression Jeu -->
+                <VBox fx:id="jeuDeleteView" styleClass="white-board" spacing="22"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Supprimer des Jeux 🗑️" />
+                    </HBox>
+
+                    <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
+                        <ImageView fitHeight="40" fitWidth="40">
+                            <image><Image url="@warning.png" /></image>
+                        </ImageView>
+                        <Label text="⚠️ Attention : Cette action est irréversible !"
+                               styleClass="warning-text" />
+                    </HBox>
+
+                    <Label text="📋 Sélectionne les jeux à supprimer :" styleClass="form-label" />
+                    <ListView fx:id="jeuDeleteList" styleClass="sessions-list"
+                              VBox.vgrow="ALWAYS" prefHeight="380">
+                        <placeholder>
+                            <Label text="Aucun jeu disponible 🎮" styleClass="empty-submessage" />
+                        </placeholder>
+                    </ListView>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT">
+                        <Button fx:id="btnJeuRefreshList" text="🔄 Actualiser" onAction="#handleRefreshJeu"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnJeuDeleteSelected" text="🗑️ Supprimer la sélection"
+                                onAction="#handleJeuDeleteSelected"
+                                styleClass="action-btn delete-btn" prefHeight="60" prefWidth="280" />
+                    </HBox>
+                    <Label fx:id="jeuDeleteMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- ========== VUES QUESTION ========== -->
+                <!-- Vue Liste Questions -->
+                <VBox fx:id="questionListView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="30" right="40" bottom="30" left="40" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@quiz.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Gestion des Questions ❓" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="questionSearchField" promptText="🔍 Chercher une question..."
+                                   styleClass="search-field" prefWidth="350" prefHeight="50" />
+                        <Button text="🔄" onAction="#handleRefreshQuestion"
+                                styleClass="refresh-btn" prefWidth="60" prefHeight="60" />
+                    </HBox>
+
+                    <HBox spacing="20" alignment="CENTER">
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="📊 Total questions:" styleClass="stat-pill-label" />
+                            <Label fx:id="totalQuestions" text="0" styleClass="stat-pill-value" />
+                        </HBox>
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" styleClass="cards-scroll-pane" VBox.vgrow="ALWAYS">
+                        <FlowPane fx:id="questionsCardsContainer" hgap="25" vgap="25"
+                                  styleClass="cards-container" prefWrapLength="1400" />
+                    </ScrollPane>
+
+                    <VBox fx:id="questionEmptyMessage" alignment="CENTER" spacing="20"
+                          visible="false" managed="false">
+                        <ImageView fitHeight="150" fitWidth="150">
+                            <image><Image url="@quiz.png" /></image>
+                        </ImageView>
+                        <Label text="Aucune question pour le moment ❓" styleClass="empty-message" />
+                        <Label text="Clique sur Ajouter pour en créer une !" styleClass="empty-submessage" />
+                    </VBox>
+                </VBox>
+
+                <!-- Vue Ajout Question -->
+                <VBox fx:id="questionAddView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Nouvelle Question ✨" />
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <Label text="🎮 Jeu :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="questionJeuCombo" promptText="Choisir un jeu"
+                                          styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                          prefHeight="52" />
+
+                                <Label text="❓ Question :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionTextArea" promptText="Texte de la question"
+                                           styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="A️⃣ Option A :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionOptionA" promptText="Option A"
+                                           styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="B️⃣ Option B :" styleClass="form-label"
+                                       GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionOptionB" promptText="Option B"
+                                           styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="C️⃣ Option C :" styleClass="form-label"
+                                       GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionOptionC" promptText="Option C"
+                                           styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="✅ Bonne réponse :" styleClass="form-label"
+                                       GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="questionBonneReponseCombo" promptText="Choisir la bonne réponse"
+                                          styleClass="form-field" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                                          prefHeight="52">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="A" />
+                                            <String fx:value="B" />
+                                            <String fx:value="C" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnQuestionReset" text="🔄 Réinitialiser" onAction="#handleQuestionReset"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="220" />
+                        <Button fx:id="btnQuestionSave" text="✅ Enregistrer" onAction="#handleQuestionSave"
+                                styleClass="action-btn save-btn" prefHeight="60" prefWidth="220" />
+                    </HBox>
+                    <Label fx:id="questionAddMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- Vue Modification Question -->
+                <VBox fx:id="questionUpdateView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Modifier une Question ✏️" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="questionSelector" promptText="📋 Choisir une question à modifier"
+                                  prefWidth="450" styleClass="form-field" prefHeight="52" />
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <Label fx:id="questionId" visible="false" managed="false" />
+
+                                <Label text="🎮 Jeu :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="questionUpdateJeuCombo"
+                                          styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                          prefHeight="52" />
+
+                                <Label text="❓ Question :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionUpdateTextArea"
+                                           styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="A️⃣ Option A :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionUpdateOptionA"
+                                           styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="B️⃣ Option B :" styleClass="form-label"
+                                       GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionUpdateOptionB"
+                                           styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="C️⃣ Option C :" styleClass="form-label"
+                                       GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <TextField fx:id="questionUpdateOptionC"
+                                           styleClass="form-field" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="✅ Bonne réponse :" styleClass="form-label"
+                                       GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="questionUpdateBonneReponseCombo"
+                                          styleClass="form-field" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                                          prefHeight="52">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="A" />
+                                            <String fx:value="B" />
+                                            <String fx:value="C" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnQuestionCancel" text="🔄 Annuler" onAction="#handleQuestionCancel"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnQuestionUpdate" text="✅ Mettre à jour" onAction="#handleQuestionUpdate"
+                                styleClass="action-btn save-btn" prefHeight="60" prefWidth="230" />
+                    </HBox>
+                    <Label fx:id="questionUpdateMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- Vue Suppression Question -->
+                <VBox fx:id="questionDeleteView" styleClass="white-board" spacing="22"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Supprimer des Questions 🗑️" />
+                    </HBox>
+
+                    <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
+                        <ImageView fitHeight="40" fitWidth="40">
+                            <image><Image url="@warning.png" /></image>
+                        </ImageView>
+                        <Label text="⚠️ Attention : Cette action est irréversible !"
+                               styleClass="warning-text" />
+                    </HBox>
+
+                    <Label text="📋 Sélectionne les questions à supprimer :" styleClass="form-label" />
+                    <ListView fx:id="questionDeleteList" styleClass="sessions-list"
+                              VBox.vgrow="ALWAYS" prefHeight="380">
+                        <placeholder>
+                            <Label text="Aucune question disponible ❓" styleClass="empty-submessage" />
+                        </placeholder>
+                    </ListView>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT">
+                        <Button fx:id="btnQuestionRefreshList" text="🔄 Actualiser" onAction="#handleRefreshQuestion"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnQuestionDeleteSelected" text="🗑️ Supprimer la sélection"
+                                onAction="#handleQuestionDeleteSelected"
+                                styleClass="action-btn delete-btn" prefHeight="60" prefWidth="280" />
+                    </HBox>
+                    <Label fx:id="questionDeleteMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- ========== VUES SCORE ========== -->
+                <!-- Vue Liste Scores -->
+                <VBox fx:id="scoreListView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="30" right="40" bottom="30" left="40" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@score.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Gestion des Scores 🏆" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="scoreSearchField" promptText="🔍 Chercher par ID utilisateur..."
+                                   styleClass="search-field" prefWidth="350" prefHeight="50" />
+                        <Button text="🔄" onAction="#handleRefreshScore"
+                                styleClass="refresh-btn" prefWidth="60" prefHeight="60" />
+                    </HBox>
+
+                    <HBox spacing="20" alignment="CENTER">
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="📊 Total scores:" styleClass="stat-pill-label" />
+                            <Label fx:id="totalScores" text="0" styleClass="stat-pill-value" />
+                        </HBox>
+                        <HBox styleClass="stat-pill" spacing="8">
+                            <Label text="🏆 Moyenne points:" styleClass="stat-pill-label" />
+                            <Label fx:id="avgScore" text="0" styleClass="stat-pill-value" />
+                        </HBox>
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" styleClass="cards-scroll-pane" VBox.vgrow="ALWAYS">
+                        <FlowPane fx:id="scoresCardsContainer" hgap="25" vgap="25"
+                                  styleClass="cards-container" prefWrapLength="1400" />
+                    </ScrollPane>
+
+                    <VBox fx:id="scoreEmptyMessage" alignment="CENTER" spacing="20"
+                          visible="false" managed="false">
+                        <ImageView fitHeight="150" fitWidth="150">
+                            <image><Image url="@score.png" /></image>
+                        </ImageView>
+                        <Label text="Aucun score pour le moment 🏆" styleClass="empty-message" />
+                        <Label text="Clique sur Ajouter pour en créer un !" styleClass="empty-submessage" />
+                    </VBox>
+                </VBox>
+
+                <!-- Vue Ajout Score -->
+                <VBox fx:id="scoreAddView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@plus.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Nouveau Score ✨" />
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <Label text="👤 Utilisateur ID :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="scoreUtilisateurId" promptText="ID de l'utilisateur"
+                                           styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="🎮 Jeu :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="scoreJeuCombo" promptText="Choisir un jeu"
+                                          styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                          prefHeight="52" />
+
+                                <Label text="⭐ Points :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="scorePointsField" promptText="Nombre de points"
+                                           styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnScoreReset" text="🔄 Réinitialiser" onAction="#handleScoreReset"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="220" />
+                        <Button fx:id="btnScoreSave" text="✅ Enregistrer" onAction="#handleScoreSave"
+                                styleClass="action-btn save-btn" prefHeight="60" prefWidth="220" />
+                    </HBox>
+                    <Label fx:id="scoreAddMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- Vue Modification Score -->
+                <VBox fx:id="scoreUpdateView" styleClass="white-board" spacing="20"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@refresh.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Modifier un Score ✏️" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="scoreSelector" promptText="📋 Choisir un score à modifier"
+                                  prefWidth="450" styleClass="form-field" prefHeight="52" />
+                    </HBox>
+
+                    <ScrollPane fitToWidth="true" fitToHeight="true"
+                                styleClass="form-scroll-pane" VBox.vgrow="ALWAYS">
+                        <VBox spacing="20">
+                            <GridPane hgap="30" vgap="18" styleClass="form-grid">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="28" />
+                                    <ColumnConstraints percentWidth="72" />
+                                </columnConstraints>
+
+                                <Label fx:id="scoreId" visible="false" managed="false" />
+
+                                <Label text="👤 Utilisateur ID :" styleClass="form-label"
+                                       GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="scoreUpdateUtilisateurId"
+                                           styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="🎮 Jeu :" styleClass="form-label"
+                                       GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="scoreUpdateJeuCombo"
+                                          styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                          prefHeight="52" />
+
+                                <Label text="⭐ Points :" styleClass="form-label"
+                                       GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="scoreUpdatePointsField"
+                                           styleClass="form-field" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                           prefHeight="52" />
+
+                                <Label text="📅 Date :" styleClass="form-label"
+                                       GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <DatePicker fx:id="scoreUpdateDatePicker"
+                                            styleClass="form-field" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                                            prefHeight="52" />
+                            </GridPane>
+                        </VBox>
+                    </ScrollPane>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="form-actions">
+                        <Button fx:id="btnScoreCancel" text="🔄 Annuler" onAction="#handleScoreCancel"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnScoreUpdate" text="✅ Mettre à jour" onAction="#handleScoreUpdate"
+                                styleClass="action-btn save-btn" prefHeight="60" prefWidth="230" />
+                    </HBox>
+                    <Label fx:id="scoreUpdateMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+                <!-- Vue Suppression Score -->
+                <VBox fx:id="scoreDeleteView" styleClass="white-board" spacing="22"
+                      visible="false" managed="false">
+                    <padding><Insets top="35" right="60" bottom="35" left="60" /></padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <ImageView fitHeight="70" fitWidth="70">
+                            <image><Image url="@trash.png" /></image>
+                        </ImageView>
+                        <Label styleClass="form-title" text="Supprimer des Scores 🗑️" />
+                    </HBox>
+
+                    <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
+                        <ImageView fitHeight="40" fitWidth="40">
+                            <image><Image url="@warning.png" /></image>
+                        </ImageView>
+                        <Label text="⚠️ Attention : Cette action est irréversible !"
+                               styleClass="warning-text" />
+                    </HBox>
+
+                    <Label text="📋 Sélectionne les scores à supprimer :" styleClass="form-label" />
+                    <ListView fx:id="scoreDeleteList" styleClass="sessions-list"
+                              VBox.vgrow="ALWAYS" prefHeight="380">
+                        <placeholder>
+                            <Label text="Aucun score disponible 🏆" styleClass="empty-submessage" />
+                        </placeholder>
+                    </ListView>
+
+                    <HBox spacing="20" alignment="CENTER_RIGHT">
+                        <Button fx:id="btnScoreRefreshList" text="🔄 Actualiser" onAction="#handleRefreshScore"
+                                styleClass="action-btn reset-btn" prefHeight="60" prefWidth="200" />
+                        <Button fx:id="btnScoreDeleteSelected" text="🗑️ Supprimer la sélection"
+                                onAction="#handleScoreDeleteSelected"
+                                styleClass="action-btn delete-btn" prefHeight="60" prefWidth="280" />
+                    </HBox>
+                    <Label fx:id="scoreDeleteMessageLabel" styleClass="message-label"
+                           visible="false" managed="false" />
+                </VBox>
+
+            </StackPane>
+        </center>
+
+        <!-- BOTTOM: Navigation -->
+        <bottom>
+            <HBox alignment="CENTER" styleClass="bottom-wrapper" prefHeight="130">
+                <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav"
+                      prefHeight="120" maxWidth="1300" minWidth="1300" prefWidth="1300">
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <VBox alignment="CENTER" styleClass="nav-item" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@cours.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Cours" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@quiz.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Exercices" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@famille.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Parents" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item-active" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg calm-bg" radius="42" />
+                            <ImageView fitHeight="58" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@puzzle.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label-active" text="Gamification" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@meditation.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Session De Calme" />
+                    </VBox>
+
+                    <VBox alignment="CENTER" styleClass="nav-item" spacing="4">
+                        <StackPane styleClass="nav-icon-container">
+                            <Circle styleClass="nav-icon-bg" radius="38" />
+                            <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
+                                <image><Image url="@emotions.png" /></image>
+                            </ImageView>
+                        </StackPane>
+                        <Label styleClass="nav-label" text="Émotions" />
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+            </HBox>
+        </bottom>
+
+    </BorderPane>
+</StackPane>
