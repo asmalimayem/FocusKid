@@ -34,7 +34,7 @@
             <HBox alignment="CENTER" spacing="25" styleClass="top-bar">
                 <HBox alignment="CENTER_LEFT" spacing="15" styleClass="app-brand">
                     <ImageView fitHeight="80" fitWidth="80" styleClass="app-logo">
-                        <image><Image url="@logo.png" /></image>
+                        <Image url="@logo.png" />
                     </ImageView>
                     <Label styleClass="app-name" text="FocusKid" />
                 </HBox>
@@ -45,7 +45,7 @@
                 <StackPane styleClass="avatar-container">
                     <Circle styleClass="avatar-circle" radius="45" />
                     <ImageView fitHeight="80" fitWidth="80" styleClass="avatar-image">
-                        <image><Image url="@avatar.png" /></image>
+                        <Image url="@avatar.png" />
                     </ImageView>
                 </StackPane>
             </HBox>
@@ -64,7 +64,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="30" preserveRatio="true" styleClass="entity-icon">
-                                    <image><Image url="@puzzle.png" /></image>
+                                    <Image url="@puzzle.png" />
                                 </ImageView>
                                 <Label text="Jeux" styleClass="entity-label" />
                             </VBox>
@@ -75,7 +75,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="30" preserveRatio="true" styleClass="entity-icon">
-                                    <image><Image url="@quiz.png" /></image>
+                                    <Image url="@quiz.png" />
                                 </ImageView>
                                 <Label text="Questions" styleClass="entity-label" />
                             </VBox>
@@ -86,7 +86,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="30" preserveRatio="true" styleClass="entity-icon">
-                                    <image><Image url="@score.png" /></image>
+                                    <Image url="@score.png" />
                                 </ImageView>
                                 <Label text="Scores" styleClass="entity-label" />
                             </VBox>
@@ -105,7 +105,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
-                                    <image><Image url="@plus.png" /></image>
+                                    <Image url="@plus.png" />
                                 </ImageView>
                                 <Label text="Ajouter" styleClass="side-label" />
                             </VBox>
@@ -116,7 +116,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
-                                    <image><Image url="@list.png" /></image>
+                                    <Image url="@list.png" />
                                 </ImageView>
                                 <Label text="Liste" styleClass="side-label" />
                             </VBox>
@@ -127,7 +127,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
-                                    <image><Image url="@refresh.png" /></image>
+                                    <Image url="@refresh.png" />
                                 </ImageView>
                                 <Label text="Modifier" styleClass="side-label" />
                             </VBox>
@@ -138,7 +138,7 @@
                         <graphic>
                             <VBox alignment="CENTER" spacing="3">
                                 <ImageView fitWidth="40" preserveRatio="true" styleClass="side-icon">
-                                    <image><Image url="@trash.png" /></image>
+                                    <Image url="@trash.png" />
                                 </ImageView>
                                 <Label text="Supprimer" styleClass="side-label" />
                             </VBox>
@@ -160,10 +160,12 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@puzzle.png" /></image>
+                            <Image url="@puzzle.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Gestion des Jeux 🎮" />
                         <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="jeuSortCombo" promptText="🔽 Trier par"
+                                  styleClass="search-field" prefWidth="150" prefHeight="50" />
                         <TextField fx:id="jeuSearchField" promptText="🔍 Chercher un jeu..."
                                    styleClass="search-field" prefWidth="350" prefHeight="50" />
                         <Button text="🔄" onAction="#handleRefreshJeu"
@@ -185,7 +187,7 @@
                     <VBox fx:id="jeuEmptyMessage" alignment="CENTER" spacing="20"
                           visible="false" managed="false">
                         <ImageView fitHeight="150" fitWidth="150">
-                            <image><Image url="@puzzle.png" /></image>
+                            <Image url="@puzzle.png" />
                         </ImageView>
                         <Label text="Aucun jeu pour le moment 🎮" styleClass="empty-message" />
                         <Label text="Clique sur Ajouter pour en créer un !" styleClass="empty-submessage" />
@@ -199,7 +201,7 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@plus.png" /></image>
+                            <Image url="@plus.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Nouveau Jeu ✨" />
                     </HBox>
@@ -266,7 +268,7 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@refresh.png" /></image>
+                            <Image url="@refresh.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Modifier un Jeu ✏️" />
                         <Region HBox.hgrow="ALWAYS" />
@@ -338,14 +340,14 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@trash.png" /></image>
+                            <Image url="@trash.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Supprimer des Jeux 🗑️" />
                     </HBox>
 
                     <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
                         <ImageView fitHeight="40" fitWidth="40">
-                            <image><Image url="@warning.png" /></image>
+                            <Image url="@warning.png" />
                         </ImageView>
                         <Label text="⚠️ Attention : Cette action est irréversible !"
                                styleClass="warning-text" />
@@ -378,10 +380,12 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@quiz.png" /></image>
+                            <Image url="@quiz.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Gestion des Questions ❓" />
                         <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="questionSortCombo" promptText="🔽 Trier par"
+                                  styleClass="search-field" prefWidth="150" prefHeight="50" />
                         <TextField fx:id="questionSearchField" promptText="🔍 Chercher une question..."
                                    styleClass="search-field" prefWidth="350" prefHeight="50" />
                         <Button text="🔄" onAction="#handleRefreshQuestion"
@@ -403,7 +407,7 @@
                     <VBox fx:id="questionEmptyMessage" alignment="CENTER" spacing="20"
                           visible="false" managed="false">
                         <ImageView fitHeight="150" fitWidth="150">
-                            <image><Image url="@quiz.png" /></image>
+                            <Image url="@quiz.png" />
                         </ImageView>
                         <Label text="Aucune question pour le moment ❓" styleClass="empty-message" />
                         <Label text="Clique sur Ajouter pour en créer une !" styleClass="empty-submessage" />
@@ -417,7 +421,7 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@plus.png" /></image>
+                            <Image url="@plus.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Nouvelle Question ✨" />
                     </HBox>
@@ -495,7 +499,7 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@refresh.png" /></image>
+                            <Image url="@refresh.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Modifier une Question ✏️" />
                         <Region HBox.hgrow="ALWAYS" />
@@ -578,14 +582,14 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@trash.png" /></image>
+                            <Image url="@trash.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Supprimer des Questions 🗑️" />
                     </HBox>
 
                     <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
                         <ImageView fitHeight="40" fitWidth="40">
-                            <image><Image url="@warning.png" /></image>
+                            <Image url="@warning.png" />
                         </ImageView>
                         <Label text="⚠️ Attention : Cette action est irréversible !"
                                styleClass="warning-text" />
@@ -618,10 +622,12 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@score.png" /></image>
+                            <Image url="@score.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Gestion des Scores 🏆" />
                         <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="scoreSortCombo" promptText="🔽 Trier par"
+                                  styleClass="search-field" prefWidth="150" prefHeight="50" />
                         <TextField fx:id="scoreSearchField" promptText="🔍 Chercher par ID utilisateur..."
                                    styleClass="search-field" prefWidth="350" prefHeight="50" />
                         <Button text="🔄" onAction="#handleRefreshScore"
@@ -647,7 +653,7 @@
                     <VBox fx:id="scoreEmptyMessage" alignment="CENTER" spacing="20"
                           visible="false" managed="false">
                         <ImageView fitHeight="150" fitWidth="150">
-                            <image><Image url="@score.png" /></image>
+                            <Image url="@score.png" />
                         </ImageView>
                         <Label text="Aucun score pour le moment 🏆" styleClass="empty-message" />
                         <Label text="Clique sur Ajouter pour en créer un !" styleClass="empty-submessage" />
@@ -661,7 +667,7 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@plus.png" /></image>
+                            <Image url="@plus.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Nouveau Score ✨" />
                     </HBox>
@@ -713,7 +719,7 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@refresh.png" /></image>
+                            <Image url="@refresh.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Modifier un Score ✏️" />
                         <Region HBox.hgrow="ALWAYS" />
@@ -776,14 +782,14 @@
 
                     <HBox alignment="CENTER_LEFT" spacing="20">
                         <ImageView fitHeight="70" fitWidth="70">
-                            <image><Image url="@trash.png" /></image>
+                            <Image url="@trash.png" />
                         </ImageView>
                         <Label styleClass="form-title" text="Supprimer des Scores 🗑️" />
                     </HBox>
 
                     <HBox styleClass="warning-container" spacing="15" alignment="CENTER_LEFT">
                         <ImageView fitHeight="40" fitWidth="40">
-                            <image><Image url="@warning.png" /></image>
+                            <Image url="@warning.png" />
                         </ImageView>
                         <Label text="⚠️ Attention : Cette action est irréversible !"
                                styleClass="warning-text" />
@@ -822,7 +828,7 @@
                         <StackPane styleClass="nav-icon-container">
                             <Circle styleClass="nav-icon-bg" radius="38" />
                             <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
-                                <image><Image url="@cours.png" /></image>
+                                <Image url="@cours.png" />
                             </ImageView>
                         </StackPane>
                         <Label styleClass="nav-label" text="Cours" />
@@ -832,7 +838,7 @@
                         <StackPane styleClass="nav-icon-container">
                             <Circle styleClass="nav-icon-bg" radius="38" />
                             <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
-                                <image><Image url="@quiz.png" /></image>
+                                <Image url="@quiz.png" />
                             </ImageView>
                         </StackPane>
                         <Label styleClass="nav-label" text="Exercices" />
@@ -842,7 +848,7 @@
                         <StackPane styleClass="nav-icon-container">
                             <Circle styleClass="nav-icon-bg" radius="38" />
                             <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
-                                <image><Image url="@famille.png" /></image>
+                                <Image url="@famille.png" />
                             </ImageView>
                         </StackPane>
                         <Label styleClass="nav-label" text="Parents" />
@@ -852,7 +858,7 @@
                         <StackPane styleClass="nav-icon-container">
                             <Circle styleClass="nav-icon-bg calm-bg" radius="42" />
                             <ImageView fitHeight="58" preserveRatio="true" styleClass="nav-icon">
-                                <image><Image url="@puzzle.png" /></image>
+                                <Image url="@puzzle.png" />
                             </ImageView>
                         </StackPane>
                         <Label styleClass="nav-label-active" text="Gamification" />
@@ -862,7 +868,7 @@
                         <StackPane styleClass="nav-icon-container">
                             <Circle styleClass="nav-icon-bg" radius="38" />
                             <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
-                                <image><Image url="@meditation.png" /></image>
+                                <Image url="@meditation.png" />
                             </ImageView>
                         </StackPane>
                         <Label styleClass="nav-label" text="Session De Calme" />
@@ -872,7 +878,7 @@
                         <StackPane styleClass="nav-icon-container">
                             <Circle styleClass="nav-icon-bg" radius="38" />
                             <ImageView fitHeight="52" preserveRatio="true" styleClass="nav-icon">
-                                <image><Image url="@emotions.png" /></image>
+                                <Image url="@emotions.png" />
                             </ImageView>
                         </StackPane>
                         <Label styleClass="nav-label" text="Émotions" />

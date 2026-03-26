@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane styleClass="game-background" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projet.fouckid.controllers.GameSessionController">
+
+    <top>
+        <VBox spacing="10" style="-fx-background-color: rgba(255,255,255,0.9); -fx-padding: 20;">
+            <HBox spacing="20" alignment="CENTER">
+                <Label fx:id="gameTitleLabel" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a8b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="⭐ Score:" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-text-fill: #ff8c00;"/>
+                <Label fx:id="scoreLabel" text="0" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+                <Label text="📋 Question:" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-text-fill: #1a1a8b;"/>
+                <Label fx:id="questionNumberLabel" text="1/?" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a1a8b;"/>
+            </HBox>
+            <!-- Correction ici : utiliser 100% au lieu de Double.MAX_VALUE -->
+            <ProgressBar fx:id="progressBar" prefWidth="Infinity" style="-fx-accent: #4CAF50; -fx-pref-height: 15;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+
+            <!-- Question -->
+            <Label fx:id="questionLabel" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1a1a8b; -fx-wrap-text: true; -fx-alignment: center;"
+                   prefWidth="800" wrapText="true"/>
+
+            <!-- Options -->
+            <VBox spacing="20" alignment="CENTER" prefWidth="600">
+                <Button fx:id="optionAButton" onAction="#handleOptionA"
+                        style="-fx-background-color: #FFB74D; -fx-background-radius: 20; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 18px; -fx-padding: 15 25;"
+                        prefWidth="500" wrapText="true"/>
+
+                <Button fx:id="optionBButton" onAction="#handleOptionB"
+                        style="-fx-background-color: #4FC3F7; -fx-background-radius: 20; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 18px; -fx-padding: 15 25;"
+                        prefWidth="500" wrapText="true"/>
+
+                <Button fx:id="optionCButton" onAction="#handleOptionC"
+                        style="-fx-background-color: #81C784; -fx-background-radius: 20; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 18px; -fx-padding: 15 25;"
+                        prefWidth="500" wrapText="true"/>
+            </VBox>
+
+            <!-- Feedback -->
+            <Label fx:id="feedbackLabel" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 20; -fx-background-color: rgba(255,255,255,0.9);">
+            <Button fx:id="backButton" text="🏠 Menu Principal" onAction="#handleBackToMenu"
+                    style="-fx-background-color: #FF7043; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 15;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="timerLabel" text="⏱️ 30s" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

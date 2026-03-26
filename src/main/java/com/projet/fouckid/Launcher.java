@@ -10,9 +10,11 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("adminDashboardGamification.fxml"));
-        primaryStage.setTitle("FocusKid - Administration Gamification");
+        // Charger l'écran de login au lieu de l'admin directement
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        primaryStage.setTitle("FocusKid - Bienvenue");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 

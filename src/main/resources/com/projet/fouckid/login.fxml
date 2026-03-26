@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.paint.Color?>
+
+<StackPane styleClass="login-background" stylesheets="@style.css"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.projet.fouckid.controllers.LoginController">
+
+    <BorderPane style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 30; -fx-pref-width: 800; -fx-pref-height: 600;">
+
+        <center>
+            <VBox alignment="CENTER" spacing="40" style="-fx-padding: 50;">
+
+                <!-- Logo et titre avec émoji -->
+                <VBox alignment="CENTER" spacing="20">
+                    <Label text="🎮📚🧠" style="-fx-font-size: 80px;"/>
+                    <Label text="FocusKid" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #1a1a8b;">
+                        <effect>
+                            <DropShadow color="#ffb32b" radius="10" offsetX="3" offsetY="3"/>
+                        </effect>
+                    </Label>
+                    <Label text="Apprendre en s'amusant !" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-text-fill: #ff8c00;"/>
+                </VBox>
+
+                <!-- Boutons de sélection -->
+                <HBox spacing="50" alignment="CENTER">
+
+                    <!-- Bouton Administrateur -->
+                    <VBox alignment="CENTER" spacing="15" style="-fx-cursor: hand;">
+                        <Button fx:id="adminButton" onAction="#handleAdminLogin"
+                                style="-fx-background-color: #2196F3; -fx-background-radius: 50; -fx-min-width: 180; -fx-min-height: 180;">
+                            <graphic>
+                                <VBox alignment="CENTER" spacing="10">
+                                    <Label text="👑⚙️" style="-fx-font-size: 60px;"/>
+                                    <Label text="Administrateur" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                </VBox>
+                            </graphic>
+                        </Button>
+                        <Label text="Gérer les jeux, questions et scores"
+                               style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 12px; -fx-text-fill: #666;"/>
+                    </VBox>
+
+                    <!-- Bouton Utilisateur -->
+                    <VBox alignment="CENTER" spacing="15" style="-fx-cursor: hand;">
+                        <Button fx:id="userButton" onAction="#handleUserLogin"
+                                style="-fx-background-color: #4CAF50; -fx-background-radius: 50; -fx-min-width: 180; -fx-min-height: 180;">
+                            <graphic>
+                                <VBox alignment="CENTER" spacing="10">
+                                    <Label text="👧🎮" style="-fx-font-size: 60px;"/>
+                                    <Label text="Enfant" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                </VBox>
+                            </graphic>
+                        </Button>
+                        <Label text="Jouer aux jeux et gagner des points !"
+                               style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 12px; -fx-text-fill: #666;"/>
+                    </VBox>
+
+                </HBox>
+
+                <!-- Message d'information -->
+                <Label fx:id="infoLabel" text="Choisissez votre mode d'accès"
+                       style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 14px; -fx-text-fill: #1a1a8b;"/>
+
+            </VBox>
+        </center>
+
+    </BorderPane>
+</StackPane>

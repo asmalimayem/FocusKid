@@ -11,11 +11,15 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -24,11 +28,10 @@ import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class adminDashboardGamificationController implements Initializable {
 
@@ -53,6 +56,7 @@ public class adminDashboardGamificationController implements Initializable {
     @FXML private VBox jeuDeleteView;
 
     @FXML private TextField jeuSearchField;
+    @FXML private ComboBox<String> jeuSortCombo;
     @FXML private Label totalJeux;
     @FXML private FlowPane jeuxCardsContainer;
     @FXML private VBox jeuEmptyMessage;
@@ -85,6 +89,7 @@ public class adminDashboardGamificationController implements Initializable {
     @FXML private VBox questionDeleteView;
 
     @FXML private TextField questionSearchField;
+    @FXML private ComboBox<String> questionSortCombo;
     @FXML private Label totalQuestions;
     @FXML private FlowPane questionsCardsContainer;
     @FXML private VBox questionEmptyMessage;
@@ -123,6 +128,7 @@ public class adminDashboardGamificationController implements Initializable {
     @FXML private VBox scoreDeleteView;
 
     @FXML private TextField scoreSearchField;
+    @FXML private ComboBox<String> scoreSortCombo;
     @FXML private Label totalScores;
     @FXML private Label avgScore;
     @FXML private FlowPane scoresCardsContainer;
@@ -163,7 +169,6 @@ public class adminDashboardGamificationController implements Initializable {
     private Question currentQuestion;
     private Score currentScore;
 
-    // ========== ENUM POUR LE TYPE D'ENTITÉ ==========
     private enum EntityType { JEU, QUESTION, SCORE }
     private EntityType currentEntity = EntityType.JEU;
 
@@ -178,7 +183,7 @@ public class adminDashboardGamificationController implements Initializable {
         });
 
         initializeViews();
-        handleSelectJeu(); // Sélectionner Jeu par défaut
+        handleSelectJeu();
         setupAnimations();
         refreshAllData();
     }
@@ -190,7 +195,6 @@ public class adminDashboardGamificationController implements Initializable {
         setupQuestionViews();
         setupScoreViews();
 
-        // Style des bordures
         styleViewBorder(jeuListView, "#9C27B0");
         styleViewBorder(jeuAddView, "#FF9800");
         styleViewBorder(jeuUpdateView, "#2196F3");
@@ -274,11 +278,17 @@ public class adminDashboardGamificationController implements Initializable {
         });
     }
 
-    // ========== CONFIGURATION DES VUES ==========
+    // ========== CONFIGURATION DES VUES AVEC TRI ==========
 
     private void setupJeuViews() {
         if (jeuSearchField != null) {
-            jeuSearchField.textProperty().addListener((obs, oldVal, newVal) -> filterJeux(newVal));
+            jeuSearchField.textProperty().addListener((obs, oldVal, newVal) -> filterAndSortJeux());
+        }
+
+        if (jeuSortCombo != null) {
+            jeuSortCombo.getItems().addAll("Titre (A-Z)", "Titre (Z-A)", "Type", "Niveau");
+            jeuSortCombo.setValue("Titre (A-Z)");
+            jeuSortCombo.setOnAction(e -> filterAndSortJeux());
         }
 
         if (jeuTypeCombo != null && jeuTypeCombo.getItems().isEmpty()) {
@@ -327,7 +337,13 @@ public class adminDashboardGamificationController implements Initializable {
 
     private void setupQuestionViews() {
         if (questionSearchField != null) {
-            questionSearchField.textProperty().addListener((obs, oldVal, newVal) -> filterQuestions(newVal));
+            questionSearchField.textProperty().addListener((obs, oldVal, newVal) -> filterAndSortQuestions());
+        }
+
+        if (questionSortCombo != null) {
+            questionSortCombo.getItems().addAll("Question (A-Z)", "Question (Z-A)", "Jeu", "ID");
+            questionSortCombo.setValue("Question (A-Z)");
+            questionSortCombo.setOnAction(e -> filterAndSortQuestions());
         }
 
         if (questionBonneReponseCombo != null && questionBonneReponseCombo.getItems().isEmpty()) {
@@ -374,7 +390,13 @@ public class adminDashboardGamificationController implements Initializable {
 
     private void setupScoreViews() {
         if (scoreSearchField != null) {
-            scoreSearchField.textProperty().addListener((obs, oldVal, newVal) -> filterScores(newVal));
+            scoreSearchField.textProperty().addListener((obs, oldVal, newVal) -> filterAndSortScores());
+        }
+
+        if (scoreSortCombo != null) {
+            scoreSortCombo.getItems().addAll("Points (décroissant)", "Points (croissant)", "Date (récent)", "Date (ancien)", "Utilisateur");
+            scoreSortCombo.setValue("Points (décroissant)");
+            scoreSortCombo.setOnAction(e -> filterAndSortScores());
         }
 
         if (scoreSelector != null) {
@@ -406,6 +428,103 @@ public class adminDashboardGamificationController implements Initializable {
                 }
             });
         }
+    }
+
+    // ========== MÉTHODES DE FILTRAGE ET TRI ==========
+
+    private void filterAndSortJeux() {
+        if (allJeux == null) return;
+
+        String searchText = jeuSearchField.getText();
+        String sortType = jeuSortCombo != null ? jeuSortCombo.getValue() : "Titre (A-Z)";
+
+        List<Jeu> filtered = allJeux.stream()
+                .filter(j -> j.getTitre() != null &&
+                        (searchText == null || searchText.isEmpty() ||
+                                j.getTitre().toLowerCase().contains(searchText.toLowerCase())))
+                .collect(Collectors.toList());
+
+        switch (sortType) {
+            case "Titre (A-Z)":
+                filtered.sort(Comparator.comparing(Jeu::getTitre, String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "Titre (Z-A)":
+                filtered.sort(Comparator.comparing(Jeu::getTitre, String.CASE_INSENSITIVE_ORDER).reversed());
+                break;
+            case "Type":
+                filtered.sort(Comparator.comparing(Jeu::getType));
+                break;
+            case "Niveau":
+                filtered.sort(Comparator.comparing(Jeu::getNiveau));
+                break;
+        }
+
+        displayJeux(filtered);
+        updateJeuStats();
+    }
+
+    private void filterAndSortQuestions() {
+        if (allQuestions == null) return;
+
+        String searchText = questionSearchField.getText();
+        String sortType = questionSortCombo != null ? questionSortCombo.getValue() : "Question (A-Z)";
+
+        List<Question> filtered = allQuestions.stream()
+                .filter(q -> q.getQuestionText() != null &&
+                        (searchText == null || searchText.isEmpty() ||
+                                q.getQuestionText().toLowerCase().contains(searchText.toLowerCase())))
+                .collect(Collectors.toList());
+
+        switch (sortType) {
+            case "Question (A-Z)":
+                filtered.sort(Comparator.comparing(Question::getQuestionText, String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "Question (Z-A)":
+                filtered.sort(Comparator.comparing(Question::getQuestionText, String.CASE_INSENSITIVE_ORDER).reversed());
+                break;
+            case "Jeu":
+                filtered.sort(Comparator.comparing(Question::getJeuId));
+                break;
+            case "ID":
+                filtered.sort(Comparator.comparing(Question::getId));
+                break;
+        }
+
+        displayQuestions(filtered);
+        updateQuestionStats();
+    }
+
+    private void filterAndSortScores() {
+        if (allScores == null) return;
+
+        String searchText = scoreSearchField.getText();
+        String sortType = scoreSortCombo != null ? scoreSortCombo.getValue() : "Points (décroissant)";
+
+        List<Score> filtered = allScores.stream()
+                .filter(s -> (searchText == null || searchText.isEmpty() ||
+                        String.valueOf(s.getUtilisateurId()).contains(searchText)))
+                .collect(Collectors.toList());
+
+        switch (sortType) {
+            case "Points (décroissant)":
+                filtered.sort((a, b) -> Integer.compare(b.getPoints(), a.getPoints()));
+                break;
+            case "Points (croissant)":
+                filtered.sort(Comparator.comparingInt(Score::getPoints));
+                break;
+            case "Date (récent)":
+                filtered.sort((a, b) -> b.getDatePartie().compareTo(a.getDatePartie()));
+                break;
+            case "Date (ancien)":
+                filtered.sort((a, b) -> a.getDatePartie().compareTo(b.getDatePartie()));
+                break;
+            case "Utilisateur":
+                filtered.sort(Comparator.comparingInt(Score::getUtilisateurId));
+                break;
+        }
+
+        displayScores(filtered);
+        updateScoreStats();
     }
 
     private void refreshJeuCombos() {
@@ -648,8 +767,7 @@ public class adminDashboardGamificationController implements Initializable {
 
     private void refreshJeuxList() {
         refreshAllData();
-        displayJeux(allJeux);
-        updateJeuStats();
+        filterAndSortJeux();
     }
 
     private void displayJeux(List<Jeu> jeux) {
@@ -669,22 +787,9 @@ public class adminDashboardGamificationController implements Initializable {
             jeuEmptyMessage.setManaged(false);
         }
 
-        int delay = 0;
         for (Jeu jeu : jeux) {
             VBox card = createJeuCard(jeu);
-            card.setOpacity(0);
             jeuxCardsContainer.getChildren().add(card);
-
-            PauseTransition pause = new PauseTransition(Duration.millis(delay));
-            pause.setOnFinished(e -> {
-                FadeTransition ft = new FadeTransition(Duration.millis(350), card);
-                ft.setFromValue(0); ft.setToValue(1); ft.play();
-                ScaleTransition st = new ScaleTransition(Duration.millis(350), card);
-                st.setFromX(0.85); st.setFromY(0.85);
-                st.setToX(1.0); st.setToY(1.0); st.play();
-            });
-            pause.play();
-            delay += 60;
         }
     }
 
@@ -713,7 +818,8 @@ public class adminDashboardGamificationController implements Initializable {
             ScaleTransition st = new ScaleTransition(Duration.millis(180), card);
             st.setToX(1.06); st.setToY(1.06); st.play();
             DropShadow glow = new DropShadow();
-            glow.setColor(Color.GOLD); glow.setRadius(18);
+            glow.setColor(Color.GOLD);
+            glow.setRadius(18);
             card.setEffect(glow);
         });
         card.setOnMouseExited(e -> {
@@ -732,18 +838,6 @@ public class adminDashboardGamificationController implements Initializable {
             case "EXERCICE": return "#FFF3E0";
             default: return "#FCE4EC";
         }
-    }
-
-    private void filterJeux(String searchText) {
-        if (searchText == null || searchText.isEmpty()) {
-            displayJeux(allJeux);
-            return;
-        }
-        List<Jeu> filtered = allJeux.stream()
-                .filter(j -> j.getTitre() != null &&
-                        j.getTitre().toLowerCase().contains(searchText.toLowerCase()))
-                .toList();
-        displayJeux(filtered);
     }
 
     private void updateJeuStats() {
@@ -916,8 +1010,7 @@ public class adminDashboardGamificationController implements Initializable {
 
     private void refreshQuestionsList() {
         refreshAllData();
-        displayQuestions(allQuestions);
-        updateQuestionStats();
+        filterAndSortQuestions();
         refreshJeuCombos();
     }
 
@@ -938,22 +1031,9 @@ public class adminDashboardGamificationController implements Initializable {
             questionEmptyMessage.setManaged(false);
         }
 
-        int delay = 0;
         for (Question question : questions) {
             VBox card = createQuestionCard(question);
-            card.setOpacity(0);
             questionsCardsContainer.getChildren().add(card);
-
-            PauseTransition pause = new PauseTransition(Duration.millis(delay));
-            pause.setOnFinished(e -> {
-                FadeTransition ft = new FadeTransition(Duration.millis(350), card);
-                ft.setFromValue(0); ft.setToValue(1); ft.play();
-                ScaleTransition st = new ScaleTransition(Duration.millis(350), card);
-                st.setFromX(0.85); st.setFromY(0.85);
-                st.setToX(1.0); st.setToY(1.0); st.play();
-            });
-            pause.play();
-            delay += 60;
         }
     }
 
@@ -987,7 +1067,8 @@ public class adminDashboardGamificationController implements Initializable {
             ScaleTransition st = new ScaleTransition(Duration.millis(180), card);
             st.setToX(1.06); st.setToY(1.06); st.play();
             DropShadow glow = new DropShadow();
-            glow.setColor(Color.GOLD); glow.setRadius(18);
+            glow.setColor(Color.GOLD);
+            glow.setRadius(18);
             card.setEffect(glow);
         });
         card.setOnMouseExited(e -> {
@@ -997,18 +1078,6 @@ public class adminDashboardGamificationController implements Initializable {
         });
 
         return card;
-    }
-
-    private void filterQuestions(String searchText) {
-        if (searchText == null || searchText.isEmpty()) {
-            displayQuestions(allQuestions);
-            return;
-        }
-        List<Question> filtered = allQuestions.stream()
-                .filter(q -> q.getQuestionText() != null &&
-                        q.getQuestionText().toLowerCase().contains(searchText.toLowerCase()))
-                .toList();
-        displayQuestions(filtered);
     }
 
     private void updateQuestionStats() {
@@ -1223,8 +1292,7 @@ public class adminDashboardGamificationController implements Initializable {
 
     private void refreshScoresList() {
         refreshAllData();
-        displayScores(allScores);
-        updateScoreStats();
+        filterAndSortScores();
         refreshJeuCombos();
     }
 
@@ -1245,22 +1313,9 @@ public class adminDashboardGamificationController implements Initializable {
             scoreEmptyMessage.setManaged(false);
         }
 
-        int delay = 0;
         for (Score score : scores) {
             VBox card = createScoreCard(score);
-            card.setOpacity(0);
             scoresCardsContainer.getChildren().add(card);
-
-            PauseTransition pause = new PauseTransition(Duration.millis(delay));
-            pause.setOnFinished(e -> {
-                FadeTransition ft = new FadeTransition(Duration.millis(350), card);
-                ft.setFromValue(0); ft.setToValue(1); ft.play();
-                ScaleTransition st = new ScaleTransition(Duration.millis(350), card);
-                st.setFromX(0.85); st.setFromY(0.85);
-                st.setToX(1.0); st.setToY(1.0); st.play();
-            });
-            pause.play();
-            delay += 60;
         }
     }
 
@@ -1292,7 +1347,8 @@ public class adminDashboardGamificationController implements Initializable {
             ScaleTransition st = new ScaleTransition(Duration.millis(180), card);
             st.setToX(1.06); st.setToY(1.06); st.play();
             DropShadow glow = new DropShadow();
-            glow.setColor(Color.GOLD); glow.setRadius(18);
+            glow.setColor(Color.GOLD);
+            glow.setRadius(18);
             card.setEffect(glow);
         });
         card.setOnMouseExited(e -> {
@@ -1302,22 +1358,6 @@ public class adminDashboardGamificationController implements Initializable {
         });
 
         return card;
-    }
-
-    private void filterScores(String searchText) {
-        if (searchText == null || searchText.isEmpty()) {
-            displayScores(allScores);
-            return;
-        }
-        try {
-            int userId = Integer.parseInt(searchText);
-            List<Score> filtered = allScores.stream()
-                    .filter(s -> s.getUtilisateurId() == userId)
-                    .toList();
-            displayScores(filtered);
-        } catch (NumberFormatException e) {
-            displayScores(allScores);
-        }
     }
 
     private void updateScoreStats() {

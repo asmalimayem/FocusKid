@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane styleClass="result-background" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.projet.fouckid.controllers.ResultController">
+
+    <center>
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 50; -fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 40;">
+
+            <Label fx:id="congratsLabel" text="🎉 FÉLICITATIONS ! 🎉"
+                   style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #FF6B35;"/>
+
+            <Label fx:id="gameNameLabel" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 28px; -fx-text-fill: #1a1a8b;"/>
+
+            <VBox alignment="CENTER" spacing="15" style="-fx-padding: 30; -fx-background-color: #F5F5F5; -fx-background-radius: 30;">
+                <Label text="Votre Score" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 24px; -fx-text-fill: #666;"/>
+                <Label fx:id="scoreLabel" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 72px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+                <Label fx:id="percentageLabel" style="-fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-text-fill: #ff8c00;"/>
+            </VBox>
+
+            <HBox spacing="30" alignment="CENTER">
+                <Button text="🎮 Rejouer" onAction="#handlePlayAgain"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-padding: 15 30; -fx-background-radius: 25;"/>
+                <Button text="🏠 Menu Principal" onAction="#handleBackToMenu"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 20px; -fx-padding: 15 30; -fx-background-radius: 25;"/>
+            </HBox>
+
+            <Button text="📊 Voir tous mes scores" onAction="#handleViewScores"
+                    style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 20;"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
