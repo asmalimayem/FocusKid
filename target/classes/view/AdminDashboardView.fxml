@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.AdminDashboardController"
+            stylesheets="@focuskid.css"
+            styleClass="root-page"
+            prefWidth="1200"
+            prefHeight="750">
+
+    <!-- ===== HEADER ===== -->
+    <top>
+        <HBox styleClass="app-header" alignment="CENTER_LEFT" spacing="12"
+              prefHeight="66" minHeight="66" maxHeight="66">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="38" fitWidth="38">
+                    <Image url="@/images/logo.png"/>
+                </ImageView>
+                <Label text="FocusKid — Admin" styleClass="app-title"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER_RIGHT" spacing="8">
+                <Label text="Administrateur" styleClass="header-username"/>
+                <StackPane styleClass="header-avatar">
+                    <Label text="A" style="-fx-font-size:16px; -fx-font-weight:bold; -fx-text-fill:#1a1a8b;"/>
+                </StackPane>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ===== SIDEBAR GAUCHE ===== -->
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="8" styleClass="sidebar"
+              prefWidth="110" minWidth="110" maxWidth="110">
+            <padding><Insets top="14" bottom="14" left="5" right="5"/></padding>
+
+            <!-- Carnets -->
+            <Button fx:id="btnNavCarnets" styleClass="round-button" onAction="#showCarnets">
+                <graphic>
+                    <VBox alignment="CENTER" spacing="4">
+                        <StackPane styleClass="side-icon-circle">
+                            <ImageView fitWidth="30" preserveRatio="true" styleClass="sidebar-icon">
+                                <Image url="@/images/carnet.png"/>
+                            </ImageView>
+                        </StackPane>
+                        <Label text="Carnets" styleClass="side-label"/>
+                    </VBox>
+                </graphic>
+            </Button>
+
+            <!-- Commentaires -->
+            <Button fx:id="btnNavCommentaires" styleClass="round-button" onAction="#showCommentaires">
+                <graphic>
+                    <VBox alignment="CENTER" spacing="4">
+                        <StackPane styleClass="side-icon-circle">
+                            <ImageView fitWidth="30" preserveRatio="true" styleClass="sidebar-icon">
+                                <Image url="@/images/commen.png"/>
+                            </ImageView>
+                        </StackPane>
+                        <Label text="Commentaires" styleClass="side-label"/>
+                    </VBox>
+                </graphic>
+            </Button>
+
+            <!-- Stats -->
+            <Button fx:id="btnNavStats" styleClass="round-button" onAction="#showStats">
+                <graphic>
+                    <VBox alignment="CENTER" spacing="4">
+                        <StackPane styleClass="side-icon-circle">
+                            <ImageView fitWidth="30" preserveRatio="true" styleClass="sidebar-icon">
+                                <Image url="@/images/stat.png"/>
+                            </ImageView>
+                        </StackPane>
+                        <Label text="Stats" styleClass="side-label"/>
+                    </VBox>
+                </graphic>
+            </Button>
+
+            <Region VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <!-- ===== ZONE CENTRALE ===== -->
+    <center>
+        <VBox VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="main-outer-scroll">
+                <content>
+                    <VBox styleClass="main-content-container" spacing="10" alignment="TOP_CENTER">
+
+                        <!-- ════════════ VUE CARNETS ════════════ -->
+                        <VBox fx:id="carnetsView" spacing="12" visible="true" managed="true">
+                            <Label text="📋 Gestion des Carnets" styleClass="section-title"/>
+
+                            <!-- Filtres -->
+                            <HBox styleClass="filter-bar" spacing="12" alignment="CENTER_LEFT">
+                                <Label text="🎛️ Filtres" styleClass="filter-bar-title"/>
+                                <Region styleClass="filter-separator" prefWidth="2" minWidth="2" maxWidth="2" prefHeight="32"/>
+                                <VBox spacing="3">
+                                    <Label text="Recherche" styleClass="filter-label"/>
+                                    <TextField fx:id="carnetsSearchField" promptText="Activité, lieu..."
+                                               styleClass="text-field" prefWidth="175"
+                                               onKeyReleased="#onCarnetsSearch"/>
+                                </VBox>
+                                <Region styleClass="filter-separator" prefWidth="2" minWidth="2" maxWidth="2" prefHeight="32"/>
+                                <VBox spacing="3">
+                                    <Label text="📅 Date début" styleClass="filter-label"/>
+                                    <DatePicker fx:id="carnetsDateDebut" styleClass="filter-date" promptText="jj/mm/aaaa"/>
+                                </VBox>
+                                <VBox spacing="3">
+                                    <Label text="📅 Date fin" styleClass="filter-label"/>
+                                    <DatePicker fx:id="carnetsDateFin" styleClass="filter-date" promptText="jj/mm/aaaa"/>
+                                </VBox>
+                                <Region styleClass="filter-separator" prefWidth="2" minWidth="2" maxWidth="2" prefHeight="32"/>
+                                <VBox spacing="3">
+                                    <Label text="🎯 Type activité" styleClass="filter-label"/>
+                                    <ComboBox fx:id="carnetsTypeActivite" styleClass="filter-combo"
+                                              promptText="Tous les types" prefWidth="155"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button text="Appliquer" styleClass="filter-apply-btn" onAction="#applyCarnetFilters"/>
+                                <Button text="Reset"     styleClass="filter-reset-btn"  onAction="#resetCarnetFilters"/>
+                                <Label fx:id="carnetsCountBadge" text="0 résultats" styleClass="filter-count-badge"/>
+                            </HBox>
+
+                            <!-- Tableau carnets -->
+                            <VBox styleClass="white-board" spacing="12" VBox.vgrow="ALWAYS">
+                                <HBox styleClass="form-mode-bar" alignment="CENTER_LEFT" spacing="12">
+                                    <Label text="📋  Liste des Carnets" styleClass="form-mode-label"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button styleClass="btn-nouveau" onAction="#handleNewCarnet">
+                                        <graphic>
+                                            <HBox alignment="CENTER" spacing="6">
+                                                <Label text="✨" style="-fx-font-size:15px;"/>
+                                                <Label text="Nouveau Carnet" styleClass="btn-nouveau-label"/>
+                                            </HBox>
+                                        </graphic>
+                                    </Button>
+                                    <Button styleClass="btn-nouveau" onAction="#refreshAll">
+                                        <graphic>
+                                            <HBox alignment="CENTER" spacing="6">
+                                                <Label text="🔄" style="-fx-font-size:15px;"/>
+                                                <Label text="Rafraîchir" styleClass="btn-nouveau-label"/>
+                                            </HBox>
+                                        </graphic>
+                                    </Button>
+                                </HBox>
+
+                                <TableView fx:id="carnetsTable" VBox.vgrow="ALWAYS" minHeight="280">
+                                    <columns>
+                                        <TableColumn fx:id="colCarnetId"             text="ID"             prefWidth="50"  minWidth="50"/>
+                                        <TableColumn fx:id="colCarnetDate"           text="Date"           prefWidth="95"  minWidth="80"/>
+                                        <TableColumn fx:id="colCarnetHeureDebut"     text="Début"          prefWidth="72"  minWidth="60"/>
+                                        <TableColumn fx:id="colCarnetHeureFin"       text="Fin"            prefWidth="72"  minWidth="60"/>
+                                        <TableColumn fx:id="colCarnetDuree"          text="Durée"          prefWidth="72"  minWidth="60"/>
+                                        <TableColumn fx:id="colCarnetLieu"           text="Lieu"           prefWidth="105" minWidth="80"/>
+                                        <TableColumn fx:id="colCarnetMatiere"        text="Matière"        prefWidth="105" minWidth="80"/>
+                                        <TableColumn fx:id="colCarnetTypeActivite"   text="Type"           prefWidth="88"  minWidth="70"/>
+                                        <TableColumn fx:id="colCarnetDifficulte"     text="Difficulté"     prefWidth="82"  minWidth="70"/>
+                                        <TableColumn fx:id="colCarnetConcentration"  text="Concentration"  prefWidth="100" minWidth="90"/>
+                                        <TableColumn fx:id="colCarnetAgitation"      text="Agitation"      prefWidth="82"  minWidth="70"/>
+                                        <TableColumn fx:id="colCarnetAutonomie"      text="Autonomie"      prefWidth="82"  minWidth="70"/>
+                                        <TableColumn fx:id="colCarnetInterruptions"  text="Interruptions"  prefWidth="92"  minWidth="80"/>
+                                        <TableColumn fx:id="colCarnetTempsPerte"     text="Tps Perte"      prefWidth="82"  minWidth="70"/>
+                                        <TableColumn fx:id="colCarnetTravailleSeul"  text="Seul"           prefWidth="60"  minWidth="50"/>
+                                        <TableColumn fx:id="colCarnetDemandeAide"    text="Aide"           prefWidth="60"  minWidth="50"/>
+                                        <TableColumn fx:id="colCarnetDifficultes"    text="Difficultés"    prefWidth="130" minWidth="100"/>
+                                        <TableColumn fx:id="colCarnetPointsPositifs" text="Points +"       prefWidth="130" minWidth="100"/>
+                                        <TableColumn fx:id="colCarnetActions"        text="Actions"        prefWidth="110" minWidth="110"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Aucun carnet trouvé 📋" styleClass="form-label"/>
+                                    </placeholder>
+                                </TableView>
+                            </VBox>
+
+                            <!-- Formulaire Carnet -->
+                            <VBox fx:id="carnetFormPane" visible="false" managed="false"
+                                  styleClass="white-board" spacing="12">
+                                <HBox styleClass="form-mode-bar" alignment="CENTER_LEFT" spacing="10">
+                                    <Button styleClass="btn-retour" onAction="#hideCarnetForm">
+                                        <graphic>
+                                            <Label text="⬅ Retour"
+                                                   style="-fx-font-size:13px; -fx-text-fill:#1a1a8b; -fx-font-weight:bold;"/>
+                                        </graphic>
+                                    </Button>
+                                    <Label fx:id="carnetFormModeLabel" text="✏️  Nouveau Carnet" styleClass="form-mode-label"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                </HBox>
+
+                                <ScrollPane fitToWidth="true" fitToHeight="false"
+                                            styleClass="form-scroll-pane"
+                                            prefHeight="340" minHeight="340" maxHeight="340"
+                                            VBox.vgrow="NEVER">
+                                    <content>
+                                        <VBox spacing="10" style="-fx-padding:6 10 10 6;">
+
+                                            <HBox spacing="18" alignment="TOP_LEFT">
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="📅  Date :" styleClass="form-label"/>
+                                                    <DatePicker fx:id="dateEtudeDP" maxWidth="Infinity"/>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="📖  Matière :" styleClass="form-label"/>
+                                                    <TextField fx:id="matiereTF" maxWidth="Infinity"/>
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox spacing="18" alignment="TOP_LEFT">
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🕒  Heure Début :" styleClass="form-label"/>
+                                                    <HBox styleClass="heure-picker-box" spacing="5" alignment="CENTER_LEFT">
+                                                        <Spinner fx:id="heureDebutH" prefWidth="68" styleClass="spinner,spinner-debut"/>
+                                                        <Label text="h" styleClass="heure-sep-label"/>
+                                                        <Spinner fx:id="heureDebutM" prefWidth="68" styleClass="spinner,spinner-debut"/>
+                                                        <Label text="min" styleClass="heure-sep-label"/>
+                                                    </HBox>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🕔  Heure Fin :" styleClass="form-label"/>
+                                                    <HBox styleClass="heure-picker-box" spacing="5" alignment="CENTER_LEFT">
+                                                        <Spinner fx:id="heureFinH" prefWidth="68" styleClass="spinner,spinner-fin"/>
+                                                        <Label text="h" styleClass="heure-sep-label"/>
+                                                        <Spinner fx:id="heureFinM" prefWidth="68" styleClass="spinner,spinner-fin"/>
+                                                        <Label text="min" styleClass="heure-sep-label"/>
+                                                    </HBox>
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox spacing="18" alignment="TOP_LEFT">
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="⏱  Durée (min) :" styleClass="form-label"/>
+                                                    <TextField fx:id="dureeTotaleTF" editable="false" maxWidth="Infinity"/>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="📍  Lieu :" styleClass="form-label"/>
+                                                    <TextField fx:id="lieuTF" maxWidth="Infinity"/>
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox spacing="18" alignment="TOP_LEFT">
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🎯  Type activité :" styleClass="form-label"/>
+                                                    <ComboBox fx:id="typeActiviteCB" maxWidth="Infinity"/>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="⚡  Difficulté :" styleClass="form-label"/>
+                                                    <ComboBox fx:id="niveauDifficulteCB" maxWidth="Infinity"/>
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox spacing="18" alignment="TOP_LEFT">
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🧠  Concentration :" styleClass="form-label"/>
+                                                    <ComboBox fx:id="niveauConcentrationCB" maxWidth="Infinity"/>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🌀  Agitation :" styleClass="form-label"/>
+                                                    <ComboBox fx:id="niveauAgitationCB" maxWidth="Infinity"/>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🦋  Autonomie :" styleClass="form-label"/>
+                                                    <ComboBox fx:id="niveauAutonomieCB" maxWidth="Infinity"/>
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox spacing="18" alignment="TOP_LEFT">
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="🔔  Interruptions :" styleClass="form-label"/>
+                                                    <TextField fx:id="nombreInterruptionsTF" maxWidth="Infinity"/>
+                                                </VBox>
+                                                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                    <Label text="⏳  Temps Perte (min) :" styleClass="form-label"/>
+                                                    <TextField fx:id="tempsAvantPerteTF" maxWidth="Infinity"/>
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox spacing="40" alignment="CENTER_LEFT" style="-fx-padding:2 0 0 4;">
+                                                <CheckBox fx:id="travailleSeulCB" text="👤  Travaille seul"/>
+                                                <CheckBox fx:id="demandeAideCB"   text="🤝  Demande aide"/>
+                                            </HBox>
+
+                                            <VBox spacing="4">
+                                                <Label text="⚠️  Difficultés :" styleClass="form-label"/>
+                                                <TextArea fx:id="difficultesTA" prefHeight="50" maxWidth="Infinity" wrapText="true"/>
+                                            </VBox>
+
+                                            <VBox spacing="4">
+                                                <Label text="✅  Points positifs :" styleClass="form-label"/>
+                                                <TextArea fx:id="pointsPositifsTA" prefHeight="50" maxWidth="Infinity" wrapText="true"/>
+                                            </VBox>
+
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+
+                                <HBox spacing="10" alignment="CENTER_RIGHT">
+                                    <Button text="✅  Enregistrer" styleClass="filter-apply-btn" onAction="#saveCarnet"/>
+                                    <Button text="✖  Annuler"     styleClass="filter-reset-btn"  onAction="#hideCarnetForm"/>
+                                </HBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- ════════════ VUE COMMENTAIRES ════════════ -->
+                        <VBox fx:id="commentairesView" spacing="12" visible="false" managed="false">
+                            <Label text="💬 Gestion des Commentaires" styleClass="section-title"/>
+
+                            <HBox styleClass="filter-bar" spacing="12" alignment="CENTER_LEFT">
+                                <Label text="🎛️ Filtres" styleClass="filter-bar-title"/>
+                                <Region styleClass="filter-separator" prefWidth="2" minWidth="2" maxWidth="2" prefHeight="32"/>
+                                <VBox spacing="3">
+                                    <Label text="Recherche utilisateur" styleClass="filter-label"/>
+                                    <TextField fx:id="commSearchField" promptText="Nom utilisateur..."
+                                               styleClass="text-field" prefWidth="175"
+                                               onKeyReleased="#onCommSearch"/>
+                                </VBox>
+                                <Region styleClass="filter-separator" prefWidth="2" minWidth="2" maxWidth="2" prefHeight="32"/>
+                                <VBox spacing="3">
+                                    <Label text="📅 Date début" styleClass="filter-label"/>
+                                    <DatePicker fx:id="commDateDebut" styleClass="filter-date" promptText="jj/mm/aaaa"/>
+                                </VBox>
+                                <VBox spacing="3">
+                                    <Label text="📅 Date fin" styleClass="filter-label"/>
+                                    <DatePicker fx:id="commDateFin" styleClass="filter-date" promptText="jj/mm/aaaa"/>
+                                </VBox>
+                                <Region styleClass="filter-separator" prefWidth="2" minWidth="2" maxWidth="2" prefHeight="32"/>
+                                <VBox spacing="3">
+                                    <Label text="🎯 Statut" styleClass="filter-label"/>
+                                    <ComboBox fx:id="commStatutFilter" styleClass="filter-combo"
+                                              promptText="Tous" prefWidth="140"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button text="Appliquer" styleClass="filter-apply-btn" onAction="#applyCommFilters"/>
+                                <Button text="Reset"     styleClass="filter-reset-btn"  onAction="#resetCommFilters"/>
+                                <Label fx:id="commCountBadge" text="0 résultats" styleClass="filter-count-badge"/>
+                            </HBox>
+
+                            <VBox styleClass="white-board" spacing="12">
+                                <HBox styleClass="form-mode-bar" alignment="CENTER_LEFT" spacing="12">
+                                    <Label text="💬  Liste des Commentaires" styleClass="form-mode-label"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Label fx:id="commInfoLabel" text="" styleClass="filter-count-badge"/>
+                                </HBox>
+
+                                <TableView fx:id="commentsTable" VBox.vgrow="ALWAYS" minHeight="320">
+                                    <columns>
+                                        <TableColumn fx:id="colCommId"          text="ID"           prefWidth="50"  minWidth="50"/>
+                                        <TableColumn fx:id="colCommDate"        text="Date"         prefWidth="100" minWidth="80"/>
+                                        <TableColumn fx:id="colCommUtilisateur" text="Utilisateur"  prefWidth="135" minWidth="100"/>
+                                        <TableColumn fx:id="colCommCarnet"      text="Carnet"       prefWidth="100" minWidth="80"/>
+                                        <TableColumn fx:id="colCommContenu"     text="Commentaire"  prefWidth="250" minWidth="180"/>
+                                        <TableColumn fx:id="colCommStatut"      text="Statut"       prefWidth="90"  minWidth="80"/>
+                                        <TableColumn fx:id="colCommActions"     text="Actions"      prefWidth="110" minWidth="110"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Aucun commentaire trouvé 💬" styleClass="form-label"/>
+                                    </placeholder>
+                                </TableView>
+
+                                <VBox fx:id="commDetailPane" visible="false" managed="false"
+                                      styleClass="form-mode-bar" spacing="8">
+                                    <Label text="🔍 Détail du commentaire" styleClass="form-mode-label"/>
+                                    <TextArea fx:id="commDetailText" prefRowCount="3"
+                                              editable="false" wrapText="true" styleClass="text-area"/>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- ════════════ VUE STATISTIQUES ════════════ -->
+                        <VBox fx:id="statsView" spacing="12" visible="false" managed="false">
+                            <Label text="📊 Statistiques Globales" styleClass="section-title"/>
+                            <HBox spacing="14">
+                                <VBox styleClass="white-board" HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER">
+                                    <Label text="📋" style="-fx-font-size:32px;"/>
+                                    <Label fx:id="kpiTotalCarnets" text="—"
+                                           style="-fx-font-size:30px; -fx-font-weight:bold; -fx-text-fill:#1a1a8b; -fx-font-family:'Comic Sans MS';"/>
+                                    <Label text="Carnets total" styleClass="side-label"/>
+                                </VBox>
+                                <VBox styleClass="white-board" HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER">
+                                    <Label text="💬" style="-fx-font-size:32px;"/>
+                                    <Label fx:id="kpiTotalComm" text="—"
+                                           style="-fx-font-size:30px; -fx-font-weight:bold; -fx-text-fill:#1a1a8b; -fx-font-family:'Comic Sans MS';"/>
+                                    <Label text="Commentaires" styleClass="side-label"/>
+                                </VBox>
+                                <VBox styleClass="white-board" HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER">
+                                    <Label text="👥" style="-fx-font-size:32px;"/>
+                                    <Label fx:id="kpiTotalUsers" text="—"
+                                           style="-fx-font-size:30px; -fx-font-weight:bold; -fx-text-fill:#1a1a8b; -fx-font-family:'Comic Sans MS';"/>
+                                    <Label text="Utilisateurs" styleClass="side-label"/>
+                                </VBox>
+                            </HBox>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button text="🔄  Rafraîchir les stats" styleClass="filter-apply-btn" onAction="#refreshStats"/>
+                            </HBox>
+                        </VBox>
+
+                        <Region prefHeight="10"/>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- BARRE DE NAVIGATION (bas) -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="bottom-wrapper" prefHeight="100">
+            <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav"
+                  prefHeight="90" minHeight="90" maxHeight="90">
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/cours.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Cours" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/quiz.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Exercices" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item-active" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="27" styleClass="nav-icon-bg-active"/>
+                        <ImageView fitHeight="36" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/famille.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Parents" styleClass="nav-label-active"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/puzzle.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Boutique" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/meditation.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Session De Calme" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/emotions.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Émotions" styleClass="nav-label"/>
+                </VBox>
+            </HBox>
+        </HBox>
+    </bottom>
+
+</BorderPane>

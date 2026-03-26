@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.CommentaireController"
+            stylesheets="@focuskid.css"
+            styleClass="root-page"
+            prefWidth="1100"
+            prefHeight="450"
+            minHeight="450">
+
+    <!-- ===== HEADER ===== -->
+    <top>
+        <HBox styleClass="app-header" alignment="CENTER_LEFT" spacing="12"
+              prefHeight="70" minHeight="70" maxHeight="70">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+
+    <!-- 🔙 Bouton retour -->
+    <Button onAction="#retourCarnet" styleClass="btn-retour">
+        <graphic>
+            <Label text="⬅" style="-fx-font-size:18px;"/>
+        </graphic>
+    </Button>
+                <ImageView fitHeight="40" fitWidth="40">
+                    <Image url="@/images/logo.png"/>
+                </ImageView>
+                <Label text="FocusKid" styleClass="app-title"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER_RIGHT" spacing="8">
+                <Label text="USERNAME" styleClass="header-username"/>
+                <StackPane styleClass="header-avatar">
+                    <Label text="👤" style="-fx-font-size:14px;"/>
+                </StackPane>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ===== SIDEBAR ===== -->
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="8" styleClass="sidebar"
+              prefWidth="120" minWidth="120" maxWidth="120">
+            <padding><Insets top="6" bottom="6" left="6" right="6"/></padding>
+
+            <Button styleClass="round-button" onAction="#ajouterCommentaire">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/plus.png"/>
+                    </ImageView>
+                    <Label text="Ajouter" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+            <Button styleClass="round-button" onAction="#ouvrirListe">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/list.png"/>
+                    </ImageView>
+                    <Label text="Lister" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+            
+
+            <Button styleClass="round-button" onAction="#modifierCommentaire">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/refresh.png"/>
+                    </ImageView>
+                    <Label text="Modifier" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+            <Button styleClass="round-button" onAction="#supprimerCommentaire">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/trash.png"/>
+                    </ImageView>
+                    <Label text="Supprimer" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+        </VBox>
+    </left>
+
+    <!-- ===== ZONE CENTRALE ===== -->
+    <center>
+        <VBox VBox.vgrow="ALWAYS">
+           <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" maxHeight="460">
+                <content>
+                    <VBox styleClass="main-content-container" spacing="8" alignment="TOP_CENTER">
+
+                        <Label text="💬 Gestion des Commentaires" styleClass="section-title"/>
+
+                        <VBox styleClass="white-board" spacing="10" maxWidth="800" VBox.vgrow="ALWAYS">
+
+                            <!-- BANDEAU MODE FORMULAIRE -->
+                            <HBox styleClass="form-mode-bar" alignment="CENTER_LEFT" spacing="12">
+                                <Label fx:id="formModeLabel"
+                                       text="✏️  Nouveau commentaire"
+                                       styleClass="form-mode-label"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button styleClass="btn-nouveau" onAction="#nouveauCommentaire">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="6">
+                                            <Label text="✨" style="-fx-font-size:16px;"/>
+                                            <Label text="Vider / Nouveau" styleClass="btn-nouveau-label"/>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                            </HBox>
+
+                            <!-- FORMULAIRE -->
+                            <ScrollPane fitToWidth="true" styleClass="form-scroll-pane"
+                                        prefHeight="200" minHeight="200" maxHeight="200"
+                                        VBox.vgrow="NEVER">
+                                <content>
+                                    <VBox spacing="12" style="-fx-padding:8 12 12 8;">
+
+                                        <!-- PAIRE 1 : ID Carnet  ║  Date -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🗂️  ID Carnet :" styleClass="form-label"/>
+                                                <TextField fx:id="carnetIdTF" maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="📅  Date :" styleClass="form-label"/>
+                                                <DatePicker fx:id="dateCommentaireDP" maxWidth="Infinity"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- PAIRE 2 : Type seul -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🎯  Type :" styleClass="form-label"/>
+                                                <ComboBox fx:id="typeCommentaireCB" maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS"/>
+                                        </HBox>
+
+                                        <!-- SEUL : Texte pleine largeur -->
+                                        <VBox spacing="4">
+                                            <Label text="💬  Texte :" styleClass="form-label"/>
+                                            <TextArea fx:id="texteCommentaireTA"
+                                                      prefHeight="70" maxWidth="Infinity" wrapText="true"/>
+                                        </VBox>
+
+                                    </VBox>
+                                </content>
+                            </ScrollPane>
+
+                            <!-- BARRE DE FILTRES -->
+                            <HBox styleClass="filter-bar" alignment="CENTER_LEFT" spacing="16"
+                                  style="-fx-padding: 10 20 10 20;">
+                                <Label text="🎛️  Filtres" styleClass="filter-bar-title"/>
+                                <Region styleClass="filter-separator"
+                                        prefWidth="2" minWidth="2" maxWidth="2" prefHeight="36"/>
+                                <VBox spacing="2" alignment="CENTER_LEFT">
+                                    <Label text="📅  Par date" styleClass="filter-label"/>
+                                    <DatePicker fx:id="filtreDateDP" styleClass="filter-date"
+                                                promptText="Choisir une date"/>
+                                </VBox>
+                                <Region styleClass="filter-separator"
+                                        prefWidth="2" minWidth="2" maxWidth="2" prefHeight="36"/>
+                                <VBox spacing="2" alignment="CENTER_LEFT">
+                                    <Label text="🎯  Par type" styleClass="filter-label"/>
+                                    <ComboBox fx:id="filtreTypeCB" styleClass="filter-combo"
+                                              promptText="Tous les types"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="filtreCountLabel" text="● Tous"
+                                       styleClass="filter-count-badge"/>
+                                <Button text="↺  Réinitialiser" styleClass="filter-reset-btn"
+                                        onAction="#resetFiltre"/>
+                            </HBox>
+
+                            <!-- TABLEAU COMMENTAIRES -->
+                            <TableView fx:id="tableCommentaire"
+                                       VBox.vgrow="NEVER"
+                                       prefHeight="200" minHeight="200">
+                                <placeholder>
+                                    <Label text="Aucun commentaire trouvé 💬"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="colId"    text="ID"    prefWidth="80"/>
+                                    <TableColumn fx:id="colDate"  text="Date"  prefWidth="150"/>
+                                    <TableColumn fx:id="colType"  text="Type"  prefWidth="150"/>
+                                    <TableColumn fx:id="colTexte" text="Texte" prefWidth="680"/>
+                                </columns>
+                            </TableView>
+
+                        </VBox>
+                        <Region prefHeight="8"/>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- BARRE DE NAVIGATION (bas) -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="bottom-wrapper" prefHeight="100">
+            <HBox alignment="CENTER" spacing="20" styleClass="bottom-nav"
+                  prefHeight="90" minHeight="90" maxHeight="90">
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/cours.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Cours" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/quiz.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Exercices" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item-active" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="27" styleClass="nav-icon-bg-active"/>
+                        <ImageView fitHeight="36" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/famille.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Parents" styleClass="nav-label-active"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/puzzle.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Boutique" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/meditation.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Session De Calme" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/emotions.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Émotions" styleClass="nav-label"/>
+                </VBox>
+            </HBox>
+        </HBox>
+    </bottom>
+
+</BorderPane>

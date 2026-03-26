@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.edu.esprit.controller.CarnetController"
+            stylesheets="@focuskid.css"
+            styleClass="root-page"
+            prefWidth="950"
+            prefHeight="760">
+
+    <!-- ===== HEADER ===== -->
+    <top>
+        <HBox styleClass="app-header"
+              alignment="CENTER_LEFT"
+              spacing="12"
+              prefHeight="70"
+              minHeight="70"
+              maxHeight="70">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <ImageView fitHeight="40" fitWidth="40">
+                    <Image url="@/images/logo.png"/>
+                </ImageView>
+                <Label text="FocusKid" styleClass="app-title"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER_RIGHT" spacing="8">
+                <Label text="USERNAME" styleClass="header-username"/>
+                <StackPane styleClass="header-avatar">
+                    <Label text="👤" style="-fx-font-size:14px;"/>
+                </StackPane>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ===== SIDEBAR ===== -->
+    <left>
+        <VBox alignment="TOP_CENTER"
+              spacing="8"
+              styleClass="sidebar"
+              prefWidth="120"
+              minWidth="120"
+              maxWidth="120">
+            <padding><Insets top="6" bottom="6" left="6" right="6"/></padding>
+
+            <Button styleClass="round-button" onAction="#ajouterCarnet">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/plus.png"/>
+                    </ImageView>
+                    <Label text="Ajouter" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+            <Button styleClass="round-button" onAction="#consulterCarnets">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/list.png"/>
+                    </ImageView>
+                    <Label text="Lister" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+            <Button styleClass="round-button" onAction="#modifierCarnet">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/refresh.png"/>
+                    </ImageView>
+                    <Label text="Modifier" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+            <Button styleClass="round-button" onAction="#supprimerCarnet">
+                <graphic><VBox alignment="CENTER" spacing="2">
+                    <ImageView fitWidth="40" preserveRatio="true">
+                        <Image url="@/images/trash.png"/>
+                    </ImageView>
+                    <Label text="Supprimer" styleClass="side-label"/>
+                </VBox></graphic>
+            </Button>
+
+        </VBox>
+    </left>
+
+    <!-- ===== ZONE CENTRALE ===== -->
+    <center>
+        <VBox VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox styleClass="main-content-container"
+                          spacing="8"
+                          alignment="TOP_CENTER">
+
+                        <Label text="📚 Gestion des Carnets Éducatifs"
+                               styleClass="section-title"/>
+
+                        <VBox styleClass="white-board"
+                              spacing="10"
+                              maxWidth="900"
+                              VBox.vgrow="ALWAYS">
+
+                            <!-- BANDEAU MODE FORMULAIRE -->
+                            <HBox styleClass="form-mode-bar"
+                                  alignment="CENTER_LEFT"
+                                  spacing="12">
+                                <Label fx:id="formModeLabel"
+                                       text="✏️  Nouveau carnet"
+                                       styleClass="form-mode-label"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button styleClass="btn-nouveau"
+                                        onAction="#nouveauCarnet">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="6">
+                                            <Label text="✨" style="-fx-font-size:16px;"/>
+                                            <Label text="Vider / Nouveau" styleClass="btn-nouveau-label"/>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                            </HBox>
+
+                            <!-- ===================================================
+                                 FORMULAIRE — champs organisés en paires
+                                 =================================================== -->
+                            <ScrollPane fitToWidth="true" fitToHeight="false"
+                                        styleClass="form-scroll-pane"
+                                        prefHeight="360" minHeight="360" maxHeight="360"
+                                        VBox.vgrow="NEVER">
+                                <content>
+                                    <VBox spacing="12" style="-fx-padding:8 12 12 8;">
+
+                                        <!-- ══ PAIRE 1 : Date  ║  Matière ══ -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="📅  Date :" styleClass="form-label"/>
+                                                <DatePicker fx:id="dateEtudeDP"
+                                                            maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="📖  Matière :" styleClass="form-label"/>
+                                                <TextField fx:id="matiereTF"
+                                                           maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- ══ PAIRE 2 : Heure Début  ║  Heure Fin ══ -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🕒  Heure Début :" styleClass="form-label"/>
+                                                <HBox styleClass="heure-picker-box" spacing="6"
+                                                      alignment="CENTER_LEFT">
+                                                    <Spinner fx:id="heureDebutH" prefWidth="72"
+                                                             styleClass="spinner,spinner-debut"/>
+                                                    <Label text="h" styleClass="heure-sep-label"/>
+                                                    <Spinner fx:id="heureDebutM" prefWidth="72"
+                                                             styleClass="spinner,spinner-debut"/>
+                                                    <Label text="min" styleClass="heure-sep-label"/>
+                                                </HBox>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🕔  Heure Fin :" styleClass="form-label"/>
+                                                <HBox styleClass="heure-picker-box" spacing="6"
+                                                      alignment="CENTER_LEFT">
+                                                    <Spinner fx:id="heureFinH" prefWidth="72"
+                                                             styleClass="spinner,spinner-fin"/>
+                                                    <Label text="h" styleClass="heure-sep-label"/>
+                                                    <Spinner fx:id="heureFinM" prefWidth="72"
+                                                             styleClass="spinner,spinner-fin"/>
+                                                    <Label text="min" styleClass="heure-sep-label"/>
+                                                </HBox>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- ══ PAIRE 3 : Durée (auto)  ║  Lieu ══ -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="⏱  Durée (min) :" styleClass="form-label"/>
+                                                <TextField fx:id="dureeTotaleTF" editable="false"
+                                                           maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="📍  Lieu :" styleClass="form-label"/>
+                                                <TextField fx:id="lieuTF" maxWidth="Infinity"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- ══ PAIRE 4 : Type activité  ║  Niveau Difficulté ══ -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🎯  Type activité :" styleClass="form-label"/>
+                                                <ComboBox fx:id="typeActiviteCB" maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="⚡  Niveau Difficulté :" styleClass="form-label"/>
+                                                <ComboBox fx:id="niveauDifficulteCB" maxWidth="Infinity"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- ══ TRIPLET 5 : Concentration  ║  Agitation  ║  Autonomie ══ -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🧠  Concentration :" styleClass="form-label"/>
+                                                <ComboBox fx:id="niveauConcentrationCB" maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🌀  Agitation :" styleClass="form-label"/>
+                                                <ComboBox fx:id="niveauAgitationCB" maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🦋  Autonomie :" styleClass="form-label"/>
+                                                <ComboBox fx:id="niveauAutonomieCB" maxWidth="Infinity"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- ══ PAIRE 6 : Interruptions  ║  Temps Perte ══ -->
+                                        <HBox spacing="20" alignment="TOP_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="🔔  Interruptions :" styleClass="form-label"/>
+                                                <TextField fx:id="nombreInterruptionsTF" maxWidth="Infinity"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="⏳  Temps Perte (min) :" styleClass="form-label"/>
+                                                <TextField fx:id="tempsAvantPerteTF" maxWidth="Infinity"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- ══ LIGNE 7 : Checkboxes ══ -->
+                                        <HBox spacing="40" alignment="CENTER_LEFT"
+                                              style="-fx-padding: 4 0 0 4;">
+                                            <CheckBox fx:id="travailleSeulCB" text="👤  Travaille seul"/>
+                                            <CheckBox fx:id="demandeAideCB"   text="🤝  Demande aide"/>
+                                        </HBox>
+
+                                        <!-- ══ SEUL : Difficultés (pleine largeur) ══ -->
+                                        <VBox spacing="4">
+                                            <Label text="⚠️  Difficultés :" styleClass="form-label"/>
+                                            <TextArea fx:id="difficultesTA"
+                                                      prefHeight="55" maxWidth="Infinity"
+                                                      wrapText="true"/>
+                                        </VBox>
+
+                                        <!-- ══ SEUL : Points positifs (pleine largeur) ══ -->
+                                        <VBox spacing="4">
+                                            <Label text="✅  Points positifs :" styleClass="form-label"/>
+                                            <TextArea fx:id="pointsPositifsTA"
+                                                      prefHeight="55" maxWidth="Infinity"
+                                                      wrapText="true"/>
+                                        </VBox>
+
+                                    </VBox>
+                                </content>
+                            </ScrollPane>
+
+                            <!-- BARRE DE FILTRES -->
+                            <HBox styleClass="filter-bar"
+                                  alignment="CENTER_LEFT"
+                                  spacing="16"
+                                  style="-fx-padding: 10 20 10 20;">
+                                <Label text="🎛️  Filtres" styleClass="filter-bar-title"/>
+                                <Region styleClass="filter-separator"
+                                        prefWidth="2" minWidth="2" maxWidth="2"
+                                        prefHeight="36"/>
+                                <VBox spacing="2" alignment="CENTER_LEFT">
+                                    <Label text="📅  Par date" styleClass="filter-label"/>
+                                    <DatePicker fx:id="filtreDateDP"
+                                                styleClass="filter-date"
+                                                promptText="Choisir une date"/>
+                                </VBox>
+                                <Region styleClass="filter-separator"
+                                        prefWidth="2" minWidth="2" maxWidth="2"
+                                        prefHeight="36"/>
+                                <VBox spacing="2" alignment="CENTER_LEFT">
+                                    <Label text="🎯  Par type" styleClass="filter-label"/>
+                                    <ComboBox fx:id="filtreTypeCB"
+                                              styleClass="filter-combo"
+                                              promptText="Tous les types"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="filtreCountLabel"
+                                       text="● Tous"
+                                       styleClass="filter-count-badge"/>
+                                <Button text="↺  Réinitialiser"
+                                        styleClass="filter-reset-btn"
+                                        onAction="#resetFiltre"/>
+                            </HBox>
+
+                            <!-- TABLEAU CARNETS -->
+                            <TableView fx:id="tableCarnet"
+                                       VBox.vgrow="NEVER"
+                                       prefHeight="150" minHeight="130" maxHeight="130">
+                                <columns>
+                                    <!--<TableColumn fx:id="colId"             text="ID"             prefWidth="60"/>-->
+                                    <TableColumn fx:id="colDate"           text="Date"           prefWidth="100"/>
+                                    <TableColumn fx:id="colHeureDebut"     text="Début"          prefWidth="80"/>
+                                    <TableColumn fx:id="colHeureFin"       text="Fin"            prefWidth="80"/>
+                                    <TableColumn fx:id="colDuree"          text="Durée"          prefWidth="80"/>
+                                    <TableColumn fx:id="colLieu"           text="Lieu"           prefWidth="120"/>
+                                    <TableColumn fx:id="colMatiere"        text="Matière"        prefWidth="120"/>
+                                    <TableColumn fx:id="colTypeActivite"   text="Type"           prefWidth="100"/>
+                                    <TableColumn fx:id="colDifficulte"     text="Difficulté"     prefWidth="90"/>
+                                    <TableColumn fx:id="colConcentration"  text="Concentration"  prefWidth="110"/>
+                                    <TableColumn fx:id="colAgitation"      text="Agitation"      prefWidth="90"/>
+                                    <TableColumn fx:id="colAutonomie"      text="Autonomie"      prefWidth="90"/>
+                                    <TableColumn fx:id="colInterruptions"  text="Interruptions"  prefWidth="100"/>
+                                    <TableColumn fx:id="colTempsPerte"     text="Temps Perte"    prefWidth="100"/>
+                                    <TableColumn fx:id="colTravailleSeul"  text="Travaille seul" prefWidth="100"/>
+                                    <TableColumn fx:id="colDemandeAide"    text="Demande aide"   prefWidth="100"/>
+                                    <TableColumn fx:id="colDifficultes"    text="Difficultés"    prefWidth="150"/>
+                                    <TableColumn fx:id="colPointsPositifs" text="Points positifs" prefWidth="150"/>
+                                </columns>
+                            </TableView>
+
+                            <!-- SECTION COMMENTAIRES -->
+                            <HBox alignment="CENTER_LEFT" spacing="10"
+                                  style="-fx-padding: 10 4 4 4;">
+                                <Label text="💬 Commentaires du carnet sélectionné"
+                                       styleClass="section-title"
+                                       style="-fx-font-size: 13px;"/>
+                            </HBox>
+
+                            <!-- TABLEAU COMMENTAIRES -->
+                            <TableView fx:id="tableCommentairesCarnet"
+                                       VBox.vgrow="NEVER"
+                                       prefHeight="130" minHeight="110" maxHeight="130">
+                                <placeholder>
+                                    <Label text="Sélectionnez un carnet pour voir ses commentaires 💬"/>
+                                </placeholder>
+                                <columns>
+                                    <TableColumn fx:id="colComId"    text="ID"                   prefWidth="50"/>
+                                    <TableColumn fx:id="colComDate"  text="Date"                  prefWidth="110"/>
+                                    <TableColumn fx:id="colComType"  text="Type"                  prefWidth="150"/>
+                                    <TableColumn fx:id="colComTexte" text="Texte du commentaire"  prefWidth="560"/>
+                                </columns>
+                            </TableView>
+
+                            <!-- BOUTONS D'ACTION -->
+                            <HBox alignment="CENTER_RIGHT" spacing="14"
+                                  style="-fx-padding: 6 4 0 4;">
+
+                                <Button styleClass="action-btn-comm"
+                                        onAction="#ouvrirAjouterCommentaire">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="8">
+                                            <Label text="💬" style="-fx-font-size:20px;"/>
+                                            <Label text="Ajouter commentaire" styleClass="action-btn-label"/>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+
+                                <Button styleClass="action-btn-print"
+                                        onAction="#imprimerCarnet">
+                                    <graphic>
+                                        <HBox alignment="CENTER" spacing="8">
+                                            <Label text="🖨️" style="-fx-font-size:20px;"/>
+                                            <Label text="Imprimer" styleClass="action-btn-label"/>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+
+                                <Button text="📊 Graphiques"
+                                        onAction="#ouvrirGraphiques"
+                                        styleClass="action-btn-print"/>
+                            </HBox>
+
+                        </VBox>
+                        <Region prefHeight="8"/>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- BARRE DE NAVIGATION (bas) -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="bottom-wrapper" prefHeight="100">
+            <HBox alignment="CENTER"
+                  spacing="20"
+                  styleClass="bottom-nav"
+                  prefHeight="90"
+                  minHeight="90"
+                  maxHeight="90">
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/cours.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Cours" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/quiz.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Exercices" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item-active" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="27" styleClass="nav-icon-bg-active"/>
+                        <ImageView fitHeight="36" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/famille.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Parents" styleClass="nav-label-active"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/puzzle.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Boutique" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/meditation.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Session De Calme" styleClass="nav-label"/>
+                </VBox>
+                <VBox alignment="CENTER" styleClass="nav-item" spacing="2">
+                    <StackPane styleClass="nav-icon-container">
+                        <Circle radius="23" styleClass="nav-icon-bg"/>
+                        <ImageView fitHeight="30" preserveRatio="true" styleClass="nav-icon">
+                            <Image url="@/images/emotions.png"/>
+                        </ImageView>
+                    </StackPane>
+                    <Label text="Émotions" styleClass="nav-label"/>
+                </VBox>
+            </HBox>
+        </HBox>
+    </bottom>
+
+</BorderPane>
