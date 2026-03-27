@@ -325,14 +325,14 @@ public class AdminDashboardController implements Initializable {
         carnetsCountBadge.setText(n + " résultat" + (n > 1 ? "s" : ""));
     }
 
-    @FXML
+    /*@FXML
     public void handleNewCarnet() {
         isEditMode = false;
         selectedCarnet = null;
         carnetFormModeLabel.setText("✏️  Nouveau Carnet");
         clearCarnetForm();
         toggleCarnetForm(true);
-    }
+    }*/
 
     private void openEditCarnetForm(CarnetRow row) {
         isEditMode = true;

@@ -134,14 +134,14 @@
                                 <HBox styleClass="form-mode-bar" alignment="CENTER_LEFT" spacing="12">
                                     <Label text="📋  Liste des Carnets" styleClass="form-mode-label"/>
                                     <Region HBox.hgrow="ALWAYS"/>
-                                    <Button styleClass="btn-nouveau" onAction="#handleNewCarnet">
-                                        <graphic>
+                                   <!--  <Button styleClass="btn-nouveau" onAction="#handleNewCarnet">
+                                       <graphic>
                                             <HBox alignment="CENTER" spacing="6">
                                                 <Label text="✨" style="-fx-font-size:15px;"/>
                                                 <Label text="Nouveau Carnet" styleClass="btn-nouveau-label"/>
                                             </HBox>
                                         </graphic>
-                                    </Button>
+                                    </Button>-->
                                     <Button styleClass="btn-nouveau" onAction="#refreshAll">
                                         <graphic>
                                             <HBox alignment="CENTER" spacing="6">
